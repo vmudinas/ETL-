@@ -1,0 +1,1157 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/5/2014 12:40:39 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7DU-2UA2510JVV"
+  DTS:CreatorName="UBOC-AD\ub68960"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{A74040E8-FEB5-408A-B829-F3D076A6B488}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="1033"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="LoadCollateralPledged"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="67"
+  DTS:VersionGUID="{11916702-90FF-46EA-A408-EF83EAD40F53}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E4058725-9214-4273-80E6-CBB06B558A54}"
+      DTS:ObjectName="DestinationConnectionOLEDB">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::database_server]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=GMG-MPSC-QRMPRD\TSY;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11;Integrated Security=SSPI;Auto Translate=false;Application Name=SSIS-New Package-{E4058725-9214-4273-80E6-CBB06B558A54}DestinationConnectionOLEDB;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+      DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{B492AF73-FD4C-47B6-9C40-B3F6CEC9C4E5}"
+      DTS:ObjectName="SourceConnectionAdoNET">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::dmq_password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::dmq_server]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::dmq_user]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=P003;User ID=SVC_DMQ_DATA;Unicode=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3111FCFA-A326-4922-BD12-45C62D7AF0B1}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date">
+      <DTS:VariableValue
+        DTS:DataType="7">12/1/2015</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E346183C-4719-4C6F-87E5-768DEC10E4C7}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_STR, 4, 1252) DATEPART(&quot;yy&quot; ,@[User::as_of_date]) + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::as_of_date]), 2)  + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::as_of_date]), 2) "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date_yyyymmdd">
+      <DTS:VariableValue
+        DTS:DataType="8">20151201</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{837BEC33-3728-4E32-8851-22A017373420}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="database_server">
+      <DTS:VariableValue
+        DTS:DataType="8">GMG-MPSC-QRMPRD\TSY</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F81D6226-93E2-405C-BB80-44BBEB5554E6}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_password">
+      <DTS:VariableValue
+        DTS:DataType="8">svc987dm</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E6A0F9CF-2B61-4C74-8860-4167C75CB77E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_server">
+      <DTS:VariableValue
+        DTS:DataType="8">P003</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CEB196F8-C9FD-43B9-85CA-1BD339CD5355}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_user">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_DMQ_DATA</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete Collateral Pledged data if exist"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:DTSID="{7484957A-2666-4E26-8E61-AF057EF36862}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete Collateral Pledged data if exist"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{E4058725-9214-4273-80E6-CBB06B558A54}"
+          SQLTask:SqlStatementSource="DELETE [PublicFund].[collateral_pledged] &#xA;WHERE [AS_OF_DATE] = convert(date,?)&#xA;GO&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::as_of_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Collateral Pledged Data"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:DTSID="{AF08F471-AB02-46B5-A522-571F0B2ACB3E}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Collateral Pledged Data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[Source - Query].[SqlCommand]">"select TO_DATE(I.INTRADER_COLLTRL_DAILY_DT_ID,'YYYYMMDD') AS INTRADER_COLLTRL_DAILY_DT, 
+I.INTRADER_COLLTRL_FR_TICKET_NUM, 
+I.COLLTRL_FROM_CUSIP,
+D.SECURITY_DESC,
+A.COLLTRL_GROUP_DESC, 
+A.PLEDGE_CATEGORY_DESC, 
+I.COLLTRL_TO_LOCATION, 
+1 AS COLLTRL_RECORD_TYPE,  
+ROUND((F.ORIG_FACT_AMT * I.COLLTRL_MKT_VALUE) / 
+(SELECT SUM(COLLTRL_MKT_VALUE) 
+FROM INTRADER_COLLTRL_DAILY_FACT_B  S 
+WHERE S.INTRADER_COLLTRL_DAILY_DT_ID = I.INTRADER_COLLTRL_DAILY_DT_ID
+AND S.INTRADER_COLLTRL_FR_TICKET_NUM = I.INTRADER_COLLTRL_FR_TICKET_NUM  )) AS ORIG_FACT_AMT,
+I.COLLTRL_MKT_VALUE
+from INTRADER_COLLTRL_DAILY_FACT_B i
+join INTRADER_COLLTRL_ATTRIB_DIM_B a on I.INTRADER_COLLTRL_ATTRIB_DIM_ID = A.INTRADER_COLLTRL_ATTRIB_DIM_ID
+join ODMDMQ.INTRADER_DAILY_FACT_B F on I.INTRADER_COLLTRL_FR_TICKET_NUM = F.TICKET_NUM
+join ODMDMQ.INTRADER_ACCT_DIM_B d on F.INTRADER_ACCT_DIM_ID = D.INTRADER_ACCT_DIM_ID
+where INTRADER_COLLTRL_DAILY_DT_ID = " + @[User::as_of_date_yyyymmdd] + "
+AND F.INTRADER_DAILY_DATE_ID = " + @[User::as_of_date_yyyymmdd] + "
+AND  I.COLLTRL_RECORD_TYPE = 'PLEDGE'
+and TO_DATE(" + @[User::as_of_date_yyyymmdd] + ",'YYYYMMDD') between D.begin_dt and D.end_dt
+UNION ALL
+select TO_DATE(F.INTRADER_DAILY_DATE_ID,'YYYYMMDD') AS INTRADER_COLLTRL_DAILY_DT, 
+F.TICKET_NUM AS INTRADER_COLLTRL_FR_TICKET_NUM,
+F.CUSIP AS COLLTRL_FROM_CUSIP,
+A.SECURITY_DESC,
+A.INTRADER_GROUP_DESC AS COLLTRL_GROUP_DESC,
+'-' AS PLEDGE_CATEGORY_DESC,
+'-' AS COLLTRL_TO_LOCATION,
+0 AS COLLTRL_RECORD_TYPE,
+F.ORIG_FACT_AMT,
+F.FAIR_VALUE AS COLLTRL_MKT_VALUE
+from ODMDMQ.INTRADER_DAILY_FACT_B F
+join ODMDMQ.INTRADER_ACCT_DIM_B A on F.INTRADER_ACCT_DIM_ID = A.INTRADER_ACCT_DIM_ID
+where F.INTRADER_DAILY_DATE_ID = " + @[User::as_of_date_yyyymmdd] + "
+and TO_DATE(" + @[User::as_of_date_yyyymmdd] + ",'YYYYMMDD') between A.begin_dt and A.end_dt
+and A.INTRADER_GROUP_DESC != '-' and F.PORT_ID NOT IN ('CM1/TRES','AAIGMUNI','AMUNIPHA')" </DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              localeId="1033"
+              name="Data Conversion 0 - 0 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="INTRADER_COLLTRL_FR_TICKET_NUM"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input].Columns[COLLTRL_FROM_CUSIP]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="COLLTRL_FROM_CUSIP"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_FROM_CUSIP]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input].Columns[COLLTRL_GROUP_DESC]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="COLLTRL_GROUP_DESC"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_GROUP_DESC]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input].Columns[PLEDGE_CATEGORY_DESC]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="PLEDGE_CATEGORY_DESC"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[PLEDGE_CATEGORY_DESC]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input].Columns[COLLTRL_RECORD_TYPE]"
+                      cachedDataType="numeric"
+                      cachedName="COLLTRL_RECORD_TYPE"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_RECORD_TYPE]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input].Columns[COLLTRL_TO_LOCATION]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="COLLTRL_TO_LOCATION"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_TO_LOCATION]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input].Columns[SECURITY_DESC]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="SECURITY_DESC"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[SECURITY_DESC]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      name="INTRADER_COLLTRL_FR_TICKET_NUM"
+                      precision="10"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_FROM_CUSIP]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="20"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_FROM_CUSIP]"
+                      name="COLLTRL_FROM_CUSIP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_FROM_CUSIP]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_GROUP_DESC]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_GROUP_DESC]"
+                      name="COLLTRL_GROUP_DESC"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_GROUP_DESC]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[PLEDGE_CATEGORY_DESC]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="300"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[PLEDGE_CATEGORY_DESC]"
+                      name="PLEDGE_CATEGORY_DESC"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[PLEDGE_CATEGORY_DESC]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_RECORD_TYPE]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_RECORD_TYPE]"
+                      name="COLLTRL_RECORD_TYPE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_RECORD_TYPE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_TO_LOCATION]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_TO_LOCATION]"
+                      name="COLLTRL_TO_LOCATION"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_TO_LOCATION]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[SECURITY_DESC]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[SECURITY_DESC]"
+                      name="SECURITY_DESC"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[SECURITY_DESC]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Collateral Pledged Data\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[PublicFund].[collateral_pledged]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Collateral Pledged Data\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[COLLTRL_MKT_VALUE]"
+                      cachedDataType="numeric"
+                      cachedName="COLLTRL_MKT_VALUE"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[COLLATERAL_MARKET_VALUE]"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_MKT_VALUE]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      cachedDataType="numeric"
+                      cachedName="INTRADER_COLLTRL_FR_TICKET_NUM"
+                      cachedPrecision="10"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TICKET_NUMBER]"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[COLLTRL_FROM_CUSIP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="COLLTRL_FROM_CUSIP"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CUSIP]"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_FROM_CUSIP]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[COLLTRL_GROUP_DESC]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="COLLTRL_GROUP_DESC"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[COLLATERAL_GROUP_DESC]"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_GROUP_DESC]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PLEDGE_CATEGORY_DESC]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="300"
+                      cachedName="PLEDGE_CATEGORY_DESC"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PLEDGED_CATEGORY_DESC]"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[PLEDGE_CATEGORY_DESC]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[COLLTRL_RECORD_TYPE]"
+                      cachedDataType="bool"
+                      cachedName="COLLTRL_RECORD_TYPE"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PLEDGED]"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_RECORD_TYPE]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[INTRADER_COLLTRL_DAILY_DT]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="INTRADER_COLLTRL_DAILY_DT"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_COLLTRL_DAILY_DT]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[COLLTRL_TO_LOCATION]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="COLLTRL_TO_LOCATION"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[COLLTRL_TO_LOCATION]"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[COLLTRL_TO_LOCATION]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SECURITY_DESC]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="SECURITY_DESC"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SECURITY_DESC]"
+                      lineageId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output].Columns[SECURITY_DESC]" />
+                    <inputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ORIG_FACT_AMT]"
+                      cachedDataType="numeric"
+                      cachedName="ORIG_FACT_AMT"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORIG_FACT_AMT]"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[ORIG_FACT_AMT]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[TICKET_NUMBER]"
+                      dataType="numeric"
+                      name="TICKET_NUMBER"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CUSIP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="CUSIP" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[COLLATERAL_GROUP_DESC]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="COLLATERAL_GROUP_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PLEDGED_CATEGORY_DESC]"
+                      codePage="1252"
+                      dataType="str"
+                      length="300"
+                      name="PLEDGED_CATEGORY_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PLEDGED]"
+                      dataType="bool"
+                      name="PLEDGED" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[COLLATERAL_MARKET_VALUE]"
+                      dataType="numeric"
+                      name="COLLATERAL_MARKET_VALUE"
+                      precision="25"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[COLLTRL_TO_LOCATION]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="COLLTRL_TO_LOCATION" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SECURITY_DESC]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="SECURITY_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORIG_FACT_AMT]"
+                      dataType="numeric"
+                      name="ORIG_FACT_AMT"
+                      precision="25"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Collateral Pledged Data\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Collateral Pledged Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Collateral Pledged Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Collateral Pledged Data\Source - Query"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              name="Source - Query"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select TO_DATE(I.INTRADER_COLLTRL_DAILY_DT_ID,'YYYYMMDD') AS INTRADER_COLLTRL_DAILY_DT, 
+I.INTRADER_COLLTRL_FR_TICKET_NUM, 
+I.COLLTRL_FROM_CUSIP,
+D.SECURITY_DESC,
+A.COLLTRL_GROUP_DESC, 
+A.PLEDGE_CATEGORY_DESC, 
+I.COLLTRL_TO_LOCATION, 
+1 AS COLLTRL_RECORD_TYPE,  
+ROUND((F.ORIG_FACT_AMT * I.COLLTRL_MKT_VALUE) / 
+(SELECT SUM(COLLTRL_MKT_VALUE) 
+FROM INTRADER_COLLTRL_DAILY_FACT_B  S 
+WHERE S.INTRADER_COLLTRL_DAILY_DT_ID = I.INTRADER_COLLTRL_DAILY_DT_ID
+AND S.INTRADER_COLLTRL_FR_TICKET_NUM = I.INTRADER_COLLTRL_FR_TICKET_NUM  )) AS ORIG_FACT_AMT,
+I.COLLTRL_MKT_VALUE
+from INTRADER_COLLTRL_DAILY_FACT_B i
+join INTRADER_COLLTRL_ATTRIB_DIM_B a on I.INTRADER_COLLTRL_ATTRIB_DIM_ID = A.INTRADER_COLLTRL_ATTRIB_DIM_ID
+join ODMDMQ.INTRADER_DAILY_FACT_B F on I.INTRADER_COLLTRL_FR_TICKET_NUM = F.TICKET_NUM
+join ODMDMQ.INTRADER_ACCT_DIM_B d on F.INTRADER_ACCT_DIM_ID = D.INTRADER_ACCT_DIM_ID
+where INTRADER_COLLTRL_DAILY_DT_ID = 20151201
+AND F.INTRADER_DAILY_DATE_ID = 20151201
+AND  I.COLLTRL_RECORD_TYPE = 'PLEDGE'
+and TO_DATE(20151201,'YYYYMMDD') between D.begin_dt and D.end_dt
+UNION ALL
+select TO_DATE(F.INTRADER_DAILY_DATE_ID,'YYYYMMDD') AS INTRADER_COLLTRL_DAILY_DT, 
+F.TICKET_NUM AS INTRADER_COLLTRL_FR_TICKET_NUM,
+F.CUSIP AS COLLTRL_FROM_CUSIP,
+A.SECURITY_DESC,
+A.INTRADER_GROUP_DESC AS COLLTRL_GROUP_DESC,
+'-' AS PLEDGE_CATEGORY_DESC,
+'-' AS COLLTRL_TO_LOCATION,
+0 AS COLLTRL_RECORD_TYPE,
+F.ORIG_FACT_AMT,
+F.FAIR_VALUE AS COLLTRL_MKT_VALUE
+from ODMDMQ.INTRADER_DAILY_FACT_B F
+join ODMDMQ.INTRADER_ACCT_DIM_B A on F.INTRADER_ACCT_DIM_ID = A.INTRADER_ACCT_DIM_ID
+where F.INTRADER_DAILY_DATE_ID = 20151201
+and TO_DATE(20151201,'YYYYMMDD') between A.begin_dt and A.end_dt
+and A.INTRADER_GROUP_DESC != '-' and F.PORT_ID NOT IN ('CM1/TRES','AAIGMUNI','AMUNIPHA')</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Collateral Pledged Data\Source - Query.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_COLLTRL_DAILY_DT]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTRADER_COLLTRL_DAILY_DT]"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_COLLTRL_DAILY_DT]"
+                      name="INTRADER_COLLTRL_DAILY_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      length="30"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      name="INTRADER_COLLTRL_FR_TICKET_NUM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_FROM_CUSIP]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_FROM_CUSIP]"
+                      length="10"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_FROM_CUSIP]"
+                      name="COLLTRL_FROM_CUSIP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[SECURITY_DESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SECURITY_DESC]"
+                      length="50"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[SECURITY_DESC]"
+                      name="SECURITY_DESC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_GROUP_DESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_GROUP_DESC]"
+                      length="30"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_GROUP_DESC]"
+                      name="COLLTRL_GROUP_DESC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[PLEDGE_CATEGORY_DESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PLEDGE_CATEGORY_DESC]"
+                      length="60"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[PLEDGE_CATEGORY_DESC]"
+                      name="PLEDGE_CATEGORY_DESC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_TO_LOCATION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_TO_LOCATION]"
+                      length="10"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_TO_LOCATION]"
+                      name="COLLTRL_TO_LOCATION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_RECORD_TYPE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_RECORD_TYPE]"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_RECORD_TYPE]"
+                      name="COLLTRL_RECORD_TYPE"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[ORIG_FACT_AMT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORIG_FACT_AMT]"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[ORIG_FACT_AMT]"
+                      name="ORIG_FACT_AMT"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_MKT_VALUE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_MKT_VALUE]"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLTRL_MKT_VALUE]"
+                      name="COLLTRL_MKT_VALUE"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTRADER_COLLTRL_DAILY_DT]"
+                      dataType="dbTimeStamp"
+                      name="INTRADER_COLLTRL_DAILY_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      dataType="wstr"
+                      length="30"
+                      name="INTRADER_COLLTRL_FR_TICKET_NUM" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_FROM_CUSIP]"
+                      dataType="wstr"
+                      length="10"
+                      name="COLLTRL_FROM_CUSIP" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SECURITY_DESC]"
+                      dataType="wstr"
+                      length="50"
+                      name="SECURITY_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_GROUP_DESC]"
+                      dataType="wstr"
+                      length="30"
+                      name="COLLTRL_GROUP_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PLEDGE_CATEGORY_DESC]"
+                      dataType="wstr"
+                      length="60"
+                      name="PLEDGE_CATEGORY_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_TO_LOCATION]"
+                      dataType="wstr"
+                      length="10"
+                      name="COLLTRL_TO_LOCATION" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_RECORD_TYPE]"
+                      dataType="numeric"
+                      name="COLLTRL_RECORD_TYPE"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORIG_FACT_AMT]"
+                      dataType="numeric"
+                      name="ORIG_FACT_AMT"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLTRL_MKT_VALUE]"
+                      dataType="numeric"
+                      name="COLLTRL_MKT_VALUE"
+                      precision="38"
+                      scale="4" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTRADER_COLLTRL_DAILY_DT]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTRADER_COLLTRL_DAILY_DT]"
+                      name="INTRADER_COLLTRL_DAILY_DT" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTRADER_COLLTRL_FR_TICKET_NUM]"
+                      name="INTRADER_COLLTRL_FR_TICKET_NUM" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_FROM_CUSIP]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_FROM_CUSIP]"
+                      name="COLLTRL_FROM_CUSIP" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[SECURITY_DESC]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[SECURITY_DESC]"
+                      name="SECURITY_DESC" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_GROUP_DESC]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_GROUP_DESC]"
+                      name="COLLTRL_GROUP_DESC" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[PLEDGE_CATEGORY_DESC]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[PLEDGE_CATEGORY_DESC]"
+                      name="PLEDGE_CATEGORY_DESC" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_TO_LOCATION]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_TO_LOCATION]"
+                      name="COLLTRL_TO_LOCATION" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_RECORD_TYPE]"
+                      dataType="numeric"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_RECORD_TYPE]"
+                      name="COLLTRL_RECORD_TYPE"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORIG_FACT_AMT]"
+                      dataType="numeric"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORIG_FACT_AMT]"
+                      name="ORIG_FACT_AMT"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_MKT_VALUE]"
+                      dataType="numeric"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLTRL_MKT_VALUE]"
+                      name="COLLTRL_MKT_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Collateral Pledged Data.Paths[ADO NET Source Output]"
+              endId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Inputs[Data Conversion Input]"
+              name="ADO NET Source Output"
+              startId="Package\Load Collateral Pledged Data\Source - Query.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Load Collateral Pledged Data.Paths[Data Conversion Output]"
+              endId="Package\Load Collateral Pledged Data\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1.Outputs[Data Conversion Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{4FD09780-AB1F-48C9-A453-EE961127BA6B}"
+      DTS:From="Package\Delete Collateral Pledged data if exist"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load Collateral Pledged Data" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="188,44"
+          Id="Package\Delete Collateral Pledged data if exist"
+          TopLeft="223.103773584906,126.5" />
+        <NodeLayout
+          Size="195,44"
+          Id="Package\Load Collateral Pledged Data"
+          TopLeft="220.5,227.971698113208" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="317.367924528302,170.424528301887">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57.5471698113207"
+              Start="0,0"
+              End="0,50.0471698113207">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.0471698113207" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Collateral Pledged Data">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Load Collateral Pledged Data\Source - Query"
+          TopLeft="261,112.5" />
+        <NodeLayout
+          Size="193,42"
+          Id="Package\Load Collateral Pledged Data\Data Conversion 0 - 0 1"
+          TopLeft="240.5,214.5" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Load Collateral Pledged Data\OLE DB Destination"
+          TopLeft="250.5,316.5" />
+        <EdgeLayout
+          Id="Package\Load Collateral Pledged Data.Paths[Data Conversion Output]"
+          TopLeft="337,256.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Collateral Pledged Data.Paths[ADO NET Source Output]"
+          TopLeft="337,154.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Collateral Pledged Data\Source - Query">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

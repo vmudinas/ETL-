@@ -1,0 +1,1281 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/2/2016 2:57:03 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7NU-5CG4422XTB"
+  DTS:CreatorName="UBOC-AD\ub68960"
+  DTS:DTSID="{E77D5AD9-F7C7-4BF8-9B06-ED8C2FFC5D18}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.6020.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="UploadSeiTrustFile"
+  DTS:PackageType="5"
+  DTS:VersionBuild="71"
+  DTS:VersionGUID="{C3ED4B3D-EBD3-4261-9054-E62D293BE320}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Funding Database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{C04C9668-0D20-4011-9132-BAE01DB104E2}"
+      DTS:ObjectName="Funding Database">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::DatabaseServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SEI Trust Archive File Conn]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{9b237fe1-cd05-4484-96c9-aef32e0a4105}"
+      DTS:ObjectName="SEI Trust Archive File Conn">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::FileArchivePath] +  @[User::FileName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="RaggedRight"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000A_"
+          DTS:RowDelimiter="_x000D__x000A_"
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="\\mpsc-tsy-dvapp1\d\applications\CT-CORE\Funding\Intraday\Inbound\Archive\ctdm_CorpTreasuryFedSettlements_20160920165600.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="1000"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="EntireRow"
+              DTS:DTSID="{D173E0C6-77FD-416E-A045-4A9D5923DE2C}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SEI Trust File Conn]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{F6EBFC1D-4A5A-4F72-A983-04BD0688075E}"
+      DTS:ObjectName="SEI Trust File Conn">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::FilePath] +  @[User::FileName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x0009_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter="_x000D__x000A_"
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="\\mpsc-tsy-dvapp1\d\applications\CT-CORE\Funding\Intraday\Inbound\ctdm_CorpTreasuryFedSettlements_20160920165600.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="10"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Pending_Item_Num"
+              DTS:DTSID="{F5E188B5-1C86-4752-BFB3-C88DC95758E7}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="CUSIP_ID"
+              DTS:DTSID="{4F836542-89D3-44A0-919D-67BC2F362EF4}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Asset_Short_Nm"
+              DTS:DTSID="{DA8DDF82-F2BA-4CA9-B580-23558ED9DF37}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Trade_Type_Cd"
+              DTS:DTSID="{058C6771-DD0A-4EDE-A04A-7005366C1F88}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Trade_Type_Nm"
+              DTS:DTSID="{E1E72528-1867-4052-9FBF-5320915D1189}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Active_Status_Cd"
+              DTS:DTSID="{B5482A65-0C6A-407B-B443-AE377A333088}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Active_Status_Nm"
+              DTS:DTSID="{AF642787-E192-4100-A47D-620432CBEA3E}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Net_Proceeds_Amt"
+              DTS:DTSID="{B6C302B5-993C-4A07-9BDD-43246C3D26C2}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Accrued_Interest_Amt"
+              DTS:DTSID="{DE641E9C-0E79-4D81-8389-79EAB16623A7}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Theoretical_Settlement_Dt"
+              DTS:DTSID="{F012EBE7-88D4-46A6-AD6B-B723DC61AAAC}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Trade_Entry_Dt"
+              DTS:DTSID="{5C598A21-20D6-4C9B-A73A-787F812A5AC6}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x0009_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Posting_Tm"
+              DTS:DTSID="{820C5EDE-67CA-4C3E-AFBC-992E81324651}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Actual_Settlement_Dt"
+              DTS:DTSID="{83F5E91F-E554-4778-BD2A-B53F2F055CBA}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9F1188FD-F2EC-4F38-8E61-D6BF2CDC8E9D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AsOfDate">
+      <DTS:VariableValue
+        DTS:DataType="7">9/20/2016 4:56:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D1665968-1DD9-492C-9E1B-B5F06AA4A5A8}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DatabaseServerName">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{38572000-8988-4C61-AC7B-7A0D543C0B3E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileArchivePath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\mpsc-tsy-dvapp1\d\applications\CT-CORE\Funding\Intraday\Inbound\Archive\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E88C296F-29BC-4EA0-ABFF-A6892121255F}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileInitial">
+      <DTS:VariableValue
+        DTS:DataType="8">ctdm_CorpTreasuryFedSettlements</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{57AC1A29-5F34-4167-B2B3-4D2EF7B9319D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::FileInitial] + &quot;_&quot; + (DT_STR,4,1252)DATEPART( &quot;yyyy&quot; , @[User::AsOfDate] ) +&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;mm&quot; , @[User::AsOfDate] ), 2) +&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;dd&quot; , @[User::AsOfDate] ), 2) +&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;Hh&quot; , @[User::AsOfDate] ), 2) +&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;mi&quot; , @[User::AsOfDate] ), 2) +&#xA;RIGHT(&quot;0&quot; + (DT_STR,4,1252)DATEPART( &quot;ss&quot; , @[User::AsOfDate] ), 2) + &quot;.txt&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileName">
+      <DTS:VariableValue
+        DTS:DataType="8">ctdm_CorpTreasuryFedSettlements_20160920165600.txt</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EA14C949-8F8F-4407-BBF9-53BE278B7D03}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">\\mpsc-tsy-dvapp1\d\applications\CT-CORE\Funding\Intraday\Inbound\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EDD2EA0D-9150-48C9-93DF-6A74499E7D08}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FileType">
+      <DTS:VariableValue
+        DTS:DataType="8">txt</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{829D7B77-275D-4195-8EBF-486B5BEA787E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="IterationId">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Archive SEI Trust file"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="File System Task"
+      DTS:DTSID="{335164D6-B76D-43C3-A0DB-9345CC4EFB7D}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.FileSystemTask.FileSystemTask, Microsoft.SqlServer.FileSystemTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Archive SEI Trust file"
+      DTS:TaskContact="File System Task;Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <FileSystemData
+          TaskOperationType="RenameFile"
+          TaskOverwriteDestFile="True"
+          TaskSourcePath="{F6EBFC1D-4A5A-4F72-A983-04BD0688075E}"
+          TaskDestinationPath="{9b237fe1-cd05-4484-96c9-aef32e0a4105}" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert into SEI Trust Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{eb4e9bbe-acb9-4057-aae8-449df2fb86dc}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert into SEI Trust Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C04C9668-0D20-4011-9132-BAE01DB104E2}"
+          SQLTask:SqlStatementSource="EXEC [Intraday].[ins_sei_trust_from_staging] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="@AS_OF_DATE"
+            SQLTask:DtsVariableName="User::AsOfDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="@ITERATION_ID"
+            SQLTask:DtsVariableName="User::IterationId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="2"
+            SQLTask:ParameterSize="0" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Parse and load SEI File"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F15518B6-7FEA-4506-BE73-AE0673CFB1EB}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Parse and load SEI File"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Parse and load SEI File\Insert into SEI Trust Table"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Insert into SEI Trust Table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Intraday].[staging_sei_trust]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Funding Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[Funding Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[CUSIP_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="CUSIP_ID"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[CUSIP_ID]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[CUSIP_ID]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Pending_Item_Num]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Pending_Item_Num"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[PENDING_ITEM_NUM]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Pending_Item_Num]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Asset_Short_Nm]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Asset_Short_Nm"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ASSET_SHORT_NM]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Asset_Short_Nm]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Trade_Type_Cd]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Trade_Type_Cd"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[TRADE_TYPE_CD]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Trade_Type_Cd]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Trade_Type_Nm]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Trade_Type_Nm"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[TRADE_TYPE_NM]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Trade_Type_Nm]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Active_Status_Cd]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Active_Status_Cd"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ACTIVE_STATUS_CD]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Active_Status_Cd]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Active_Status_Nm]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Active_Status_Nm"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ACTIVE_STATUS_NM]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Active_Status_Nm]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Net_Proceeds_Amt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Net_Proceeds_Amt"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[NET_PROCEEDS_AMT]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Net_Proceeds_Amt]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Accrued_Interest_Amt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Accrued_Interest_Amt"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ACCRUED_INTEREST_AMT]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Accrued_Interest_Amt]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Theoretical_Settlement_Dt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Theoretical_Settlement_Dt"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[THEORETICAL_SETTLEMENT_DT]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Theoretical_Settlement_Dt]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Trade_Entry_Dt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Trade_Entry_Dt"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[TRADE_ENTRY_DT]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Trade_Entry_Dt]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Posting_Tm]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Posting_Tm"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[POSTING_TM]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Posting_Tm]" />
+                    <inputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].Columns[Actual_Settlement_Dt]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Actual_Settlement_Dt"
+                      externalMetadataColumnId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ACTUAL_SETTLEMENT_DT]"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Actual_Settlement_Dt]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[CUSIP_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CUSIP_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[PENDING_ITEM_NUM]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="PENDING_ITEM_NUM" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ASSET_SHORT_NM]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ASSET_SHORT_NM" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[TRADE_TYPE_CD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TRADE_TYPE_CD" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[TRADE_TYPE_NM]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TRADE_TYPE_NM" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ACTIVE_STATUS_CD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ACTIVE_STATUS_CD" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ACTIVE_STATUS_NM]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ACTIVE_STATUS_NM" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[NET_PROCEEDS_AMT]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="NET_PROCEEDS_AMT" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ACCRUED_INTEREST_AMT]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ACCRUED_INTEREST_AMT" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[THEORETICAL_SETTLEMENT_DT]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="THEORETICAL_SETTLEMENT_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[TRADE_ENTRY_DT]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="TRADE_ENTRY_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[POSTING_TM]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="POSTING_TM" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[ACTUAL_SETTLEMENT_DT]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ACTUAL_SETTLEMENT_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Parse and load SEI File\Insert into SEI Trust Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\Insert into SEI Trust Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Parse and load SEI File\Insert into SEI Trust Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Parse and load SEI File\SEI File"
+              componentClassID="{D23FD76B-F51D-420F-BBCB-19CBF6AC1AB4}"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="1033"
+              name="SEI File"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Parse and load SEI File\SEI File.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SEI Trust File Conn]"
+                  connectionManagerRefId="Package.ConnectionManagers[SEI Trust File Conn]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Pending_Item_Num]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Pending_Item_Num]"
+                      length="10"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Pending_Item_Num]"
+                      name="Pending_Item_Num"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[CUSIP_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[CUSIP_ID]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[CUSIP_ID]"
+                      name="CUSIP_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Asset_Short_Nm]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Asset_Short_Nm]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Asset_Short_Nm]"
+                      name="Asset_Short_Nm"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Trade_Type_Cd]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Trade_Type_Cd]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Trade_Type_Cd]"
+                      name="Trade_Type_Cd"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Trade_Type_Nm]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Trade_Type_Nm]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Trade_Type_Nm]"
+                      name="Trade_Type_Nm"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Active_Status_Cd]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Active_Status_Cd]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Active_Status_Cd]"
+                      name="Active_Status_Cd"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Active_Status_Nm]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Active_Status_Nm]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Active_Status_Nm]"
+                      name="Active_Status_Nm"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Net_Proceeds_Amt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Net_Proceeds_Amt]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Net_Proceeds_Amt]"
+                      name="Net_Proceeds_Amt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Accrued_Interest_Amt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Accrued_Interest_Amt]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Accrued_Interest_Amt]"
+                      name="Accrued_Interest_Amt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Theoretical_Settlement_Dt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Theoretical_Settlement_Dt]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Theoretical_Settlement_Dt]"
+                      name="Theoretical_Settlement_Dt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Trade_Entry_Dt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Trade_Entry_Dt]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Trade_Entry_Dt]"
+                      name="Trade_Entry_Dt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Posting_Tm]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Posting_Tm]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Posting_Tm]"
+                      name="Posting_Tm"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Actual_Settlement_Dt]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Actual_Settlement_Dt]"
+                      length="50"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].Columns[Actual_Settlement_Dt]"
+                      name="Actual_Settlement_Dt"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Pending_Item_Num]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Pending_Item_Num" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[CUSIP_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CUSIP_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Asset_Short_Nm]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Asset_Short_Nm" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Trade_Type_Cd]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Trade_Type_Cd" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Trade_Type_Nm]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Trade_Type_Nm" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Active_Status_Cd]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Active_Status_Cd" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Active_Status_Nm]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Active_Status_Nm" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Net_Proceeds_Amt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Net_Proceeds_Amt" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Accrued_Interest_Amt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Accrued_Interest_Amt" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Theoretical_Settlement_Dt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Theoretical_Settlement_Dt" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Trade_Entry_Dt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Trade_Entry_Dt" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Posting_Tm]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Posting_Tm" />
+                    <externalMetadataColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output].ExternalColumns[Actual_Settlement_Dt]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="Actual_Settlement_Dt" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1252"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Parse and load SEI File.Paths[Flat File Source Output]"
+              endId="Package\Parse and load SEI File\Insert into SEI Trust Table.Inputs[OLE DB Destination Input]"
+              name="Flat File Source Output"
+              startId="Package\Parse and load SEI File\SEI File.Outputs[Flat File Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Staging Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D8B2AC33-A344-4171-A08B-028FF9459657}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C04C9668-0D20-4011-9132-BAE01DB104E2}"
+          SQLTask:SqlStatementSource="Truncate Table [Intraday].[staging_sei_trust]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{4F7734AB-2F74-4D48-AAD1-99FDD4D31BC7}"
+      DTS:From="Package\Truncate Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Parse and load SEI File" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{CBE41E4B-1105-4DC8-BC23-A4F2841D99CB}"
+      DTS:From="Package\Parse and load SEI File"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Insert into SEI Trust Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{A0CFBD70-E3F5-4966-A4AC-5CB6DA708335}"
+      DTS:From="Package\Insert into SEI Trust Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Archive SEI Trust file" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="180,42"
+          Id="Package\Archive SEI Trust file"
+          TopLeft="185,372" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\Insert into SEI Trust Table"
+          TopLeft="169,258" />
+        <NodeLayout
+          Size="189,42"
+          Id="Package\Parse and load SEI File"
+          TopLeft="173,147" />
+        <NodeLayout
+          Size="190,42"
+          Id="Package\Truncate Staging Table"
+          TopLeft="169,37" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="265.75,79">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68"
+              Start="0,0"
+              End="0,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="269.75,189">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,69"
+              Start="0,0"
+              End="0,61.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,61.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="273.5,300">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72"
+              Start="0,0"
+              End="0,64.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Parse and load SEI File">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="116,42"
+          Id="Package\Parse and load SEI File\SEI File"
+          TopLeft="382,75" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\Parse and load SEI File\Insert into SEI Trust Table"
+          TopLeft="329,184" />
+        <EdgeLayout
+          Id="Package\Parse and load SEI File.Paths[Flat File Source Output]"
+          TopLeft="440,117">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-8,67"
+              Start="0,0"
+              End="-8,59.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.5"
+                    Point2="0,33.5"
+                    Point3="-4,33.5" />
+                  <mssgle:LineSegment
+                    End="-4,33.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-4,33.5"
+                    Point2="-8,33.5"
+                    Point3="-8,37.5" />
+                  <mssgle:LineSegment
+                    End="-8,59.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Parse and load SEI File\Insert into SEI Trust Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

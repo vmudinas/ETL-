@@ -1,0 +1,2086 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/5/2014 12:40:39 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7DU-2UA2510JVV"
+  DTS:CreatorName="UBOC-AD\ub68960"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{69C24465-D420-4B8E-BB3B-5781A91135E8}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.6020.0"
+  DTS:LocaleID="1033"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="Load2052A"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="239"
+  DTS:VersionGUID="{C709CF61-D49B-4290-BCBD-F16DC267D0B8}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DMQ]"
+      DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{BAB9BBD4-D84D-4FDD-BC4B-14C39A32E75F}"
+      DTS:ObjectName="DMQ">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::dmq_password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::dmq_server]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::dmq_user]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=P003;User ID=SVC_DMQ_DATA;Persist Security Info=True;Unicode=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SQL]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AB898CE2-3AD9-4886-AB1F-CA99133E4F69}"
+      DTS:ObjectName="SQL">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::database_server]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_LIABILITY;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5F640785-58C9-450B-BAB8-4183061170E8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date">
+      <DTS:VariableValue
+        DTS:DataType="7">5/24/2016</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1DCCEAEA-3ADD-4177-9904-889A0EF5C761}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_STR, 4, 1252) DATEPART(&quot;yy&quot; ,@[User::as_of_date]) + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::as_of_date]), 2)  + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::as_of_date]), 2)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date_yyyymmdd">
+      <DTS:VariableValue
+        DTS:DataType="8">20160524</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{349999E2-6F14-4D09-AD0D-5819FB7522FE}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="database_server">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{034A715D-9E50-490E-ABC0-F41296B47440}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_password">
+      <DTS:VariableValue
+        DTS:DataType="8">svc987dm</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FD0B7C6A-32CA-4F3E-9F0F-B0F903D0E31C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_server">
+      <DTS:VariableValue
+        DTS:DataType="8">P003</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5DE8E00E-7C92-4293-8FA3-180ED302E3BD}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_user">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_DMQ_DATA</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{83723CFA-3C2D-4A91-9775-16FE5C405640}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;DELETE [OvernightStress].[stg_2052a]&#xA;WHERE PERIOD_DT_DIM_ID ='&quot; + @[User::as_of_date_yyyymmdd] +&quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sql_frb_delete">
+      <DTS:VariableValue
+        DTS:DataType="8">DELETE [OvernightStress].[stg_2052a]
+WHERE PERIOD_DT_DIM_ID ='20160524'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FAFD0610-6AC0-408A-9234-FFB9C0D53129}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;SELECT &#xA;V_2052A.TABLE_NAME&#xA;    ,V_2052A.PERIOD_DT_DIM_ID &#xA;    ,V_2052A.REPORTING_ENTITY &#xA;    ,V_2052A.CURRENCY &#xA;    ,V_2052A.CONVERTED &#xA;    ,V_2052A.PID &#xA;    ,V_2052A.PRODUCT &#xA;    ,V_2052A.SID &#xA;    ,V_2052A.SUB_PRODUCT &#xA;    ,V_2052A.MARKET_VALUE &#xA;    ,V_2052A.LENDABLE_VALUE &#xA;    ,V_2052A.MATURITY_BUCKET &#xA;    ,V_2052A.FORWARD_START_AMOUNT &#xA;    ,V_2052A.FORWARD_START_BUCKET &#xA;    ,V_2052A.COLLATERAL_CLASS &#xA;    ,V_2052A.TREASURY_CONTROL &#xA;    ,V_2052A.ETL_LOAD_DT&#xA;    ,V_2052A.ETL_UPDATE_DT&#xA;    ,V_2052A.PRIME_BROKERAGE &#xA;       ,V_2052A.MATURITY_AMOUNT  &#xA;       ,V_2052A.COLLATERAL_VALUE  &#xA;       ,V_2052A.COLLATERAL_CURRENCY &#xA;       ,V_2052A.INTERNAL &#xA;       ,V_2052A.INTERNAL_COUNTERPARTY &#xA;       ,V_2052A.EFFECTIVE_MATURITY_BUCKET &#xA;       ,V_2052A.UNENCUMBERED  &#xA;       ,V_2052A.SETTLEMENT &#xA;       ,V_2052A.CID &#xA;       ,V_2052A.COUNTERPARTY &#xA;       ,V_2052A.INSURED &#xA;       ,V_2052A.TRIGGER_IND &#xA;       ,V_2052A.REHYPOTHECATED &#xA;       ,V_2052A.CURRENCY_1 &#xA;       ,V_2052A.CURRENCY_CONVERTED_1&#xA;       ,V_2052A.CURRENCY_2 &#xA;       ,V_2052A.CURRENCY_CONVERTED_2&#xA;       ,V_2052A.MATURITY_AMOUNT_CURRENCY_1 &#xA;       ,V_2052A.MATURITY_AMOUNT_CURRENCY_2 &#xA;       ,V_2052A.FX_OPTION_DIRECTION &#xA;       ,V_2052A.FORWARD_START_AMT_CURRENCY_1 &#xA;       ,V_2052A.FORWARD_START_AMT_CURRENCY_2 &#xA;       ,V_2052A.SID2 &#xA;      ,V_2052A.SUB_PRODUCT2&#xA;FROM ODMDMQ.V_2052A&#xA;WHERE PERIOD_DT_DIM_ID  = '&quot; + @[User::as_of_date_yyyymmdd] +&quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sql_frb_load">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT 
+V_2052A.TABLE_NAME
+    ,V_2052A.PERIOD_DT_DIM_ID 
+    ,V_2052A.REPORTING_ENTITY 
+    ,V_2052A.CURRENCY 
+    ,V_2052A.CONVERTED 
+    ,V_2052A.PID 
+    ,V_2052A.PRODUCT 
+    ,V_2052A.SID 
+    ,V_2052A.SUB_PRODUCT 
+    ,V_2052A.MARKET_VALUE 
+    ,V_2052A.LENDABLE_VALUE 
+    ,V_2052A.MATURITY_BUCKET 
+    ,V_2052A.FORWARD_START_AMOUNT 
+    ,V_2052A.FORWARD_START_BUCKET 
+    ,V_2052A.COLLATERAL_CLASS 
+    ,V_2052A.TREASURY_CONTROL 
+    ,V_2052A.ETL_LOAD_DT
+    ,V_2052A.ETL_UPDATE_DT
+    ,V_2052A.PRIME_BROKERAGE 
+       ,V_2052A.MATURITY_AMOUNT  
+       ,V_2052A.COLLATERAL_VALUE  
+       ,V_2052A.COLLATERAL_CURRENCY 
+       ,V_2052A.INTERNAL 
+       ,V_2052A.INTERNAL_COUNTERPARTY 
+       ,V_2052A.EFFECTIVE_MATURITY_BUCKET 
+       ,V_2052A.UNENCUMBERED  
+       ,V_2052A.SETTLEMENT 
+       ,V_2052A.CID 
+       ,V_2052A.COUNTERPARTY 
+       ,V_2052A.INSURED 
+       ,V_2052A.TRIGGER_IND 
+       ,V_2052A.REHYPOTHECATED 
+       ,V_2052A.CURRENCY_1 
+       ,V_2052A.CURRENCY_CONVERTED_1
+       ,V_2052A.CURRENCY_2 
+       ,V_2052A.CURRENCY_CONVERTED_2
+       ,V_2052A.MATURITY_AMOUNT_CURRENCY_1 
+       ,V_2052A.MATURITY_AMOUNT_CURRENCY_2 
+       ,V_2052A.FX_OPTION_DIRECTION 
+       ,V_2052A.FORWARD_START_AMT_CURRENCY_1 
+       ,V_2052A.FORWARD_START_AMT_CURRENCY_2 
+       ,V_2052A.SID2 
+      ,V_2052A.SUB_PRODUCT2
+FROM ODMDMQ.V_2052A
+WHERE PERIOD_DT_DIM_ID  = '20160524'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{080215D9-5025-40C2-BFE0-3587ACDF1ACD}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;[OvernightStress].[stg_2052a]&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sql_frb_loadTableName">
+      <DTS:VariableValue
+        DTS:DataType="8">[OvernightStress].[stg_2052a]</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete Existing"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:DTSID="{8c8edde3-a9b6-4968-b6c2-bd9138a677fd}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete Existing"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="SqlStatementSource">@[User::sql_frb_delete]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{AB898CE2-3AD9-4886-AB1F-CA99133E4F69}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="DELETE [OvernightStress].[stg_2052a]&#xA;WHERE PERIOD_DT_DIM_ID ='20160524'" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::as_of_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load New"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:DTSID="{b5f7ccc3-13c8-442c-93b7-c2e08e1b5c64}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load New"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[Source - Query].[SqlCommand]">@[User::sql_frb_load]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load New\Destination - frb_staging table"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination - frb_staging table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[OvernightStress].[stg_frb_rep_outflows_deposits]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable">User::sql_frb_loadTableName</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load New\Destination - frb_staging table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SQL]"
+                  connectionManagerRefId="Package.ConnectionManagers[SQL]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[TABLE_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="26"
+                      cachedName="TABLE_NAME"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[TABLE_NAME]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[TABLE_NAME]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[PERIOD_DT_DIM_ID]"
+                      cachedDataType="numeric"
+                      cachedName="PERIOD_DT_DIM_ID"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[PERIOD_DT_DIM_ID]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PERIOD_DT_DIM_ID]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[CURRENCY]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="CURRENCY"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[PID]"
+                      cachedDataType="numeric"
+                      cachedName="PID"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[PID]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PID]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[PRODUCT]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="PRODUCT"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[PRODUCT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PRODUCT]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[SID]"
+                      cachedDataType="numeric"
+                      cachedName="SID"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SID]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SID]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[SUB_PRODUCT]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="SUB_PRODUCT"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SUB_PRODUCT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SUB_PRODUCT]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[MARKET_VALUE]"
+                      cachedDataType="numeric"
+                      cachedName="MARKET_VALUE"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MARKET_VALUE]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MARKET_VALUE]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[LENDABLE_VALUE]"
+                      cachedDataType="numeric"
+                      cachedName="LENDABLE_VALUE"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[LENDABLE_VALUE]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[LENDABLE_VALUE]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[MATURITY_BUCKET]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="MATURITY_BUCKET"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MATURITY_BUCKET]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_BUCKET]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[FORWARD_START_AMOUNT]"
+                      cachedDataType="numeric"
+                      cachedName="FORWARD_START_AMOUNT"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FORWARD_START_AMOUNT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMOUNT]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[FORWARD_START_BUCKET]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="FORWARD_START_BUCKET"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FORWARD_START_BUCKET]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_BUCKET]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[COLLATERAL_CLASS]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="COLLATERAL_CLASS"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[COLLATERAL_CLASS]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COLLATERAL_CLASS]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[TREASURY_CONTROL]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="TREASURY_CONTROL"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[TREASURY_CONTROL]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[TREASURY_CONTROL]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[ETL_LOAD_DT]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ETL_LOAD_DT"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[ETL_LOAD_DT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[ETL_LOAD_DT]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[PRIME_BROKERAGE]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="PRIME_BROKERAGE"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[PRIME_BROKERAGE]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PRIME_BROKERAGE]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[MATURITY_AMOUNT]"
+                      cachedDataType="numeric"
+                      cachedName="MATURITY_AMOUNT"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MATURITY_AMOUNT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_AMOUNT]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[COLLATERAL_VALUE]"
+                      cachedDataType="numeric"
+                      cachedName="COLLATERAL_VALUE"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[COLLATERAL_VALUE]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COLLATERAL_VALUE]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[COLLATERAL_CURRENCY]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="COLLATERAL_CURRENCY"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[COLLATERAL_CURRENCY]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COLLATERAL_CURRENCY]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[INTERNAL]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="INTERNAL"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[INTERNAL]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[INTERNAL]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[INTERNAL_COUNTERPARTY]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="INTERNAL_COUNTERPARTY"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[INTERNAL_COUNTERPARTY]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[INTERNAL_COUNTERPARTY]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[EFFECTIVE_MATURITY_BUCKET]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="EFFECTIVE_MATURITY_BUCKET"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[EFFECTIVE_MATURITY_BUCKET]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[EFFECTIVE_MATURITY_BUCKET]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[UNENCUMBERED]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="UNENCUMBERED"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[UNENCUMBERED]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[UNENCUMBERED]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[SETTLEMENT]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="SETTLEMENT"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SETTLEMENT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SETTLEMENT]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[CID]"
+                      cachedDataType="numeric"
+                      cachedName="CID"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CID]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CID]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[COUNTERPARTY]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="COUNTERPARTY"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[COUNTERPARTY]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COUNTERPARTY]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[INSURED]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="INSURED"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[INSURED]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[INSURED]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[TRIGGER_IND]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="TRIGGER_IND"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[TRIGGER_IND]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[TRIGGER_IND]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[REHYPOTHECATED]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="REHYPOTHECATED"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[REHYPOTHECATED]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[REHYPOTHECATED]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[CURRENCY_1]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="CURRENCY_1"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY_1]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_1]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[CURRENCY_CONVERTED_1]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="CURRENCY_CONVERTED_1"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY_CONVERTED_1]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_CONVERTED_1]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[CURRENCY_2]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="CURRENCY_2"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY_2]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_2]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[CURRENCY_CONVERTED_2]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="CURRENCY_CONVERTED_2"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY_CONVERTED_2]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_CONVERTED_2]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[MATURITY_AMOUNT_CURRENCY_1]"
+                      cachedDataType="numeric"
+                      cachedName="MATURITY_AMOUNT_CURRENCY_1"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MATURITY_AMOUNT_CURRENCY_1]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_AMOUNT_CURRENCY_1]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[MATURITY_AMOUNT_CURRENCY_2]"
+                      cachedDataType="numeric"
+                      cachedName="MATURITY_AMOUNT_CURRENCY_2"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MATURITY_AMOUNT_CURRENCY_2]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_AMOUNT_CURRENCY_2]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[FX_OPTION_DIRECTION]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="FX_OPTION_DIRECTION"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FX_OPTION_DIRECTION]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FX_OPTION_DIRECTION]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[FORWARD_START_AMT_CURRENCY_1]"
+                      cachedDataType="numeric"
+                      cachedName="FORWARD_START_AMT_CURRENCY_1"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FORWARD_START_AMT_CURRENCY_1]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMT_CURRENCY_1]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[FORWARD_START_AMT_CURRENCY_2]"
+                      cachedDataType="numeric"
+                      cachedName="FORWARD_START_AMT_CURRENCY_2"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FORWARD_START_AMT_CURRENCY_2]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMT_CURRENCY_2]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[SID2]"
+                      cachedDataType="numeric"
+                      cachedName="SID2"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SID2]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SID2]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[SUB_PRODUCT2]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="SUB_PRODUCT2"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SUB_PRODUCT2]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SUB_PRODUCT2]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[REPORTING_ENTITY]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="REPORTING_ENTITY"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[REPORTING_ENTITY]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[REPORTING_ENTITY]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[CONVERTED]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="CONVERTED"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CONVERTED]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CONVERTED]" />
+                    <inputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].Columns[ETL_UPDATE_DT]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ETL_UPDATE_DT"
+                      externalMetadataColumnId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[TL_UPDATE_DT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[ETL_UPDATE_DT]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      name="PRODUCT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[PID]"
+                      dataType="numeric"
+                      name="PID"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[PERIOD_DT_DIM_ID]"
+                      dataType="numeric"
+                      name="PERIOD_DT_DIM_ID"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[REPORTING_ENTITY]"
+                      dataType="wstr"
+                      length="60"
+                      name="REPORTING_ENTITY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY]"
+                      dataType="wstr"
+                      length="3"
+                      name="CURRENCY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CONVERTED]"
+                      dataType="wstr"
+                      length="5"
+                      name="CONVERTED" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MATURITY_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="MATURITY_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[COLLATERAL_CLASS]"
+                      dataType="wstr"
+                      length="10"
+                      name="COLLATERAL_CLASS" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[ETL_LOAD_DT]"
+                      dataType="dbDate"
+                      name="ETL_LOAD_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CID]"
+                      dataType="numeric"
+                      name="CID"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[COUNTERPARTY]"
+                      dataType="wstr"
+                      length="50"
+                      name="COUNTERPARTY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MATURITY_AMOUNT]"
+                      dataType="numeric"
+                      name="MATURITY_AMOUNT"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[COLLATERAL_VALUE]"
+                      dataType="numeric"
+                      name="COLLATERAL_VALUE"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[COLLATERAL_CURRENCY]"
+                      dataType="wstr"
+                      length="3"
+                      name="COLLATERAL_CURRENCY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[INSURED]"
+                      dataType="wstr"
+                      length="10"
+                      name="INSURED" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[TRIGGER_IND]"
+                      dataType="wstr"
+                      length="5"
+                      name="TRIGGER_IND" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[REHYPOTHECATED]"
+                      dataType="wstr"
+                      length="5"
+                      name="REHYPOTHECATED" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[INTERNAL]"
+                      dataType="wstr"
+                      length="5"
+                      name="INTERNAL" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[INTERNAL_COUNTERPARTY]"
+                      dataType="wstr"
+                      length="50"
+                      name="INTERNAL_COUNTERPARTY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[TABLE_NAME]"
+                      dataType="wstr"
+                      length="26"
+                      name="TABLE_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SID]"
+                      dataType="numeric"
+                      name="SID"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SUB_PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      name="SUB_PRODUCT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MARKET_VALUE]"
+                      dataType="numeric"
+                      name="MARKET_VALUE"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[LENDABLE_VALUE]"
+                      dataType="numeric"
+                      name="LENDABLE_VALUE"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FORWARD_START_AMOUNT]"
+                      dataType="numeric"
+                      name="FORWARD_START_AMOUNT"
+                      precision="18"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FORWARD_START_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="FORWARD_START_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[TREASURY_CONTROL]"
+                      dataType="wstr"
+                      length="5"
+                      name="TREASURY_CONTROL" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[TL_UPDATE_DT]"
+                      dataType="dbDate"
+                      name="TL_UPDATE_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[PRIME_BROKERAGE]"
+                      dataType="wstr"
+                      length="5"
+                      name="PRIME_BROKERAGE" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[EFFECTIVE_MATURITY_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="EFFECTIVE_MATURITY_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[UNENCUMBERED]"
+                      dataType="wstr"
+                      length="5"
+                      name="UNENCUMBERED" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SETTLEMENT]"
+                      dataType="wstr"
+                      length="10"
+                      name="SETTLEMENT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY_1]"
+                      dataType="wstr"
+                      length="3"
+                      name="CURRENCY_1" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY_CONVERTED_1]"
+                      dataType="wstr"
+                      length="5"
+                      name="CURRENCY_CONVERTED_1" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY_2]"
+                      dataType="wstr"
+                      length="3"
+                      name="CURRENCY_2" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[CURRENCY_CONVERTED_2]"
+                      dataType="wstr"
+                      length="5"
+                      name="CURRENCY_CONVERTED_2" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MATURITY_AMOUNT_CURRENCY_1]"
+                      dataType="numeric"
+                      name="MATURITY_AMOUNT_CURRENCY_1"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[MATURITY_AMOUNT_CURRENCY_2]"
+                      dataType="numeric"
+                      name="MATURITY_AMOUNT_CURRENCY_2"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FX_OPTION_DIRECTION]"
+                      dataType="wstr"
+                      length="20"
+                      name="FX_OPTION_DIRECTION" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FORWARD_START_AMT_CURRENCY_1]"
+                      dataType="numeric"
+                      name="FORWARD_START_AMT_CURRENCY_1"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[FORWARD_START_AMT_CURRENCY_2]"
+                      dataType="numeric"
+                      name="FORWARD_START_AMT_CURRENCY_2"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SID2]"
+                      dataType="numeric"
+                      name="SID2"
+                      precision="18" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input].ExternalColumns[SUB_PRODUCT2]"
+                      dataType="wstr"
+                      length="15"
+                      name="SUB_PRODUCT2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load New\Destination - frb_staging table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load New\Destination - frb_staging table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load New\Destination - frb_staging table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load New\Destination - frb_staging table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load New\Source - Query"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              localeId="1033"
+              name="Source - Query"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT 
+V_2052A.TABLE_NAME
+    ,V_2052A.PERIOD_DT_DIM_ID 
+    ,V_2052A.REPORTING_ENTITY 
+    ,V_2052A.CURRENCY 
+    ,V_2052A.CONVERTED 
+    ,V_2052A.PID 
+    ,V_2052A.PRODUCT 
+    ,V_2052A.SID 
+    ,V_2052A.SUB_PRODUCT 
+    ,V_2052A.MARKET_VALUE 
+    ,V_2052A.LENDABLE_VALUE 
+    ,V_2052A.MATURITY_BUCKET 
+    ,V_2052A.FORWARD_START_AMOUNT 
+    ,V_2052A.FORWARD_START_BUCKET 
+    ,V_2052A.COLLATERAL_CLASS 
+    ,V_2052A.TREASURY_CONTROL 
+    ,V_2052A.ETL_LOAD_DT
+    ,V_2052A.ETL_UPDATE_DT
+    ,V_2052A.PRIME_BROKERAGE 
+       ,V_2052A.MATURITY_AMOUNT  
+       ,V_2052A.COLLATERAL_VALUE  
+       ,V_2052A.COLLATERAL_CURRENCY 
+       ,V_2052A.INTERNAL 
+       ,V_2052A.INTERNAL_COUNTERPARTY 
+       ,V_2052A.EFFECTIVE_MATURITY_BUCKET 
+       ,V_2052A.UNENCUMBERED  
+       ,V_2052A.SETTLEMENT 
+       ,V_2052A.CID 
+       ,V_2052A.COUNTERPARTY 
+       ,V_2052A.INSURED 
+       ,V_2052A.TRIGGER_IND 
+       ,V_2052A.REHYPOTHECATED 
+       ,V_2052A.CURRENCY_1 
+       ,V_2052A.CURRENCY_CONVERTED_1
+       ,V_2052A.CURRENCY_2 
+       ,V_2052A.CURRENCY_CONVERTED_2
+       ,V_2052A.MATURITY_AMOUNT_CURRENCY_1 
+       ,V_2052A.MATURITY_AMOUNT_CURRENCY_2 
+       ,V_2052A.FX_OPTION_DIRECTION 
+       ,V_2052A.FORWARD_START_AMT_CURRENCY_1 
+       ,V_2052A.FORWARD_START_AMT_CURRENCY_2 
+       ,V_2052A.SID2 
+      ,V_2052A.SUB_PRODUCT2
+FROM ODMDMQ.V_2052A
+WHERE PERIOD_DT_DIM_ID  = '20160524'</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load New\Source - Query.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DMQ]"
+                  connectionManagerRefId="Package.ConnectionManagers[DMQ]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[TABLE_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TABLE_NAME]"
+                      length="26"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[TABLE_NAME]"
+                      name="TABLE_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PERIOD_DT_DIM_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PERIOD_DT_DIM_ID]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PERIOD_DT_DIM_ID]"
+                      name="PERIOD_DT_DIM_ID"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[REPORTING_ENTITY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[REPORTING_ENTITY]"
+                      length="60"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[REPORTING_ENTITY]"
+                      name="REPORTING_ENTITY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY]"
+                      length="3"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY]"
+                      name="CURRENCY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CONVERTED]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CONVERTED]"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CONVERTED]"
+                      name="CONVERTED"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PID]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PID]"
+                      name="PID"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PRODUCT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PRODUCT]"
+                      length="80"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PRODUCT]"
+                      name="PRODUCT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SID]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SID]"
+                      name="SID"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SUB_PRODUCT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SUB_PRODUCT]"
+                      length="80"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SUB_PRODUCT]"
+                      name="SUB_PRODUCT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MARKET_VALUE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MARKET_VALUE]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MARKET_VALUE]"
+                      name="MARKET_VALUE"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[LENDABLE_VALUE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LENDABLE_VALUE]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[LENDABLE_VALUE]"
+                      name="LENDABLE_VALUE"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_BUCKET]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_BUCKET]"
+                      length="20"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_BUCKET]"
+                      name="MATURITY_BUCKET"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMOUNT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_AMOUNT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMOUNT]"
+                      name="FORWARD_START_AMOUNT"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_BUCKET]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_BUCKET]"
+                      length="20"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_BUCKET]"
+                      name="FORWARD_START_BUCKET"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COLLATERAL_CLASS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLATERAL_CLASS]"
+                      length="10"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COLLATERAL_CLASS]"
+                      name="COLLATERAL_CLASS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[TREASURY_CONTROL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TREASURY_CONTROL]"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[TREASURY_CONTROL]"
+                      name="TREASURY_CONTROL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[ETL_LOAD_DT]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ETL_LOAD_DT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[ETL_LOAD_DT]"
+                      name="ETL_LOAD_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[ETL_UPDATE_DT]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ETL_UPDATE_DT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[ETL_UPDATE_DT]"
+                      name="ETL_UPDATE_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PRIME_BROKERAGE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PRIME_BROKERAGE]"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[PRIME_BROKERAGE]"
+                      name="PRIME_BROKERAGE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_AMOUNT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_AMOUNT]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_AMOUNT]"
+                      name="MATURITY_AMOUNT"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COLLATERAL_VALUE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLATERAL_VALUE]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COLLATERAL_VALUE]"
+                      name="COLLATERAL_VALUE"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COLLATERAL_CURRENCY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLATERAL_CURRENCY]"
+                      length="3"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COLLATERAL_CURRENCY]"
+                      name="COLLATERAL_CURRENCY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[INTERNAL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTERNAL]"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[INTERNAL]"
+                      name="INTERNAL"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[INTERNAL_COUNTERPARTY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTERNAL_COUNTERPARTY]"
+                      length="50"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[INTERNAL_COUNTERPARTY]"
+                      name="INTERNAL_COUNTERPARTY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[EFFECTIVE_MATURITY_BUCKET]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[EFFECTIVE_MATURITY_BUCKET]"
+                      length="20"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[EFFECTIVE_MATURITY_BUCKET]"
+                      name="EFFECTIVE_MATURITY_BUCKET"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[UNENCUMBERED]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[UNENCUMBERED]"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[UNENCUMBERED]"
+                      name="UNENCUMBERED"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SETTLEMENT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SETTLEMENT]"
+                      length="10"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SETTLEMENT]"
+                      name="SETTLEMENT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CID]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CID]"
+                      name="CID"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COUNTERPARTY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COUNTERPARTY]"
+                      length="50"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[COUNTERPARTY]"
+                      name="COUNTERPARTY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[INSURED]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INSURED]"
+                      length="10"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[INSURED]"
+                      name="INSURED"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[TRIGGER_IND]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TRIGGER_IND]"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[TRIGGER_IND]"
+                      name="TRIGGER_IND"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[REHYPOTHECATED]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[REHYPOTHECATED]"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[REHYPOTHECATED]"
+                      name="REHYPOTHECATED"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY_1]"
+                      length="3"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_1]"
+                      name="CURRENCY_1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_CONVERTED_1]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY_CONVERTED_1]"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_CONVERTED_1]"
+                      name="CURRENCY_CONVERTED_1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY_2]"
+                      length="3"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_2]"
+                      name="CURRENCY_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_CONVERTED_2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY_CONVERTED_2]"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENCY_CONVERTED_2]"
+                      name="CURRENCY_CONVERTED_2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_AMOUNT_CURRENCY_1]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_AMOUNT_CURRENCY_1]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_AMOUNT_CURRENCY_1]"
+                      name="MATURITY_AMOUNT_CURRENCY_1"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_AMOUNT_CURRENCY_2]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_AMOUNT_CURRENCY_2]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[MATURITY_AMOUNT_CURRENCY_2]"
+                      name="MATURITY_AMOUNT_CURRENCY_2"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FX_OPTION_DIRECTION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FX_OPTION_DIRECTION]"
+                      length="20"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FX_OPTION_DIRECTION]"
+                      name="FX_OPTION_DIRECTION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMT_CURRENCY_1]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_AMT_CURRENCY_1]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMT_CURRENCY_1]"
+                      name="FORWARD_START_AMT_CURRENCY_1"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMT_CURRENCY_2]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_AMT_CURRENCY_2]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMT_CURRENCY_2]"
+                      name="FORWARD_START_AMT_CURRENCY_2"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SID2]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SID2]"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SID2]"
+                      name="SID2"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SUB_PRODUCT2]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SUB_PRODUCT2]"
+                      length="15"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].Columns[SUB_PRODUCT2]"
+                      name="SUB_PRODUCT2"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TABLE_NAME]"
+                      dataType="wstr"
+                      length="26"
+                      name="TABLE_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PERIOD_DT_DIM_ID]"
+                      dataType="numeric"
+                      name="PERIOD_DT_DIM_ID"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[REPORTING_ENTITY]"
+                      dataType="wstr"
+                      length="60"
+                      name="REPORTING_ENTITY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY]"
+                      dataType="wstr"
+                      length="3"
+                      name="CURRENCY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CONVERTED]"
+                      dataType="wstr"
+                      length="5"
+                      name="CONVERTED" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PID]"
+                      dataType="numeric"
+                      name="PID"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      name="PRODUCT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SID]"
+                      dataType="numeric"
+                      name="SID"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SUB_PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      name="SUB_PRODUCT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MARKET_VALUE]"
+                      dataType="numeric"
+                      name="MARKET_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LENDABLE_VALUE]"
+                      dataType="numeric"
+                      name="LENDABLE_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="MATURITY_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_AMOUNT]"
+                      dataType="numeric"
+                      name="FORWARD_START_AMOUNT"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="FORWARD_START_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLATERAL_CLASS]"
+                      dataType="wstr"
+                      length="10"
+                      name="COLLATERAL_CLASS" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TREASURY_CONTROL]"
+                      dataType="wstr"
+                      length="5"
+                      name="TREASURY_CONTROL" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ETL_LOAD_DT]"
+                      dataType="dbTimeStamp"
+                      name="ETL_LOAD_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ETL_UPDATE_DT]"
+                      dataType="dbTimeStamp"
+                      name="ETL_UPDATE_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PRIME_BROKERAGE]"
+                      dataType="wstr"
+                      length="5"
+                      name="PRIME_BROKERAGE" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_AMOUNT]"
+                      dataType="numeric"
+                      name="MATURITY_AMOUNT"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLATERAL_VALUE]"
+                      dataType="numeric"
+                      name="COLLATERAL_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLATERAL_CURRENCY]"
+                      dataType="wstr"
+                      length="3"
+                      name="COLLATERAL_CURRENCY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTERNAL]"
+                      dataType="wstr"
+                      length="5"
+                      name="INTERNAL" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTERNAL_COUNTERPARTY]"
+                      dataType="wstr"
+                      length="50"
+                      name="INTERNAL_COUNTERPARTY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[EFFECTIVE_MATURITY_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="EFFECTIVE_MATURITY_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[UNENCUMBERED]"
+                      dataType="wstr"
+                      length="5"
+                      name="UNENCUMBERED" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SETTLEMENT]"
+                      dataType="wstr"
+                      length="10"
+                      name="SETTLEMENT" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CID]"
+                      dataType="numeric"
+                      name="CID"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COUNTERPARTY]"
+                      dataType="wstr"
+                      length="50"
+                      name="COUNTERPARTY" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INSURED]"
+                      dataType="wstr"
+                      length="10"
+                      name="INSURED" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TRIGGER_IND]"
+                      dataType="wstr"
+                      length="5"
+                      name="TRIGGER_IND" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[REHYPOTHECATED]"
+                      dataType="wstr"
+                      length="5"
+                      name="REHYPOTHECATED" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY_1]"
+                      dataType="wstr"
+                      length="3"
+                      name="CURRENCY_1" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY_CONVERTED_1]"
+                      dataType="wstr"
+                      length="5"
+                      name="CURRENCY_CONVERTED_1" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY_2]"
+                      dataType="wstr"
+                      length="3"
+                      name="CURRENCY_2" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY_CONVERTED_2]"
+                      dataType="wstr"
+                      length="5"
+                      name="CURRENCY_CONVERTED_2" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_AMOUNT_CURRENCY_1]"
+                      dataType="numeric"
+                      name="MATURITY_AMOUNT_CURRENCY_1"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_AMOUNT_CURRENCY_2]"
+                      dataType="numeric"
+                      name="MATURITY_AMOUNT_CURRENCY_2"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FX_OPTION_DIRECTION]"
+                      dataType="wstr"
+                      length="20"
+                      name="FX_OPTION_DIRECTION" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_AMT_CURRENCY_1]"
+                      dataType="numeric"
+                      name="FORWARD_START_AMT_CURRENCY_1"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_AMT_CURRENCY_2]"
+                      dataType="numeric"
+                      name="FORWARD_START_AMT_CURRENCY_2"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SID2]"
+                      dataType="numeric"
+                      name="SID2"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SUB_PRODUCT2]"
+                      dataType="wstr"
+                      length="15"
+                      name="SUB_PRODUCT2" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[TABLE_NAME]"
+                      dataType="wstr"
+                      length="26"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[TABLE_NAME]"
+                      name="TABLE_NAME" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[PERIOD_DT_DIM_ID]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[PERIOD_DT_DIM_ID]"
+                      name="PERIOD_DT_DIM_ID"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[REPORTING_ENTITY]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[REPORTING_ENTITY]"
+                      name="REPORTING_ENTITY" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY]"
+                      name="CURRENCY" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CONVERTED]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CONVERTED]"
+                      name="CONVERTED" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[PID]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[PID]"
+                      name="PID"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[PRODUCT]"
+                      name="PRODUCT" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SID]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SID]"
+                      name="SID"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SUB_PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SUB_PRODUCT]"
+                      name="SUB_PRODUCT" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MARKET_VALUE]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MARKET_VALUE]"
+                      name="MARKET_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[LENDABLE_VALUE]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[LENDABLE_VALUE]"
+                      name="LENDABLE_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MATURITY_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MATURITY_BUCKET]"
+                      name="MATURITY_BUCKET" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_AMOUNT]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_AMOUNT]"
+                      name="FORWARD_START_AMOUNT"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_BUCKET]"
+                      name="FORWARD_START_BUCKET" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLATERAL_CLASS]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLATERAL_CLASS]"
+                      name="COLLATERAL_CLASS" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[TREASURY_CONTROL]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[TREASURY_CONTROL]"
+                      name="TREASURY_CONTROL" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[ETL_LOAD_DT]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[ETL_LOAD_DT]"
+                      name="ETL_LOAD_DT" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[ETL_UPDATE_DT]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[ETL_UPDATE_DT]"
+                      name="ETL_UPDATE_DT" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[PRIME_BROKERAGE]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[PRIME_BROKERAGE]"
+                      name="PRIME_BROKERAGE" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MATURITY_AMOUNT]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MATURITY_AMOUNT]"
+                      name="MATURITY_AMOUNT"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLATERAL_VALUE]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLATERAL_VALUE]"
+                      name="COLLATERAL_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLATERAL_CURRENCY]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLATERAL_CURRENCY]"
+                      name="COLLATERAL_CURRENCY" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTERNAL]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTERNAL]"
+                      name="INTERNAL" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTERNAL_COUNTERPARTY]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTERNAL_COUNTERPARTY]"
+                      name="INTERNAL_COUNTERPARTY" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[EFFECTIVE_MATURITY_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[EFFECTIVE_MATURITY_BUCKET]"
+                      name="EFFECTIVE_MATURITY_BUCKET" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[UNENCUMBERED]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[UNENCUMBERED]"
+                      name="UNENCUMBERED" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SETTLEMENT]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SETTLEMENT]"
+                      name="SETTLEMENT" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CID]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CID]"
+                      name="CID"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[COUNTERPARTY]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[COUNTERPARTY]"
+                      name="COUNTERPARTY" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[INSURED]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[INSURED]"
+                      name="INSURED" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[TRIGGER_IND]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[TRIGGER_IND]"
+                      name="TRIGGER_IND" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[REHYPOTHECATED]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[REHYPOTHECATED]"
+                      name="REHYPOTHECATED" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY_1]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY_1]"
+                      name="CURRENCY_1" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY_CONVERTED_1]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY_CONVERTED_1]"
+                      name="CURRENCY_CONVERTED_1" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY_2]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY_2]"
+                      name="CURRENCY_2" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY_CONVERTED_2]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENCY_CONVERTED_2]"
+                      name="CURRENCY_CONVERTED_2" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MATURITY_AMOUNT_CURRENCY_1]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MATURITY_AMOUNT_CURRENCY_1]"
+                      name="MATURITY_AMOUNT_CURRENCY_1"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MATURITY_AMOUNT_CURRENCY_2]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[MATURITY_AMOUNT_CURRENCY_2]"
+                      name="MATURITY_AMOUNT_CURRENCY_2"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FX_OPTION_DIRECTION]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FX_OPTION_DIRECTION]"
+                      name="FX_OPTION_DIRECTION" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_AMT_CURRENCY_1]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_AMT_CURRENCY_1]"
+                      name="FORWARD_START_AMT_CURRENCY_1"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_AMT_CURRENCY_2]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_AMT_CURRENCY_2]"
+                      name="FORWARD_START_AMT_CURRENCY_2"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SID2]"
+                      dataType="numeric"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SID2]"
+                      name="SID2"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SUB_PRODUCT2]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[SUB_PRODUCT2]"
+                      name="SUB_PRODUCT2" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load New\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load New.Paths[ADO NET Source Output]"
+              endId="Package\Load New\Destination - frb_staging table.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Load New\Source - Query.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{7dd814bd-d42b-4df5-a072-c640e9544c67}"
+      DTS:From="Package\Delete Existing"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load New" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="151,42"
+          Id="Package\Delete Existing"
+          TopLeft="108.641509433962,85" />
+        <NodeLayout
+          Size="128,42"
+          Id="Package\Load New"
+          TopLeft="87,237.22641509434" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="184.141509433962,127">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-33.141509433962,110.22641509434"
+              Start="0,0"
+              End="-33.141509433962,102.72641509434">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.11320754717" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,51.11320754717"
+                    Point2="0,55.11320754717"
+                    Point3="-4,55.11320754717" />
+                  <mssgle:LineSegment
+                    End="-29.141509433962,55.11320754717" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-29.141509433962,55.11320754717"
+                    Point2="-33.141509433962,55.11320754717"
+                    Point3="-33.141509433962,59.11320754717" />
+                  <mssgle:LineSegment
+                    End="-33.141509433962,102.72641509434" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load New">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Load New\Destination - frb_staging table"
+          TopLeft="221,202.5" />
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Load New\Source - Query"
+          TopLeft="118,55" />
+        <EdgeLayout
+          Id="Package\Load New.Paths[ADO NET Source Output]"
+          TopLeft="194,97">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="139,105.5"
+              Start="0,0"
+              End="139,98">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,48.75"
+                    Point2="0,52.75"
+                    Point3="4,52.75" />
+                  <mssgle:LineSegment
+                    End="135,52.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="135,52.75"
+                    Point2="139,52.75"
+                    Point3="139,56.75" />
+                  <mssgle:LineSegment
+                    End="139,98" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load New\Destination - frb_staging table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load New\Source - Query">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

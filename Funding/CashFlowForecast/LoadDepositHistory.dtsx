@@ -1,0 +1,1363 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/23/2013 7:00:25 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7DU-2UA2510JVV"
+  DTS:CreatorName="UBOC-AD\xu93148"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{F1DC6397-B12B-4733-976D-E087DD78556A}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="1033"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="LoadDepositHistory"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="66"
+  DTS:VersionGUID="{586A0D09-C9A4-4685-BE6E-B29E0A598997}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{39D502D9-DF86-49C4-A28A-70EC0A1BE737}"
+      DTS:ObjectName="DestinationConnectionOLEDB">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::database_server]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=false;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+      DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{BF88AA78-DE85-4816-A0DD-45C43D87DF1D}"
+      DTS:ObjectName="SourceConnectionAdoNET">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::dmq_password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::dmq_server]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::dmq_user]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=P003;User ID=SVC_DMQ_DATA;Persist Security Info=True;Unicode=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6F26F127-FA74-45AF-A603-1366D480214A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="database_server">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0FB85819-0534-4DB2-BF1C-8AE8A1E8EEED}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="deposit_gtm_codes">
+      <DTS:VariableValue
+        DTS:DataType="8">'10EF......'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{72E90D7A-298E-4426-B185-35EE55AD4C86}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_password">
+      <DTS:VariableValue
+        DTS:DataType="8">svc987dm</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DEA5535C-7432-47ED-978A-4DA66344F95C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_server">
+      <DTS:VariableValue
+        DTS:DataType="8">P003</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F5115F1A-B95E-454D-8001-AEA4BCEB2D20}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_user">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_DMQ_DATA</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6540900C-10C3-41DE-AEA5-6C13266FB371}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="from_date">
+      <DTS:VariableValue
+        DTS:DataType="7">1/1/2013</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{063583E7-5104-405A-B401-CC27F3554473}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="to_date">
+      <DTS:VariableValue
+        DTS:DataType="7">12/8/2015</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get Deposit GTM Code"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{24ff8fff-f6e1-40b7-99e8-dfb438aade6e}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Deposit GTM Code"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39D502D9-DF86-49C4-A28A-70EC0A1BE737}"
+          SQLTask:SqlStatementSource="EXEC [CashFlowForecast].[get_deposit_gtm_dmq_code] ? OUTPUT" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::deposit_gtm_codes"
+            SQLTask:ParameterDirection="Output"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Deposit GTM Staging Table"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{4e988704-609d-40d9-b0bf-4760745fdec9}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Deposit GTM Staging Table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[Source - Query].[SqlCommand]">"SELECT
+    DATE_DIM.CALENDAR_DT,
+    ORG.ORG_HIER_LVL4_ID_CURR,
+   ORG.ORG_HIER_LVL4_DESC_CURR,
+   sum(OEDWDDS.GL_DAILY_BALANCE_FACT_B.GL_CUR_BAL_AMT) GL_CUR_BAL_AMT
+  FROM
+  OEDWDDS.GL_DAILY_BALANCE_FACT_B,
+  OEDWDDS.ORGANIZATION_DIM_B  ORG,
+  OSSTP.DATE_DIM_B  DATE_DIM,
+  OEDWDDS.GL_ACCOUNT_DIM_B  ACCT
+WHERE
+  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.DATE_ID=DATE_DIM.DATE_ID  )
+  AND  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.GL_ACCT_ID=ACCT.GL_ACCT_ID  )
+  AND  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.ORG_ID=ORG.ORG_ID  )
+  AND DATE_DIM.CALENDAR_DT &gt; TO_DATE('" + (DT_WSTR,20) @[User::from_date] + "','MM/DD/YYYY')
+  AND DATE_DIM.CALENDAR_DT &lt;= TO_DATE('" + (DT_WSTR,20) @[User::to_date] + "','MM/DD/YYYY')
+  AND  
+  (
+   ACCT.PS_GL_ACCT_LVL02_ID  =  '100309'
+   AND
+   ORG.ORG_HIER_LVL4_ID_CURR IN (" +  @[User::deposit_gtm_codes] +")
+  )
+GROUP BY
+    DATE_DIM.CALENDAR_DT,
+    ORG.ORG_HIER_LVL4_ID_CURR,
+   ORG.ORG_HIER_LVL4_DESC_CURR"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Deposit GTM Staging Table\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[CashFlowForecast].[staging_deposit_gtm_history]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CALENDAR_DT]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="CALENDAR_DT"
+                      externalMetadataColumnId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CALENDAR_DT]"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[CALENDAR_DT]" />
+                    <inputColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GL_CUR_BAL_AMT]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="GL_CUR_BAL_AMT"
+                      externalMetadataColumnId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GL_CUR_BAL_AMT]"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[GL_CUR_BAL_AMT]" />
+                    <inputColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ORG_HIER_LVL4_ID_CURR]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="ORG_HIER_LVL4_ID_CURR"
+                      externalMetadataColumnId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_HIER_LVL4_ID_CURR]"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL4_ID_CURR]" />
+                    <inputColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ORG_HIER_LVL4_DESC_CURR]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="ORG_HIER_LVL4_DESC_CURR"
+                      externalMetadataColumnId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_HIER_LVL4_DESC_CURR]"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL4_DESC_CURR]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CALENDAR_DT]"
+                      dataType="dbDate"
+                      name="CALENDAR_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GL_CUR_BAL_AMT]"
+                      dataType="numeric"
+                      name="GL_CUR_BAL_AMT"
+                      precision="25"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_HIER_LVL4_ID_CURR]"
+                      dataType="wstr"
+                      length="10"
+                      name="ORG_HIER_LVL4_ID_CURR" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_HIER_LVL4_DESC_CURR]"
+                      dataType="wstr"
+                      length="60"
+                      name="ORG_HIER_LVL4_DESC_CURR" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Deposit GTM Staging Table\Source - Query"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              name="Source - Query"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+    DATE_DIM.CALENDAR_DT,
+    ORG.ORG_HIER_LVL4_ID_CURR,
+   ORG.ORG_HIER_LVL4_DESC_CURR,
+   sum(OEDWDDS.GL_DAILY_BALANCE_FACT_B.GL_CUR_BAL_AMT) GL_CUR_BAL_AMT
+  FROM
+  OEDWDDS.GL_DAILY_BALANCE_FACT_B,
+  OEDWDDS.ORGANIZATION_DIM_B  ORG,
+  OSSTP.DATE_DIM_B  DATE_DIM,
+  OEDWDDS.GL_ACCOUNT_DIM_B  ACCT
+WHERE
+  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.DATE_ID=DATE_DIM.DATE_ID  )
+  AND  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.GL_ACCT_ID=ACCT.GL_ACCT_ID  )
+  AND  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.ORG_ID=ORG.ORG_ID  )
+  AND DATE_DIM.CALENDAR_DT &gt; TO_DATE('1/1/2013','MM/DD/YYYY')
+  AND DATE_DIM.CALENDAR_DT &lt;= TO_DATE('12/8/2015','MM/DD/YYYY')
+  AND  
+  (
+   ACCT.PS_GL_ACCT_LVL02_ID  =  '100309'
+   AND
+   ORG.ORG_HIER_LVL4_ID_CURR IN ('10EF......')
+  )
+GROUP BY
+    DATE_DIM.CALENDAR_DT,
+    ORG.ORG_HIER_LVL4_ID_CURR,
+   ORG.ORG_HIER_LVL4_DESC_CURR</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Deposit GTM Staging Table\Source - Query.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[CALENDAR_DT]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CALENDAR_DT]"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[CALENDAR_DT]"
+                      name="CALENDAR_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL4_ID_CURR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORG_HIER_LVL4_ID_CURR]"
+                      length="10"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL4_ID_CURR]"
+                      name="ORG_HIER_LVL4_ID_CURR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL4_DESC_CURR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORG_HIER_LVL4_DESC_CURR]"
+                      length="60"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL4_DESC_CURR]"
+                      name="ORG_HIER_LVL4_DESC_CURR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[GL_CUR_BAL_AMT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[GL_CUR_BAL_AMT]"
+                      length="40"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[GL_CUR_BAL_AMT]"
+                      name="GL_CUR_BAL_AMT"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CALENDAR_DT]"
+                      dataType="dbTimeStamp"
+                      name="CALENDAR_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORG_HIER_LVL4_ID_CURR]"
+                      dataType="wstr"
+                      length="10"
+                      name="ORG_HIER_LVL4_ID_CURR" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORG_HIER_LVL4_DESC_CURR]"
+                      dataType="wstr"
+                      length="60"
+                      name="ORG_HIER_LVL4_DESC_CURR" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[GL_CUR_BAL_AMT]"
+                      dataType="numeric"
+                      name="GL_CUR_BAL_AMT" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[CALENDAR_DT]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[CALENDAR_DT]"
+                      name="CALENDAR_DT" />
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORG_HIER_LVL4_ID_CURR]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORG_HIER_LVL4_ID_CURR]"
+                      name="ORG_HIER_LVL4_ID_CURR" />
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORG_HIER_LVL4_DESC_CURR]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORG_HIER_LVL4_DESC_CURR]"
+                      name="ORG_HIER_LVL4_DESC_CURR" />
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[GL_CUR_BAL_AMT]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[GL_CUR_BAL_AMT]"
+                      name="GL_CUR_BAL_AMT" />
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Deposit GTM Staging Table.Paths[ADO NET Source Output]"
+              endId="Package\Load Deposit GTM Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Load Deposit GTM Staging Table\Source - Query.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Deposit Staging Table"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{D05814BA-941E-4B49-93DF-235C7A617A2A}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Deposit Staging Table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[Source - Query].[SqlCommand]">"SELECT
+  DATE_DIM.CALENDAR_DT,
+  ORG.ORG_HIER_LVL3_ID_CURR,
+  ORG.ORG_HIER_LVL3_DESC_CURR,
+  sum(OEDWDDS.GL_DAILY_BALANCE_FACT_B.GL_CUR_BAL_AMT) GL_CUR_BAL_AMT
+FROM
+  OEDWDDS.GL_DAILY_BALANCE_FACT_B,
+  OEDWDDS.ORGANIZATION_DIM_B  ORG,
+  OSSTP.DATE_DIM_B  DATE_DIM,
+  OEDWDDS.GL_ACCOUNT_DIM_B  ACCT
+WHERE
+  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.DATE_ID=DATE_DIM.DATE_ID  )
+  AND  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.GL_ACCT_ID=ACCT.GL_ACCT_ID  )
+  AND  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.ORG_ID=ORG.ORG_ID  )
+  AND DATE_DIM.CALENDAR_DT &gt; TO_DATE('" + (DT_WSTR,20) @[User::from_date] + "','MM/DD/YYYY')
+  AND DATE_DIM.CALENDAR_DT &lt;= TO_DATE('" + (DT_WSTR,20) @[User::to_date] + "','MM/DD/YYYY') 
+  AND  
+  (
+   ACCT.PS_GL_ACCT_LVL02_ID  =  '100309'
+  )
+GROUP BY
+  DATE_DIM.CALENDAR_DT,
+    ORG.ORG_HIER_LVL3_ID_CURR,
+  ORG.ORG_HIER_LVL3_DESC_CURR"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Deposit Staging Table\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[CashFlowForecast].[staging_deposit_history]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Deposit Staging Table\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CALENDAR_DT]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="CALENDAR_DT"
+                      externalMetadataColumnId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CALENDAR_DT]"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[CALENDAR_DT]" />
+                    <inputColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[GL_CUR_BAL_AMT]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="GL_CUR_BAL_AMT"
+                      externalMetadataColumnId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GL_CUR_BAL_AMT]"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[GL_CUR_BAL_AMT]" />
+                    <inputColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ORG_HIER_LVL3_ID_CURR]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="ORG_HIER_LVL3_ID_CURR"
+                      externalMetadataColumnId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_HIER_LVL3_ID_CURR]"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL3_ID_CURR]" />
+                    <inputColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ORG_HIER_LVL3_DESC_CURR]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="ORG_HIER_LVL3_DESC_CURR"
+                      externalMetadataColumnId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_HIER_LVL3_DESC_CURR]"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL3_DESC_CURR]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CALENDAR_DT]"
+                      dataType="dbDate"
+                      name="CALENDAR_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[GL_CUR_BAL_AMT]"
+                      dataType="numeric"
+                      name="GL_CUR_BAL_AMT"
+                      precision="25"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_HIER_LVL3_ID_CURR]"
+                      dataType="wstr"
+                      length="10"
+                      name="ORG_HIER_LVL3_ID_CURR" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_HIER_LVL3_DESC_CURR]"
+                      dataType="wstr"
+                      length="60"
+                      name="ORG_HIER_LVL3_DESC_CURR" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Deposit Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Deposit Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Deposit Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Deposit Staging Table\Source - Query"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              name="Source - Query"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT
+  DATE_DIM.CALENDAR_DT,
+  ORG.ORG_HIER_LVL3_ID_CURR,
+  ORG.ORG_HIER_LVL3_DESC_CURR,
+  sum(OEDWDDS.GL_DAILY_BALANCE_FACT_B.GL_CUR_BAL_AMT) GL_CUR_BAL_AMT
+FROM
+  OEDWDDS.GL_DAILY_BALANCE_FACT_B,
+  OEDWDDS.ORGANIZATION_DIM_B  ORG,
+  OSSTP.DATE_DIM_B  DATE_DIM,
+  OEDWDDS.GL_ACCOUNT_DIM_B  ACCT
+WHERE
+  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.DATE_ID=DATE_DIM.DATE_ID  )
+  AND  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.GL_ACCT_ID=ACCT.GL_ACCT_ID  )
+  AND  ( OEDWDDS.GL_DAILY_BALANCE_FACT_B.ORG_ID=ORG.ORG_ID  )
+  AND DATE_DIM.CALENDAR_DT &gt; TO_DATE('1/1/2013','MM/DD/YYYY')
+  AND DATE_DIM.CALENDAR_DT &lt;= TO_DATE('12/8/2015','MM/DD/YYYY') 
+  AND  
+  (
+   ACCT.PS_GL_ACCT_LVL02_ID  =  '100309'
+  )
+GROUP BY
+  DATE_DIM.CALENDAR_DT,
+    ORG.ORG_HIER_LVL3_ID_CURR,
+  ORG.ORG_HIER_LVL3_DESC_CURR</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Deposit Staging Table\Source - Query.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[CALENDAR_DT]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CALENDAR_DT]"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[CALENDAR_DT]"
+                      name="CALENDAR_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL3_ID_CURR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORG_HIER_LVL3_ID_CURR]"
+                      length="10"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL3_ID_CURR]"
+                      name="ORG_HIER_LVL3_ID_CURR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL3_DESC_CURR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORG_HIER_LVL3_DESC_CURR]"
+                      length="60"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[ORG_HIER_LVL3_DESC_CURR]"
+                      name="ORG_HIER_LVL3_DESC_CURR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[GL_CUR_BAL_AMT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[GL_CUR_BAL_AMT]"
+                      length="40"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[GL_CUR_BAL_AMT]"
+                      name="GL_CUR_BAL_AMT"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CALENDAR_DT]"
+                      dataType="dbTimeStamp"
+                      name="CALENDAR_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORG_HIER_LVL3_ID_CURR]"
+                      dataType="wstr"
+                      length="10"
+                      name="ORG_HIER_LVL3_ID_CURR" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ORG_HIER_LVL3_DESC_CURR]"
+                      dataType="wstr"
+                      length="60"
+                      name="ORG_HIER_LVL3_DESC_CURR" />
+                    <externalMetadataColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[GL_CUR_BAL_AMT]"
+                      dataType="numeric"
+                      name="GL_CUR_BAL_AMT" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[CALENDAR_DT]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[CALENDAR_DT]"
+                      name="CALENDAR_DT" />
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORG_HIER_LVL3_ID_CURR]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORG_HIER_LVL3_ID_CURR]"
+                      name="ORG_HIER_LVL3_ID_CURR" />
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORG_HIER_LVL3_DESC_CURR]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ORG_HIER_LVL3_DESC_CURR]"
+                      name="ORG_HIER_LVL3_DESC_CURR" />
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[GL_CUR_BAL_AMT]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[GL_CUR_BAL_AMT]"
+                      name="GL_CUR_BAL_AMT" />
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Deposit Staging Table.Paths[ADO NET Source Output]"
+              endId="Package\Load Deposit Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Load Deposit Staging Table\Source - Query.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Deposit Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9A1E5110-57C0-4BBA-BA69-A5520878E0C7}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Deposit Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39D502D9-DF86-49C4-A28A-70EC0A1BE737}"
+          SQLTask:SqlStatementSource="exec [CashFlowForecast].ins_percent_changed_deposit ? , ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::from_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::to_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Deposit GTM Staging Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{e25fa377-53ce-422a-b306-1fcf2e409fdf}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Deposit GTM Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39D502D9-DF86-49C4-A28A-70EC0A1BE737}"
+          SQLTask:SqlStatementSource="delete [CashFlowForecast].staging_deposit_gtm_history where CALENDAR_DT &gt; ? and CALENDAR_DT &lt;= ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::from_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::to_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Deposit Staging Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ACAB0863-9982-487A-BF17-E2B7E936FB56}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Deposit Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{39D502D9-DF86-49C4-A28A-70EC0A1BE737}"
+          SQLTask:SqlStatementSource="delete [CashFlowForecast].staging_deposit_history where CALENDAR_DT &gt; ? and CALENDAR_DT &lt;= ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::from_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::to_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{8200C03A-E8EE-4FA8-A8E5-C42651920A71}"
+      DTS:From="Package\Truncate Deposit Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load Deposit Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{CB4ED943-5C11-490C-9A9A-88ACF848695B}"
+      DTS:From="Package\Load Deposit Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Load Deposit Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{3AA36F16-32A9-4832-9249-2E93AB1D6297}"
+      DTS:From="Package\Get Deposit GTM Code"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Truncate Deposit GTM Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{2DF3E7FD-89E5-4CB0-A8CA-F3654F01D38A}"
+      DTS:From="Package\Load Deposit GTM Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Load Deposit Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{2BB7ED8A-BC3F-47BE-8CF9-7948C2F2DD64}"
+      DTS:From="Package\Truncate Deposit GTM Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Load Deposit GTM Staging Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="188,42"
+          Id="Package\Get Deposit GTM Code"
+          TopLeft="655,39" />
+        <NodeLayout
+          Size="235,42"
+          Id="Package\Load Deposit GTM Staging Table"
+          TopLeft="631,265" />
+        <NodeLayout
+          Size="210,42"
+          Id="Package\Load Deposit Staging Table"
+          TopLeft="209.235849056604,267.141509433962" />
+        <NodeLayout
+          Size="198,43"
+          Id="Package\Load Deposit Table"
+          TopLeft="430.5,405.160377358491" />
+        <NodeLayout
+          Size="254,42"
+          Id="Package\Truncate Deposit GTM Staging Table"
+          TopLeft="620,149" />
+        <NodeLayout
+          Size="229,42"
+          Id="Package\Truncate Deposit Staging Table"
+          TopLeft="207.424528301887,136.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="318.080188679245,178.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,88.641509433962"
+              Start="0,0"
+              End="0,81.141509433962">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,81.141509433962" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="314.235849056604,309.141509433962">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="183.59748427673,96.018867924529"
+              Start="0,0"
+              End="183.59748427673,88.518867924529">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.1495065602908" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,53.1495065602908"
+                    Point2="0,57.1495065602908"
+                    Point3="4,57.1495065602908" />
+                  <mssgle:LineSegment
+                    End="179.59748427673,57.1495065602908" />
+                  <mssgle:CubicBezierSegment
+                    Point1="179.59748427673,57.1495065602908"
+                    Point2="183.59748427673,57.1495065602908"
+                    Point3="183.59748427673,61.1495065602908" />
+                  <mssgle:LineSegment
+                    End="183.59748427673,88.518867924529" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="748,81">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68"
+              Start="0,0"
+              End="0,60.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="748.5,307">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-187.333333333333,98.160377358491"
+              Start="0,0"
+              End="-187.333333333333,90.660377358491">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,54.424112375695" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,54.424112375695"
+                    Point2="0,58.424112375695"
+                    Point3="-4,58.424112375695" />
+                  <mssgle:LineSegment
+                    End="-183.333333333333,58.424112375695" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-183.333333333333,58.424112375695"
+                    Point2="-187.333333333333,58.424112375695"
+                    Point3="-187.333333333333,62.424112375695" />
+                  <mssgle:LineSegment
+                    End="-187.333333333333,90.660377358491" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="747.75,191">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,74"
+              Start="0,0"
+              End="0,66.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Deposit GTM Staging Table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Load Deposit GTM Staging Table\Source - Query"
+          TopLeft="236,81.5" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Load Deposit GTM Staging Table\OLE DB Destination"
+          TopLeft="225.5,183.5" />
+        <EdgeLayout
+          Id="Package\Load Deposit GTM Staging Table.Paths[ADO NET Source Output]"
+          TopLeft="312,123.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Deposit GTM Staging Table\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Deposit GTM Staging Table\Source - Query">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Load Deposit Staging Table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Load Deposit Staging Table\OLE DB Destination"
+          TopLeft="225.5,183.5" />
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Load Deposit Staging Table\Source - Query"
+          TopLeft="236,81.5" />
+        <EdgeLayout
+          Id="Package\Load Deposit Staging Table.Paths[ADO NET Source Output]"
+          TopLeft="312,123.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Deposit Staging Table\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Deposit Staging Table\Source - Query">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

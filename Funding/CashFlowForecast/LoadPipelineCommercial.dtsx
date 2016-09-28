@@ -1,0 +1,1289 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/23/2013 7:00:25 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7DU-2UA2510JVV"
+  DTS:CreatorName="UBOC-AD\xu93148"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{061EB3C8-1A5A-42C2-B7E7-0F4451B5415A}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.6020.0"
+  DTS:LocaleID="1033"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="LoadCommercial"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="194"
+  DTS:VersionGUID="{A8582521-6B63-4B70-91C9-7F03D5D4C7C1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{5909DD32-ACD8-48F4-8CAB-7A1406015180}"
+      DTS:ObjectName="DestinationConnectionOLEDB">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::database_server]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=false;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+      DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{B0E9B7FF-F354-49DB-9F4D-EF7DF8B0D4EA}"
+      DTS:ObjectName="SourceConnectionAdoNET">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::dmq_password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::dmq_server]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::dmq_user]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=P003;User ID=SVC_DMQ_DATA;Persist Security Info=True;Integrated Security=False;Unicode=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9AF15D73-6156-467B-BD94-3FF65157E0A4}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date">
+      <DTS:VariableValue
+        DTS:DataType="7">6/28/2016</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{030DBCDF-8BBB-4508-B43B-510E40971F6F}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_STR, 4, 1252) DATEPART(&quot;yy&quot; ,@[User::as_of_date]) + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::as_of_date]), 2)  + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::as_of_date]), 2)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date_yyyymmdd">
+      <DTS:VariableValue
+        DTS:DataType="8">20160628</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3FDCEA41-453F-468D-8B7D-B990E9E5D1B2}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="database_server">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1A425426-3A9F-4092-BBD1-C21A23754D1D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_password">
+      <DTS:VariableValue
+        DTS:DataType="8">svc987dm</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{123EAFE1-0F55-4551-8025-EB53885A2266}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_server">
+      <DTS:VariableValue
+        DTS:DataType="8">P003</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AC4B8F14-CCD3-4280-B3F4-889D2461842B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_user">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_DMQ_DATA</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9650A380-E6C1-4033-8BEC-8AEA53361A95}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="processing_date">
+      <DTS:VariableValue
+        DTS:DataType="7">7/11/2016 10:45:21 AM</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Insert commercial loan data into  balance_commercial_loan Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{037C7E7E-D9A4-4F52-84B0-50A79CC50D7F}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert commercial loan data into  balance_commercial_loan Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5909DD32-ACD8-48F4-8CAB-7A1406015180}"
+          SQLTask:SqlStatementSource="exec [CashFlowForecast].[ins_pipeline_commercial_from_staging] ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::as_of_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::processing_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{AEEE3E5F-EBC6-4C1F-B000-514F93287854}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load  staging_commercial_loan Table with commercial loan data from DMQ"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[Source - Query].[SqlCommand]">"
+
+    SELECT 
+         TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') as PROCESSING_DT ,
+        RECORD_FOR,
+        LOAN_CATEGORY,
+        LOAN_TYPE,
+        SUM(AMOUNT) as LOAN_AMOUNT
+    FROM
+                (
+                            SELECT
+                                 'APPROVED' as RECORD_FOR,
+                                SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                'Line of Credit' as LOAN_TYPE ,
+                               
+                                 CASE
+                                    WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=511 and TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=599 THEN  'Commercial Industrial'
+                                    WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (101, 102, 103, 110, 150, 151) THEN  'Commercial Real Estate Construction'
+                                    WHEN 
+                                                (
+                                                    (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=200 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=499) 
+                                                    OR
+                                                    (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=700 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=999) 
+                                                )
+                                    
+                                         THEN  'Other'
+                                    WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=600 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=699) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (124, 128, 129))
+                                                    )
+                                        
+                                             THEN  'Consumer'                                    
+                                    ELSE 'DELETE'
+                                END  as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT !='31-DEC-9999' 
+                                        AND DIM.DECISION_DT &gt;= TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') - 120
+                                        AND DIM.DECISION_DT &lt; TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS_TEXT like 'Approved%'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)  not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('LINE' ) 
+                                
+                        UNION all
+                             
+                             SELECT
+                                     'NOTAPPROVED' as RECORD_FOR,
+                                    SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                    FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                    'Line of Credit' as LOAN_TYPE ,
+                                    CASE
+                                        WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=511 and TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=599 THEN  'Commercial Industrial'
+                                        WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (101, 102, 103, 110, 150, 151) THEN  'Commercial Real Estate Construction'
+                                        WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=200 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=499) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=700 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=999) 
+                                                    )
+                                        
+                                             THEN  'Other'
+                                        WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=600 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=699) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (124, 128, 129))
+                                                    )
+                                        
+                                             THEN  'Consumer'                                    
+                                        ELSE 'DELETE'
+                                    END  as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT ='31-DEC-9999' 
+                                        AND DIM.RACER_APP_START_DT &gt;= TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') - 180
+                                        AND DIM.RACER_APP_START_DT &lt; TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS  != 'APPROVED'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)  not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('LINE' ) 
+                                        
+                            -------------------------------------
+                            union all
+                             SELECT
+                                 'APPROVED' as RECORD_FOR,
+                                SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                'Term Loan' as LOAN_TYPE ,
+                               
+                                 CASE
+                                    WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=511 and TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=599 THEN  'Commercial Industrial'
+                                    WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (101, 102, 103, 110, 121, 122, 123, 131, 132, 150, 151) THEN  'Commercial Real Estate Construction'
+                                    WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=200 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=499) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=700 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=999) 
+                                                    )
+                                        
+                                             THEN  'Other'
+                                     WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=600 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=699) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (124, 128, 129))
+                                                    )
+                                        
+                                             THEN  'Consumer'            
+                                    ELSE 'DELETE'
+                                END  as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT !='31-DEC-9999' 
+                                        AND DIM.DECISION_DT &gt;= TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') - 60
+                                        AND DIM.DECISION_DT &lt; TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS_TEXT like 'Approved%'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)   not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('TL', 'TL-B', 'TL-B NAm', 'TL-NAm', 'TL Line' )   
+                                
+                        UNION all
+                             
+                             SELECT
+                                     'NOTAPPROVED' as RECORD_FOR,
+                                    SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                    FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                   'Term Loan' as LOAN_TYPE ,
+                                    CASE
+                                        WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=511 and TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=599 THEN  'Commercial Industrial'
+                                        WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (101, 102, 103, 110, 150, 151) THEN  'Commercial Real Estate Construction'
+                                        WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=200 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=499) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=700 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=999) 
+                                                    )
+                                        
+                                             THEN  'Other'
+                                         WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=600 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=699) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (124, 128, 129))
+                                                    )
+                                        
+                                             THEN  'Consumer'        
+                                        ELSE 'DELETE'
+                                    END  as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT ='31-DEC-9999' 
+                                        AND DIM.RACER_APP_START_DT &gt;= TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') - 90
+                                        AND DIM.RACER_APP_START_DT &lt; TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS != 'APPROVED'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)  not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('TL', 'TL-B', 'TL-B NAm', 'TL-NAm', 'TL Line' )  
+                         
+                        --------------
+                        UNION ALL
+                        
+                         SELECT
+                                 'APPROVED' as RECORD_FOR,
+                                SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                'Lease Financing' as LOAN_TYPE ,
+                                 'Lease Financing' as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT !='31-DEC-9999' 
+                                        AND DIM.DECISION_DT &gt;= TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') - 120
+                                        AND DIM.DECISION_DT &lt; TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS_TEXT like 'Approved%'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)   not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD  in ('EQUIP LSE' ) 
+                                
+                        UNION all
+                             
+                             SELECT
+                                     'NOTAPPROVED' as RECORD_FOR,
+                                    SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                    FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                   'Lease Financing' as LOAN_TYPE ,
+                                   'Lease Financing' as  LOAN_CATEGORY   
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT ='31-DEC-9999' 
+                                        AND DIM.RACER_APP_START_DT &gt;= TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') - 120
+                                        AND DIM.RACER_APP_START_DT &lt; TO_DATE('" + (DT_WSTR, 50)@[User::as_of_date] + "','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS != 'APPROVED'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)   not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('EQUIP LSE' ) 
+
+                      ) ALLT
+                      Where LOAN_TYPE !='DELETE'
+                        and LOAN_CATEGORY!='DELETE'
+                        Group by 
+                                ALLT.RECORD_FOR,
+                                ALLT.LOAN_CATEGORY,
+                                ALLT.LOAN_TYPE    
+
+ 
+
+
+"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[CashFlowForecast].[staging_pipeline_commercial]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PROCESSING_DT]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="PROCESSING_DT"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PROCESSING_DT]"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[PROCESSING_DT]" />
+                    <inputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[RECORD_FOR]"
+                      cachedDataType="wstr"
+                      cachedLength="11"
+                      cachedName="RECORD_FOR"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RECORD_FOR]"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[RECORD_FOR]" />
+                    <inputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LOAN_CATEGORY]"
+                      cachedDataType="wstr"
+                      cachedLength="35"
+                      cachedName="LOAN_CATEGORY"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOAN_CATEGORY]"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[LOAN_CATEGORY]" />
+                    <inputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LOAN_TYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="LOAN_TYPE"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOAN_TYPE]"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[LOAN_TYPE]" />
+                    <inputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LOAN_AMOUNT]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="LOAN_AMOUNT"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOAN_AMOUNT]"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[LOAN_AMOUNT]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PROCESSING_DT]"
+                      dataType="dbDate"
+                      name="PROCESSING_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[RECORD_FOR]"
+                      dataType="wstr"
+                      length="200"
+                      name="RECORD_FOR" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOAN_CATEGORY]"
+                      dataType="wstr"
+                      length="200"
+                      name="LOAN_CATEGORY" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOAN_TYPE]"
+                      dataType="wstr"
+                      length="200"
+                      name="LOAN_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LOAN_AMOUNT]"
+                      dataType="numeric"
+                      name="LOAN_AMOUNT"
+                      precision="25"
+                      scale="2" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              name="Source - Query"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
+
+    SELECT 
+         TO_DATE('6/28/2016','MM/DD/YYYY') as PROCESSING_DT ,
+        RECORD_FOR,
+        LOAN_CATEGORY,
+        LOAN_TYPE,
+        SUM(AMOUNT) as LOAN_AMOUNT
+    FROM
+                (
+                            SELECT
+                                 'APPROVED' as RECORD_FOR,
+                                SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                'Line of Credit' as LOAN_TYPE ,
+                               
+                                 CASE
+                                    WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=511 and TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=599 THEN  'Commercial Industrial'
+                                    WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (101, 102, 103, 110, 150, 151) THEN  'Commercial Real Estate Construction'
+                                    WHEN 
+                                                (
+                                                    (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=200 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=499) 
+                                                    OR
+                                                    (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=700 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=999) 
+                                                )
+                                    
+                                         THEN  'Other'
+                                    WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=600 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=699) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (124, 128, 129))
+                                                    )
+                                        
+                                             THEN  'Consumer'                                    
+                                    ELSE 'DELETE'
+                                END  as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT !='31-DEC-9999' 
+                                        AND DIM.DECISION_DT &gt;= TO_DATE('6/28/2016','MM/DD/YYYY') - 120
+                                        AND DIM.DECISION_DT &lt; TO_DATE('6/28/2016','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS_TEXT like 'Approved%'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)  not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('LINE' ) 
+                                
+                        UNION all
+                             
+                             SELECT
+                                     'NOTAPPROVED' as RECORD_FOR,
+                                    SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                    FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                    'Line of Credit' as LOAN_TYPE ,
+                                    CASE
+                                        WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=511 and TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=599 THEN  'Commercial Industrial'
+                                        WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (101, 102, 103, 110, 150, 151) THEN  'Commercial Real Estate Construction'
+                                        WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=200 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=499) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=700 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=999) 
+                                                    )
+                                        
+                                             THEN  'Other'
+                                        WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=600 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=699) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (124, 128, 129))
+                                                    )
+                                        
+                                             THEN  'Consumer'                                    
+                                        ELSE 'DELETE'
+                                    END  as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT ='31-DEC-9999' 
+                                        AND DIM.RACER_APP_START_DT &gt;= TO_DATE('6/28/2016','MM/DD/YYYY') - 180
+                                        AND DIM.RACER_APP_START_DT &lt; TO_DATE('6/28/2016','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS  != 'APPROVED'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)  not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('LINE' ) 
+                                        
+                            -------------------------------------
+                            union all
+                             SELECT
+                                 'APPROVED' as RECORD_FOR,
+                                SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                'Term Loan' as LOAN_TYPE ,
+                               
+                                 CASE
+                                    WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=511 and TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=599 THEN  'Commercial Industrial'
+                                    WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (101, 102, 103, 110, 121, 122, 123, 131, 132, 150, 151) THEN  'Commercial Real Estate Construction'
+                                    WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=200 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=499) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=700 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=999) 
+                                                    )
+                                        
+                                             THEN  'Other'
+                                     WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=600 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=699) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (124, 128, 129))
+                                                    )
+                                        
+                                             THEN  'Consumer'            
+                                    ELSE 'DELETE'
+                                END  as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT !='31-DEC-9999' 
+                                        AND DIM.DECISION_DT &gt;= TO_DATE('6/28/2016','MM/DD/YYYY') - 60
+                                        AND DIM.DECISION_DT &lt; TO_DATE('6/28/2016','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS_TEXT like 'Approved%'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)   not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('TL', 'TL-B', 'TL-B NAm', 'TL-NAm', 'TL Line' )   
+                                
+                        UNION all
+                             
+                             SELECT
+                                     'NOTAPPROVED' as RECORD_FOR,
+                                    SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                    FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                   'Term Loan' as LOAN_TYPE ,
+                                    CASE
+                                        WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=511 and TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=599 THEN  'Commercial Industrial'
+                                        WHEN TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (101, 102, 103, 110, 150, 151) THEN  'Commercial Real Estate Construction'
+                                        WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=200 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=499) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=700 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=999) 
+                                                    )
+                                        
+                                             THEN  'Other'
+                                         WHEN 
+                                                    (
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &gt;=600 AND TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) &lt;=699) 
+                                                        OR
+                                                        (TO_NUMBER(SUBSTR (DIM.FED_CODE_COMMENT,13,3)) in (124, 128, 129))
+                                                    )
+                                        
+                                             THEN  'Consumer'        
+                                        ELSE 'DELETE'
+                                    END  as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT ='31-DEC-9999' 
+                                        AND DIM.RACER_APP_START_DT &gt;= TO_DATE('6/28/2016','MM/DD/YYYY') - 90
+                                        AND DIM.RACER_APP_START_DT &lt; TO_DATE('6/28/2016','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS != 'APPROVED'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)  not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('TL', 'TL-B', 'TL-B NAm', 'TL-NAm', 'TL Line' )  
+                         
+                        --------------
+                        UNION ALL
+                        
+                         SELECT
+                                 'APPROVED' as RECORD_FOR,
+                                SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                'Lease Financing' as LOAN_TYPE ,
+                                 'Lease Financing' as  LOAN_CATEGORY  
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT !='31-DEC-9999' 
+                                        AND DIM.DECISION_DT &gt;= TO_DATE('6/28/2016','MM/DD/YYYY') - 120
+                                        AND DIM.DECISION_DT &lt; TO_DATE('6/28/2016','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS_TEXT like 'Approved%'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)   not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD  in ('EQUIP LSE' ) 
+                                
+                        UNION all
+                             
+                             SELECT
+                                     'NOTAPPROVED' as RECORD_FOR,
+                                    SUBSTR(DIM.FED_CODE_COMMENT, 13,3) AS FRB_CODE,
+                                    FCT.RECOMMENDED_FACILITY_AMT as AMOUNT,
+                                   'Lease Financing' as LOAN_TYPE ,
+                                   'Lease Financing' as  LOAN_CATEGORY   
+                            FROM (
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B b 
+                                                WHERE b.RACER_EXPOSURE_ID IS NOT NULL
+                                                UNION ALL
+                                                SELECT * FROM STG_RACER_ACTION_FACILITY_B_H bh 
+                                                WHERE bh.RACER_EXPOSURE_ID IS NOT NULL
+                                        ) FAC
+                                JOIN RACER_DAILY_LOAN_FACT_B FCT
+                                        ON FAC.PROFILE_ID = FCT.PROFILE_ID
+                                            AND FAC.PACKAGE_ID = FCT.PACKAGE_ID
+                                            AND FAC.CREDIT_REC_SUMMARY_ID = FCT.CREDIT_REC_SUMMARY_ID
+                                            AND FAC.ACTION_FACILITY_ID = FCT.ACTION_FACILITY_ID
+                                LEFT JOIN RACER_LOAN_APP_DIM_B DIM
+                                        ON DIM.RACER_LOAN_APP_DIM_ID = FCT.RACER_LOAN_APP_DIM_ID
+                                WHERE DIM.DECISION_DT ='31-DEC-9999' 
+                                        AND DIM.RACER_APP_START_DT &gt;= TO_DATE('6/28/2016','MM/DD/YYYY') - 120
+                                        AND DIM.RACER_APP_START_DT &lt; TO_DATE('6/28/2016','MM/DD/YYYY') ---sysdate -1 or AsOfDate
+                                        AND DIM.PACKAGE_STATUS != 'APPROVED'
+                                        AND DIM.OBLIGATION_REQUEST_CD = 'N' --new loans
+                                        AND  SUBSTR(DIM.FED_CODE_COMMENT, 13,3)   not in ( 'N/A', 'ERR', 'AIL')
+                                        AND DIM.OBLIGATION_TYPE_CD in ('EQUIP LSE' ) 
+
+                      ) ALLT
+                      Where LOAN_TYPE !='DELETE'
+                        and LOAN_CATEGORY!='DELETE'
+                        Group by 
+                                ALLT.RECORD_FOR,
+                                ALLT.LOAN_CATEGORY,
+                                ALLT.LOAN_TYPE    
+
+ 
+
+
+</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[PROCESSING_DT]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PROCESSING_DT]"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[PROCESSING_DT]"
+                      name="PROCESSING_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[RECORD_FOR]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[RECORD_FOR]"
+                      length="11"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[RECORD_FOR]"
+                      name="RECORD_FOR"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[LOAN_CATEGORY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LOAN_CATEGORY]"
+                      length="35"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[LOAN_CATEGORY]"
+                      name="LOAN_CATEGORY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[LOAN_TYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LOAN_TYPE]"
+                      length="15"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[LOAN_TYPE]"
+                      name="LOAN_TYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[LOAN_AMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LOAN_AMOUNT]"
+                      length="40"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].Columns[LOAN_AMOUNT]"
+                      name="LOAN_AMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PROCESSING_DT]"
+                      dataType="dbTimeStamp"
+                      name="PROCESSING_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[RECORD_FOR]"
+                      dataType="wstr"
+                      length="11"
+                      name="RECORD_FOR" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LOAN_CATEGORY]"
+                      dataType="wstr"
+                      length="35"
+                      name="LOAN_CATEGORY" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LOAN_TYPE]"
+                      dataType="wstr"
+                      length="15"
+                      name="LOAN_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LOAN_AMOUNT]"
+                      dataType="numeric"
+                      name="LOAN_AMOUNT" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[PROCESSING_DT]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[PROCESSING_DT]"
+                      name="PROCESSING_DT" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[RECORD_FOR]"
+                      dataType="wstr"
+                      length="11"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[RECORD_FOR]"
+                      name="RECORD_FOR" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[LOAN_CATEGORY]"
+                      dataType="wstr"
+                      length="35"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[LOAN_CATEGORY]"
+                      name="LOAN_CATEGORY" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[LOAN_TYPE]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[LOAN_TYPE]"
+                      name="LOAN_TYPE" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[LOAN_AMOUNT]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[LOAN_AMOUNT]"
+                      name="LOAN_AMOUNT" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ.Paths[ADO NET Source Output]"
+              endId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Commercial loan data"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0E3B88B0-156F-45A8-BFEE-A10D06275767}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Commercial loan data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{5909DD32-ACD8-48F4-8CAB-7A1406015180}"
+          SQLTask:SqlStatementSource="Truncate table [CashFlowForecast].[staging_pipeline_commercial]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{4BE1CFF1-6139-4973-A2AF-0CC63BFAEBDE}"
+      DTS:From="Package\Truncate Commercial loan data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{8C0CC229-2BE9-4609-9EA6-547DB7BF642B}"
+      DTS:From="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Insert commercial loan data into  balance_commercial_loan Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="422,42"
+          Id="Package\Insert commercial loan data into  balance_commercial_loan Table"
+          TopLeft="238.405660377359,279.103773584906" />
+        <NodeLayout
+          Size="437,42"
+          Id="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ"
+          TopLeft="108.254716981132,187.933962264151" />
+        <NodeLayout
+          Size="228,42"
+          Id="Package\Truncate Commercial loan data"
+          TopLeft="84.5,75.198113207547" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="198.5,117.198113207547">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="128.254716981132,70.735849056604"
+              Start="0,0"
+              End="128.254716981132,63.235849056604">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.367924528302" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,31.367924528302"
+                    Point2="0,35.367924528302"
+                    Point3="4,35.367924528302" />
+                  <mssgle:LineSegment
+                    End="124.254716981132,35.367924528302" />
+                  <mssgle:CubicBezierSegment
+                    Point1="124.254716981132,35.367924528302"
+                    Point2="128.254716981132,35.367924528302"
+                    Point3="128.254716981132,39.367924528302" />
+                  <mssgle:LineSegment
+                    End="128.254716981132,63.235849056604" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="326.754716981132,229.933962264151">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="122.650943396227,49.169811320755"
+              Start="0,0"
+              End="122.650943396227,41.669811320755">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.5849056603775" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.5849056603775"
+                    Point2="0,24.5849056603775"
+                    Point3="4,24.5849056603775" />
+                  <mssgle:LineSegment
+                    End="118.650943396227,24.5849056603775" />
+                  <mssgle:CubicBezierSegment
+                    Point1="118.650943396227,24.5849056603775"
+                    Point2="122.650943396227,24.5849056603775"
+                    Point3="122.650943396227,28.5849056603775" />
+                  <mssgle:LineSegment
+                    End="122.650943396227,41.669811320755" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="152,42"
+          Id="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query"
+          TopLeft="16,5.5" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination"
+          TopLeft="5.50000000000001,107.5" />
+        <EdgeLayout
+          Id="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ.Paths[ADO NET Source Output]"
+          TopLeft="92,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load  staging_commercial_loan Table with commercial loan data from DMQ\Source - Query">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

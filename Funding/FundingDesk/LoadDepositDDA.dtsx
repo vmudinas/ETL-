@@ -1,0 +1,1158 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/5/2014 2:39:08 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7DU-2UA2510JVV"
+  DTS:CreatorName="UBOC-AD\ub68960"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{4AD719A2-FCBA-469D-9B39-808CC837E48A}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="1033"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="LoadDepositDDA"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="22"
+  DTS:VersionGUID="{57024E9B-902A-4EA9-B355-01F872267893}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{2C69C219-B549-4696-A454-A8D6A3691E62}"
+      DTS:ObjectName="DestinationConnectionOLEDB">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::database_server]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11;Integrated Security=SSPI;Auto Translate=false;Application Name=SSIS-LoadDepositDDA-{2C69C219-B549-4696-A454-A8D6A3691E62}DestinationConnectionOLEDB;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+      DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{2E261DC2-AE18-466A-8A50-38D36E2BDD18}"
+      DTS:ObjectName="SourceConnectionAdoNET">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::dmq_password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::dmq_server]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::dmq_user]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=P003;User ID=SVC_DMQ_DATA;Unicode=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{403F2CC1-DA22-40AA-B16F-BDE378C26703}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date">
+      <DTS:VariableValue
+        DTS:DataType="7">4/19/2014</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AF42086B-EBEB-4479-9D46-73DD802F228A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_STR, 4, 1252) DATEPART(&quot;yy&quot; ,@[User::as_of_date]) + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::as_of_date]), 2)  + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::as_of_date]), 2) "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date_yyyymmdd">
+      <DTS:VariableValue
+        DTS:DataType="8">20140419</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E8825D17-9188-4706-9BDF-75DC6FF593B7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="database_server">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2D63DE07-68A1-442D-9195-AC850E984F93}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_password">
+      <DTS:VariableValue
+        DTS:DataType="8">svc987dm</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6042579B-AB7A-479A-9464-BC1EB3C10DD3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_server">
+      <DTS:VariableValue
+        DTS:DataType="8">P003</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C1EA2C6F-6299-4502-9232-C9BCD01F0940}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_user">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_DMQ_DATA</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete DDA data if exist"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:DTSID="{D40AADA0-4F2C-4A9A-827C-2ABE4D16F381}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete DDA data if exist"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2C69C219-B549-4696-A454-A8D6A3691E62}"
+          SQLTask:SqlStatementSource="DELETE [PublicFund].[deposit_dda] &#xA;WHERE [AS_OF_DATE] = convert(date,?)&#xA;GO&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::as_of_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load DDA Data"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{CC3F30B7-6902-4C73-8DCA-82CBE2E3E761}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load DDA Data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[Source - Query].[SqlCommand]">"SELECT OSSTP.DATE_DIM_B.CALENDAR_DT AS AS_OF_DATE, 
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_TYPE_CD AS AccountTypeCode,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_PUBLIC_FUND_LK_TYPE_CD AS LkUpTypeCode,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_PUBLIC_FUND_LK_TYPE_DESC AS LkUpTypeDesc,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCT_NAME AS CustomerName,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_NUM AS AccountNumber,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_TAX_ID_NUM AS TaxId,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_BRANCH_STATE_CD AS StateCode,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_INT_BEARING_CD AS IntBearingCode,
+ROUND(ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_COLLECTED_BALANCE_AMT,0) AS CollectedBalanceAmount,
+ROUND(ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_DAILY_ACCRUED_INT_AMT,0) AS AccruedInterest
+FROM ODMCUST.DDA_DAILY_BALANCE_FACT_B,OSSTP.DATE_DIM_B,ODMCUST.DDA_ACCOUNT_T1_DIM_B
+WHERE ( OSSTP.DATE_DIM_B.DATE_ID=ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_DAILY_BALANCE_DATE_ID  )
+AND  ( ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_NUM=ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_ACCOUNT_NUM  )
+AND ( OSSTP.DATE_DIM_B.CALENDAR_DT  =  to_Date( " + @[User::as_of_date_yyyymmdd] + ", 'yyyymmdd' )
+AND ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_TYPE_CD  =  '4' )
+AND (ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_COLLECTED_BALANCE_AMT &gt; 0 
+OR (ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_DAILY_ACCRUED_INT_AMT &gt; 0
+AND ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_COLLECTED_BALANCE_AMT = 0) )"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load DDA Data\Data Conversion"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[LKUPTYPECODE]"
+                      cachedDataType="wstr"
+                      cachedLength="2"
+                      cachedName="LKUPTYPECODE"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPECODE]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[LKUPTYPEDESC]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="LKUPTYPEDESC"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPEDESC]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[CUSTOMERNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="25"
+                      cachedName="CUSTOMERNAME"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[CUSTOMERNAME]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[ACCOUNTTYPECODE]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="ACCOUNTTYPECODE"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTTYPECODE]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[ACCOUNTNUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="ACCOUNTNUMBER"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTNUMBER]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[TAXID]"
+                      cachedDataType="wstr"
+                      cachedLength="9"
+                      cachedName="TAXID"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[TAXID]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[STATECODE]"
+                      cachedDataType="wstr"
+                      cachedLength="2"
+                      cachedName="STATECODE"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[STATECODE]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[INTBEARINGCODE]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="INTBEARINGCODE"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTBEARINGCODE]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[COLLECTEDBALANCEAMOUNT]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="COLLECTEDBALANCEAMOUNT"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLECTEDBALANCEAMOUNT]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input].Columns[ACCRUEDINTEREST]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="ACCRUEDINTEREST"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCRUEDINTEREST]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[LKUPTYPECODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="2"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[LKUPTYPECODE]"
+                      name="LKUPTYPECODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPECODE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[LKUPTYPEDESC]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[LKUPTYPEDESC]"
+                      name="LKUPTYPEDESC"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPEDESC]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[CUSTOMERNAME]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="200"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[CUSTOMERNAME]"
+                      name="CUSTOMERNAME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[CUSTOMERNAME]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[ACCOUNTTYPECODE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[ACCOUNTTYPECODE]"
+                      name="ACCOUNTTYPECODE"
+                      precision="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTTYPECODE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[ACCOUNTNUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[ACCOUNTNUMBER]"
+                      name="ACCOUNTNUMBER"
+                      precision="10"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTNUMBER]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[TAXID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[TAXID]"
+                      name="TAXID"
+                      precision="10"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[TAXID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[STATECODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="2"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[STATECODE]"
+                      name="STATECODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[STATECODE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[INTBEARINGCODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="1"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[INTBEARINGCODE]"
+                      name="INTBEARINGCODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTBEARINGCODE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[COLLECTEDBALANCEAMOUNT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[COLLECTEDBALANCEAMOUNT]"
+                      name="COLLECTEDBALANCEAMOUNT"
+                      precision="25"
+                      scale="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLECTEDBALANCEAMOUNT]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[ACCRUEDINTEREST]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[ACCRUEDINTEREST]"
+                      name="ACCRUEDINTEREST"
+                      precision="25"
+                      scale="2"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCRUEDINTEREST]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load DDA Data\Destination - deposit_dda"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination - deposit_dda"
+              usesDispositions="true"
+              validateExternalMetadata="False"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[PublicFund].[deposit_dda]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load DDA Data\Destination - deposit_dda.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[AS_OF_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="AS_OF_DATE"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[LKUPTYPECODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="LKUPTYPECODE"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[LKUP_TYPE_CODE]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[LKUPTYPECODE]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[LKUPTYPEDESC]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LKUPTYPEDESC"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[LKUP_TYPE_DESC]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[LKUPTYPEDESC]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[CUSTOMERNAME]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="200"
+                      cachedName="CUSTOMERNAME"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[CUSTOMER_NAME]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[CUSTOMERNAME]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[ACCOUNTNUMBER]"
+                      cachedDataType="numeric"
+                      cachedName="ACCOUNTNUMBER"
+                      cachedPrecision="10"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[ACCOUNT_NUMBER]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[ACCOUNTNUMBER]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[TAXID]"
+                      cachedDataType="numeric"
+                      cachedName="TAXID"
+                      cachedPrecision="10"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[TAX_ID]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[TAXID]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[ACCOUNTTYPECODE]"
+                      cachedDataType="numeric"
+                      cachedName="ACCOUNTTYPECODE"
+                      cachedPrecision="2"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[ACCOUNT_TYPE_CODE]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[ACCOUNTTYPECODE]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[STATECODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="STATECODE"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[STATE_CODE]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[STATECODE]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[INTBEARINGCODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="INTBEARINGCODE"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[INTBEARING_CODE]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[INTBEARINGCODE]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[COLLECTEDBALANCEAMOUNT]"
+                      cachedDataType="numeric"
+                      cachedName="COLLECTEDBALANCEAMOUNT"
+                      cachedPrecision="25"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[CURRENT_BALANCE]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[COLLECTEDBALANCEAMOUNT]" />
+                    <inputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].Columns[ACCRUEDINTEREST]"
+                      cachedDataType="numeric"
+                      cachedName="ACCRUEDINTEREST"
+                      cachedPrecision="25"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[ACCRUED_INTEREST]"
+                      lineageId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output].Columns[ACCRUEDINTEREST]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[ACCOUNT_NUMBER]"
+                      dataType="numeric"
+                      name="ACCOUNT_NUMBER"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[TAX_ID]"
+                      dataType="numeric"
+                      name="TAX_ID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[ACCOUNT_TYPE_CODE]"
+                      dataType="i4"
+                      name="ACCOUNT_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[LKUP_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="LKUP_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[LKUP_TYPE_DESC]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="LKUP_TYPE_DESC" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[CUSTOMER_NAME]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="CUSTOMER_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[STATE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="STATE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[INTBEARING_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="INTBEARING_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[CURRENT_BALANCE]"
+                      dataType="numeric"
+                      name="CURRENT_BALANCE"
+                      precision="25"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[ACCRUED_INTEREST]"
+                      dataType="numeric"
+                      name="ACCRUED_INTEREST"
+                      precision="25"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load DDA Data\Destination - deposit_dda.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load DDA Data\Destination - deposit_dda.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Destination - deposit_dda.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load DDA Data\Destination - deposit_dda.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load DDA Data\Source - Query"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              name="Source - Query"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT OSSTP.DATE_DIM_B.CALENDAR_DT AS AS_OF_DATE, 
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_TYPE_CD AS AccountTypeCode,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_PUBLIC_FUND_LK_TYPE_CD AS LkUpTypeCode,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_PUBLIC_FUND_LK_TYPE_DESC AS LkUpTypeDesc,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCT_NAME AS CustomerName,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_NUM AS AccountNumber,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_TAX_ID_NUM AS TaxId,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_BRANCH_STATE_CD AS StateCode,
+ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_INT_BEARING_CD AS IntBearingCode,
+ROUND(ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_COLLECTED_BALANCE_AMT,0) AS CollectedBalanceAmount,
+ROUND(ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_DAILY_ACCRUED_INT_AMT,0) AS AccruedInterest
+FROM ODMCUST.DDA_DAILY_BALANCE_FACT_B,OSSTP.DATE_DIM_B,ODMCUST.DDA_ACCOUNT_T1_DIM_B
+WHERE ( OSSTP.DATE_DIM_B.DATE_ID=ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_DAILY_BALANCE_DATE_ID  )
+AND  ( ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_NUM=ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_ACCOUNT_NUM  )
+AND ( OSSTP.DATE_DIM_B.CALENDAR_DT  =  to_Date( 20140419, 'yyyymmdd' )
+AND ODMCUST.DDA_ACCOUNT_T1_DIM_B.DDA_ACCOUNT_TYPE_CD  =  '4' )
+AND (ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_COLLECTED_BALANCE_AMT &gt; 0 
+OR (ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_DAILY_ACCRUED_INT_AMT &gt; 0
+AND ODMCUST.DDA_DAILY_BALANCE_FACT_B.DDA_COLLECTED_BALANCE_AMT = 0) )</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load DDA Data\Source - Query.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTTYPECODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCOUNTTYPECODE]"
+                      length="1"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTTYPECODE]"
+                      name="ACCOUNTTYPECODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPECODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LKUPTYPECODE]"
+                      length="2"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPECODE]"
+                      name="LKUPTYPECODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPEDESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LKUPTYPEDESC]"
+                      length="30"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPEDESC]"
+                      name="LKUPTYPEDESC"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[CUSTOMERNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CUSTOMERNAME]"
+                      length="25"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[CUSTOMERNAME]"
+                      name="CUSTOMERNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTNUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCOUNTNUMBER]"
+                      length="18"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTNUMBER]"
+                      name="ACCOUNTNUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[TAXID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TAXID]"
+                      length="9"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[TAXID]"
+                      name="TAXID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[STATECODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[STATECODE]"
+                      length="2"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[STATECODE]"
+                      name="STATECODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTBEARINGCODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTBEARINGCODE]"
+                      length="1"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTBEARINGCODE]"
+                      name="INTBEARINGCODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLECTEDBALANCEAMOUNT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLECTEDBALANCEAMOUNT]"
+                      length="40"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[COLLECTEDBALANCEAMOUNT]"
+                      name="COLLECTEDBALANCEAMOUNT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCRUEDINTEREST]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCRUEDINTEREST]"
+                      length="40"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCRUEDINTEREST]"
+                      name="ACCRUEDINTEREST"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCOUNTTYPECODE]"
+                      dataType="wstr"
+                      length="1"
+                      name="ACCOUNTTYPECODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LKUPTYPECODE]"
+                      dataType="wstr"
+                      length="2"
+                      name="LKUPTYPECODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LKUPTYPEDESC]"
+                      dataType="wstr"
+                      length="30"
+                      name="LKUPTYPEDESC" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CUSTOMERNAME]"
+                      dataType="wstr"
+                      length="25"
+                      name="CUSTOMERNAME" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCOUNTNUMBER]"
+                      dataType="wstr"
+                      length="18"
+                      name="ACCOUNTNUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TAXID]"
+                      dataType="wstr"
+                      length="9"
+                      name="TAXID" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[STATECODE]"
+                      dataType="wstr"
+                      length="2"
+                      name="STATECODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTBEARINGCODE]"
+                      dataType="wstr"
+                      length="1"
+                      name="INTBEARINGCODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[COLLECTEDBALANCEAMOUNT]"
+                      dataType="numeric"
+                      name="COLLECTEDBALANCEAMOUNT" />
+                    <externalMetadataColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCRUEDINTEREST]"
+                      dataType="numeric"
+                      name="ACCRUEDINTEREST" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCOUNTTYPECODE]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCOUNTTYPECODE]"
+                      name="ACCOUNTTYPECODE" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[LKUPTYPECODE]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[LKUPTYPECODE]"
+                      name="LKUPTYPECODE" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[LKUPTYPEDESC]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[LKUPTYPEDESC]"
+                      name="LKUPTYPEDESC" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[CUSTOMERNAME]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[CUSTOMERNAME]"
+                      name="CUSTOMERNAME" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCOUNTNUMBER]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCOUNTNUMBER]"
+                      name="ACCOUNTNUMBER" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[TAXID]"
+                      dataType="wstr"
+                      length="9"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[TAXID]"
+                      name="TAXID" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[STATECODE]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[STATECODE]"
+                      name="STATECODE" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTBEARINGCODE]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTBEARINGCODE]"
+                      name="INTBEARINGCODE" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLECTEDBALANCEAMOUNT]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[COLLECTEDBALANCEAMOUNT]"
+                      name="COLLECTEDBALANCEAMOUNT" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCRUEDINTEREST]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCRUEDINTEREST]"
+                      name="ACCRUEDINTEREST" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load DDA Data.Paths[ADO NET Source Output]"
+              endId="Package\Load DDA Data\Data Conversion.Inputs[Data Conversion Input]"
+              name="ADO NET Source Output"
+              startId="Package\Load DDA Data\Source - Query.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Load DDA Data.Paths[Data Conversion Output]"
+              endId="Package\Load DDA Data\Destination - deposit_dda.Inputs[Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Load DDA Data\Data Conversion.Outputs[Data Conversion Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{F4396E25-76A4-47D4-957C-864F329921C8\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{F4396E25-76A4-47D4-957C-864F329921C8}"
+      DTS:From="Package\Delete DDA data if exist"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{F4396E25-76A4-47D4-957C-864F329921C8}"
+      DTS:To="Package\Load DDA Data" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Delete DDA data if exist"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Load DDA Data"
+          TopLeft="12.4811320754717,121.122641509434" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[{F4396E25-76A4-47D4-957C-864F329921C8\}]"
+          TopLeft="73.3867924528302,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="6.98113207547171,71.6981132075472"
+              Start="0,0"
+              End="6.98113207547171,64.1981132075472">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.8490566037736" />
+                  <mssgle:LineSegment
+                    End="6.98113207547171,35.8490566037736" />
+                  <mssgle:LineSegment
+                    End="6.98113207547171,64.1981132075472" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

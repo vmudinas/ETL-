@@ -1,0 +1,1112 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/5/2014 12:40:39 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7DU-2UA2510JVV"
+  DTS:CreatorName="UBOC-AD\ub68960"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{E83EF9C5-102D-49CA-B2CE-F4D93126FD3D}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="1033"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="LoadDepositCD"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="41"
+  DTS:VersionGUID="{CB6D0CA6-3C34-4955-B034-6BA965A0A633}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{02EC6990-82DA-4D3B-A1BB-77D06AA6AF0B}"
+      DTS:ObjectName="DestinationConnectionOLEDB">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::database_server]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11;Integrated Security=SSPI;Auto Translate=false;Application Name=SSIS-New Package-{02EC6990-82DA-4D3B-A1BB-77D06AA6AF0B}DestinationConnectionOLEDB;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+      DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{8D335158-8994-47FF-85C5-775AB647E852}"
+      DTS:ObjectName="SourceConnectionAdoNET">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::dmq_password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::dmq_server]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::dmq_user]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=P003;User ID=SVC_DMQ_DATA;Persist Security Info=True;Unicode=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{889108E4-F7AC-4E54-B40B-950CCF82C0FC}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date">
+      <DTS:VariableValue
+        DTS:DataType="7">1/11/2015</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F1572BCE-9AFB-4AED-9843-25669242804D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_STR, 4, 1252) DATEPART(&quot;yy&quot; ,@[User::as_of_date]) + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::as_of_date]), 2)  + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::as_of_date]), 2) "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date_yyyymmdd">
+      <DTS:VariableValue
+        DTS:DataType="8">20150111</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{824E98D8-2AE4-4699-ABEE-9A52C0737DCB}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="database_server">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{01C2EB1A-BB59-4C29-BFB2-E02360A88093}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_password">
+      <DTS:VariableValue
+        DTS:DataType="8">svc987dm</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7806E986-DF82-4B34-89E4-AAB68A584AF9}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_server">
+      <DTS:VariableValue
+        DTS:DataType="8">P003</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{099BF975-946C-4681-B2B8-82A406C7E888}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_user">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_DMQ_DATA</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete CD data if exist"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:DTSID="{542E05D2-27C2-47B8-A263-52A94E3B0374}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete CD data if exist"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{02EC6990-82DA-4D3B-A1BB-77D06AA6AF0B}"
+          SQLTask:SqlStatementSource="DELETE [PublicFund].[deposit_cd] &#xA;WHERE [AS_OF_DATE] = convert(date,?)&#xA;GO&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::as_of_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load CD Data"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:DTSID="{51E1F224-B39B-4461-A0FE-14D68F6DC113}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load CD Data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[Source - Query].[SqlCommand]">"SELECT DDA_DATE.CALENDAR_DT AS AS_OF_DATE, 
+ODMTCD.TCD_ACCOUNT_T1_DIM_B.TCD_ACCOUNT_NUM AS AccountNumber,
+ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_TAX_ID_NUM AS TaxId,
+ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_DEPOSITOR_TYPE_CD AS DepositorType,
+ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_INT_TYPE_CD AS IntTypeCode,
+OSSTP.BRANCH_DIM_B.STATE AS StateCode,
+ODMCUST.CUSTOMER_DIM_B.CUST_NAME AS CustomerName,
+ROUND(ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_CURRENT_BAL_AMT,0) AS CurrentBalance,
+ROUND(ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_ACCRUAL_INT_AMT,0) AS AccruedInterest,
+ODMTCD.TCD_ACCOUNT_T1_DIM_B.TCD_PUBLIC_FUND_LK_TYPE_CD_CUR AS LkUpTypeCode,
+ODMTCD.TCD_ACCOUNT_T1_DIM_B.TCD_PUBLIC_FUND_LK_TYPE_DES_CU AS LkUpTypeDesc
+FROM ODMCUST.CUSTOMER_DIM_B,OSSTP.DATE_DIM_B  DDA_DATE,
+OSSTP.BRANCH_DIM_B, ODMTCD.TCD_ACCOUNT_T1_DIM_B,
+ODMTCD.TCD_ACCOUNT_T2_DIM_B,ODMTCD.TCD_DAILY_BALANCE_FACT_B
+WHERE ( ODMTCD.TCD_ACCOUNT_T1_DIM_B.TCD_ACCOUNT_T1_DIM_ID=ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_ACCOUNT_T1_DIM_ID  )
+AND  ( ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_ACCOUNT_T2_DIM_ID=ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_ACCOUNT_T2_DIM_ID  )
+AND  ( ODMTCD.TCD_DAILY_BALANCE_FACT_B.CUSTOMER_DIM_ID=ODMCUST.CUSTOMER_DIM_B.CUSTOMER_DIM_ID  )
+AND  ( DDA_DATE.DATE_ID=ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_DAILY_BALANCE_DATE_ID  )
+AND  ( OSSTP.BRANCH_DIM_B.BRANCH_ID=ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_ACCOUNT_BRANCH_ID  )
+AND  ( DDA_DATE.CALENDAR_DT = to_Date( " + @[User::as_of_date_yyyymmdd] + ", 'yyyymmdd' )
+AND TO_DATE( " + @[User::as_of_date_yyyymmdd] + ",'YYYYMMDD') BETWEEN ODMCUST.CUSTOMER_DIM_B.BEGIN_DT and ODMCUST.CUSTOMER_DIM_B.END_DT
+AND TO_DATE( " + @[User::as_of_date_yyyymmdd] + ",'YYYYMMDD') BETWEEN OSSTP.BRANCH_DIM_B.BEGIN_DT and OSSTP.BRANCH_DIM_B.END_DT
+AND TO_DATE( " + @[User::as_of_date_yyyymmdd] + ",'YYYYMMDD') BETWEEN ODMTCD.TCD_ACCOUNT_T2_DIM_B.BEGIN_DT and ODMTCD.TCD_ACCOUNT_T2_DIM_B.END_DT                              
+AND ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_INT_TYPE_CD  =  'D'
+AND ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_DEPOSITOR_TYPE_CD  IN  ( 'V','W','U','Y','X','Z'  ) )
+AND ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_CURRENT_BAL_AMT  &gt;  0"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load CD Data\Data Conversion 0 - 0"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion 0 - 0"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[ACCOUNTNUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="ACCOUNTNUMBER"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTNUMBER]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[TAXID]"
+                      cachedDataType="wstr"
+                      cachedLength="9"
+                      cachedName="TAXID"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[TAXID]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[DEPOSITORTYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="DEPOSITORTYPE"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[DEPOSITORTYPE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[INTTYPECODE]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="INTTYPECODE"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTTYPECODE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[STATECODE]"
+                      cachedDataType="wstr"
+                      cachedLength="2"
+                      cachedName="STATECODE"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[STATECODE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[CUSTOMERNAME]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="CUSTOMERNAME"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[CUSTOMERNAME]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[LKUPTYPECODE]"
+                      cachedDataType="wstr"
+                      cachedLength="2"
+                      cachedName="LKUPTYPECODE"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPECODE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[LKUPTYPEDESC]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="LKUPTYPEDESC"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPEDESC]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[ACCOUNTNUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[ACCOUNTNUMBER]"
+                      name="ACCOUNTNUMBER"
+                      precision="10"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTNUMBER]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[TAXID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[TAXID]"
+                      name="TAXID"
+                      precision="10"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[TAXID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[DEPOSITORTYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="1"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[DEPOSITORTYPE]"
+                      name="DEPOSITORTYPE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[DEPOSITORTYPE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[INTTYPECODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="1"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[INTTYPECODE]"
+                      name="INTTYPECODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTTYPECODE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[STATECODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="2"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[STATECODE]"
+                      name="STATECODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[STATECODE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[CUSTOMERNAME]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="200"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[CUSTOMERNAME]"
+                      name="CUSTOMERNAME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[CUSTOMERNAME]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[LKUPTYPECODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="2"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[LKUPTYPECODE]"
+                      name="LKUPTYPECODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPECODE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[LKUPTYPEDESC]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="30"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[LKUPTYPEDESC]"
+                      name="LKUPTYPEDESC"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPEDESC]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load CD Data\Destination - deposit_cd"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination - deposit_cd"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[PublicFund].[deposit_cd]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load CD Data\Destination - deposit_cd.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[ACCOUNTNUMBER]"
+                      cachedDataType="numeric"
+                      cachedName="ACCOUNTNUMBER"
+                      cachedPrecision="10"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[ACCOUNT_NUMBER]"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[ACCOUNTNUMBER]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[TAXID]"
+                      cachedDataType="numeric"
+                      cachedName="TAXID"
+                      cachedPrecision="10"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[TAX_ID]"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[TAXID]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[DEPOSITORTYPE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="DEPOSITORTYPE"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[DEPOSITOR_TYPE]"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[DEPOSITORTYPE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[INTTYPECODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="INTTYPECODE"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[INT_TYPE_CODE]"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[INTTYPECODE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[STATECODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="STATECODE"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[STATE_CODE]"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[STATECODE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[CUSTOMERNAME]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="200"
+                      cachedName="CUSTOMERNAME"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[CUSTOMER_NAME]"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[CUSTOMERNAME]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[CURRENTBALANCE]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="CURRENTBALANCE"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[CURRENT_BALANCE]"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENTBALANCE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[ACCRUEDINTEREST]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="ACCRUEDINTEREST"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[ACCRUED_INTEREST]"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCRUEDINTEREST]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[AS_OF_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="AS_OF_DATE"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[LKUPTYPECODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="LKUPTYPECODE"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[LKUP_TYPE_CODE]"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[LKUPTYPECODE]" />
+                    <inputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].Columns[LKUPTYPEDESC]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="LKUPTYPEDESC"
+                      externalMetadataColumnId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[LKUP_TYPE_DESC]"
+                      lineageId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[LKUPTYPEDESC]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[ACCOUNT_NUMBER]"
+                      dataType="numeric"
+                      name="ACCOUNT_NUMBER"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[TAX_ID]"
+                      dataType="numeric"
+                      name="TAX_ID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[DEPOSITOR_TYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="DEPOSITOR_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[INT_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="INT_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[STATE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="STATE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[CUSTOMER_NAME]"
+                      codePage="1252"
+                      dataType="str"
+                      length="200"
+                      name="CUSTOMER_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[CURRENT_BALANCE]"
+                      dataType="numeric"
+                      name="CURRENT_BALANCE"
+                      precision="25"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[ACCRUED_INTEREST]"
+                      dataType="numeric"
+                      name="ACCRUED_INTEREST"
+                      precision="25"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[LKUP_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="LKUP_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input].ExternalColumns[LKUP_TYPE_DESC]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="LKUP_TYPE_DESC" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load CD Data\Destination - deposit_cd.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load CD Data\Destination - deposit_cd.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Destination - deposit_cd.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load CD Data\Destination - deposit_cd.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load CD Data\Source - Query"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              name="Source - Query"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DDA_DATE.CALENDAR_DT AS AS_OF_DATE, 
+ODMTCD.TCD_ACCOUNT_T1_DIM_B.TCD_ACCOUNT_NUM AS AccountNumber,
+ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_TAX_ID_NUM AS TaxId,
+ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_DEPOSITOR_TYPE_CD AS DepositorType,
+ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_INT_TYPE_CD AS IntTypeCode,
+OSSTP.BRANCH_DIM_B.STATE AS StateCode,
+ODMCUST.CUSTOMER_DIM_B.CUST_NAME AS CustomerName,
+ROUND(ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_CURRENT_BAL_AMT,0) AS CurrentBalance,
+ROUND(ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_ACCRUAL_INT_AMT,0) AS AccruedInterest,
+ODMTCD.TCD_ACCOUNT_T1_DIM_B.TCD_PUBLIC_FUND_LK_TYPE_CD_CUR AS LkUpTypeCode,
+ODMTCD.TCD_ACCOUNT_T1_DIM_B.TCD_PUBLIC_FUND_LK_TYPE_DES_CU AS LkUpTypeDesc
+FROM ODMCUST.CUSTOMER_DIM_B,OSSTP.DATE_DIM_B  DDA_DATE,
+OSSTP.BRANCH_DIM_B, ODMTCD.TCD_ACCOUNT_T1_DIM_B,
+ODMTCD.TCD_ACCOUNT_T2_DIM_B,ODMTCD.TCD_DAILY_BALANCE_FACT_B
+WHERE ( ODMTCD.TCD_ACCOUNT_T1_DIM_B.TCD_ACCOUNT_T1_DIM_ID=ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_ACCOUNT_T1_DIM_ID  )
+AND  ( ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_ACCOUNT_T2_DIM_ID=ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_ACCOUNT_T2_DIM_ID  )
+AND  ( ODMTCD.TCD_DAILY_BALANCE_FACT_B.CUSTOMER_DIM_ID=ODMCUST.CUSTOMER_DIM_B.CUSTOMER_DIM_ID  )
+AND  ( DDA_DATE.DATE_ID=ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_DAILY_BALANCE_DATE_ID  )
+AND  ( OSSTP.BRANCH_DIM_B.BRANCH_ID=ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_ACCOUNT_BRANCH_ID  )
+AND  ( DDA_DATE.CALENDAR_DT = to_Date( 20150111, 'yyyymmdd' )
+AND TO_DATE( 20150111,'YYYYMMDD') BETWEEN ODMCUST.CUSTOMER_DIM_B.BEGIN_DT and ODMCUST.CUSTOMER_DIM_B.END_DT
+AND TO_DATE( 20150111,'YYYYMMDD') BETWEEN OSSTP.BRANCH_DIM_B.BEGIN_DT and OSSTP.BRANCH_DIM_B.END_DT
+AND TO_DATE( 20150111,'YYYYMMDD') BETWEEN ODMTCD.TCD_ACCOUNT_T2_DIM_B.BEGIN_DT and ODMTCD.TCD_ACCOUNT_T2_DIM_B.END_DT                              
+AND ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_INT_TYPE_CD  =  'D'
+AND ODMTCD.TCD_ACCOUNT_T2_DIM_B.TCD_DEPOSITOR_TYPE_CD  IN  ( 'V','W','U','Y','X','Z'  ) )
+AND ODMTCD.TCD_DAILY_BALANCE_FACT_B.TCD_CURRENT_BAL_AMT  &gt;  0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load CD Data\Source - Query.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTNUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCOUNTNUMBER]"
+                      length="30"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCOUNTNUMBER]"
+                      name="ACCOUNTNUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[TAXID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TAXID]"
+                      length="9"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[TAXID]"
+                      name="TAXID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[DEPOSITORTYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[DEPOSITORTYPE]"
+                      length="3"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[DEPOSITORTYPE]"
+                      name="DEPOSITORTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTTYPECODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTTYPECODE]"
+                      length="3"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[INTTYPECODE]"
+                      name="INTTYPECODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[STATECODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[STATECODE]"
+                      length="2"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[STATECODE]"
+                      name="STATECODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[CUSTOMERNAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CUSTOMERNAME]"
+                      length="60"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[CUSTOMERNAME]"
+                      name="CUSTOMERNAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENTBALANCE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENTBALANCE]"
+                      length="40"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[CURRENTBALANCE]"
+                      name="CURRENTBALANCE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCRUEDINTEREST]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCRUEDINTEREST]"
+                      length="40"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[ACCRUEDINTEREST]"
+                      name="ACCRUEDINTEREST"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPECODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LKUPTYPECODE]"
+                      length="2"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPECODE]"
+                      name="LKUPTYPECODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPEDESC]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LKUPTYPEDESC]"
+                      length="30"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].Columns[LKUPTYPEDESC]"
+                      name="LKUPTYPEDESC"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCOUNTNUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      name="ACCOUNTNUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[TAXID]"
+                      dataType="wstr"
+                      length="9"
+                      name="TAXID" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[DEPOSITORTYPE]"
+                      dataType="wstr"
+                      length="3"
+                      name="DEPOSITORTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTTYPECODE]"
+                      dataType="wstr"
+                      length="3"
+                      name="INTTYPECODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[STATECODE]"
+                      dataType="wstr"
+                      length="2"
+                      name="STATECODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CUSTOMERNAME]"
+                      dataType="wstr"
+                      length="60"
+                      name="CUSTOMERNAME" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CURRENTBALANCE]"
+                      dataType="numeric"
+                      name="CURRENTBALANCE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[ACCRUEDINTEREST]"
+                      dataType="numeric"
+                      name="ACCRUEDINTEREST" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LKUPTYPECODE]"
+                      dataType="wstr"
+                      length="2"
+                      name="LKUPTYPECODE" />
+                    <externalMetadataColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[LKUPTYPEDESC]"
+                      dataType="wstr"
+                      length="30"
+                      name="LKUPTYPEDESC" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCOUNTNUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCOUNTNUMBER]"
+                      name="ACCOUNTNUMBER" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[TAXID]"
+                      dataType="wstr"
+                      length="9"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[TAXID]"
+                      name="TAXID" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[DEPOSITORTYPE]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[DEPOSITORTYPE]"
+                      name="DEPOSITORTYPE" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTTYPECODE]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTTYPECODE]"
+                      name="INTTYPECODE" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[STATECODE]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[STATECODE]"
+                      name="STATECODE" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[CUSTOMERNAME]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[CUSTOMERNAME]"
+                      name="CUSTOMERNAME" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENTBALANCE]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[CURRENTBALANCE]"
+                      name="CURRENTBALANCE" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCRUEDINTEREST]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ACCRUEDINTEREST]"
+                      name="ACCRUEDINTEREST" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[LKUPTYPECODE]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[LKUPTYPECODE]"
+                      name="LKUPTYPECODE" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[LKUPTYPEDESC]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[LKUPTYPEDESC]"
+                      name="LKUPTYPEDESC" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load CD Data.Paths[ADO NET Source Output]"
+              endId="Package\Load CD Data\Data Conversion 0 - 0.Inputs[Data Conversion Input]"
+              name="ADO NET Source Output"
+              startId="Package\Load CD Data\Source - Query.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Load CD Data.Paths[Data Conversion Output]"
+              endId="Package\Load CD Data\Destination - deposit_cd.Inputs[Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Load CD Data\Data Conversion 0 - 0.Outputs[Data Conversion Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{369A29F3-08B7-447B-BE69-AAD8F36FAF11}"
+      DTS:From="Package\Delete CD data if exist"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load CD Data" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Delete CD data if exist"
+          TopLeft="142.5,82.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Load CD Data"
+          TopLeft="147.858490566038,174.952830188679" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="213.066037735849,126.424528301887">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.5283018867924"
+              Start="0,0"
+              End="0,41.0283018867924">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.0283018867924" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

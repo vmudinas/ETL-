@@ -1,0 +1,1614 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/12/2016 10:13:04 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7NU-5CG4422XTB"
+  DTS:CreatorName="UBOC-AD\ub68960"
+  DTS:DTSID="{8B74A493-6E2A-4416-A811-CB3BE362B22C}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.6020.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="LoadFedWireRealTime"
+  DTS:PackageType="5"
+  DTS:VersionBuild="61"
+  DTS:VersionGUID="{92E0EB3F-645D-4A1B-8180-B094AC953CFC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Funding Database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6A45E2B4-744E-4D86-B720-DED54AC12850}"
+      DTS:ObjectName="Funding Database">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::DatabaseServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[RGW Database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0933169E-16D8-48B9-86CD-2D03220577DF}"
+      DTS:ObjectName="RGW Database">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::RGWPassword]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::RGWServerName]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::RGWUserName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=OGFTP;User ID=SVC_RGW_DATA;Provider=MSDAORA.1;Persist Security Info=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAbVFZopN5tkq2ZZMyPCgjEwAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAAAbczGsov3iDjJptD417Fw3AAAAAASAAACgAAAAEAAAAEX4gsXL+GsyBsTKjC5emRMYAAAA7gwH6S9iGe1NZOQB3hwnrbPwXjP5I1BNFAAAAGxsgcXdWjskdRXA0PzxOR7D3yZk</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3B94A4EE-59A8-4E92-93B2-36D6C2458DC2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AsOfDate">
+      <DTS:VariableValue
+        DTS:DataType="7">9/7/2016 10:16:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5FE18C0B-527A-4513-B062-5B14D40E0F6B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DatabaseServerName">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A5577848-5828-4831-9B26-87DFBF806704}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot; SELECT &#xA; OGFTP.MESSAGE.TRN_DATE,&#xA; OGFTP.MESSAGE.TRN_NUMBER,&#xA; OGFTP.MESSAGE_CR.CDT_NAME1,&#xA;  OGFTP.MESSAGE.PAY_STATE,&#xA;  0 AS IS_ANTICIPATION,&#xA;  OGFTP.MESSAGE.AMOUNT,&#xA;  OGFTP.MESSAGE_CR.CDT_ACCTG_IDTYPE,&#xA;  OGFTP.MESSAGE.POST_DATE,  &#xA;  OGFTP.MESSAGE.POST_TIME&#xA;FROM&#xA;  OGFTP.MESSAGE_CR,&#xA;  OGFTP.MESSAGE &#xA;WHERE OGFTP.MESSAGE_CR.TRN_DATE=OGFTP.MESSAGE.TRN_DATE &#xA; AND OGFTP.MESSAGE_CR.TRN_NUMBER=OGFTP.MESSAGE.TRN_NUMBER  &#xA; AND OGFTP.MESSAGE.TRN_DATE   =   to_date('&quot; + (DT_WSTR, 10) (DT_DBDATE) @[User::AsOfDate] + &quot;', 'YYYY-MM-DD' )&#xA; AND OGFTP.MESSAGE.SOURCE_CD = 'FED'  &#xA; AND OGFTP.MESSAGE.TRAN_TYPE = 'FTR'&#xA; AND OGFTP.MESSAGE.STS_CAN != 'Y'&#xA; AND OGFTP.MESSAGE.STS_ACC = 'Y'&#xA; UNION&#xA; SELECT &#xA; OGFTP.MESSAGE.TRN_DATE,&#xA; OGFTP.MESSAGE.TRN_NUMBER,&#xA; OGFTP.MESSAGE_CR.CDT_NAME1, &#xA;  OGFTP.MESSAGE.PAY_STATE,&#xA;  1 AS IS_ANTICIPATION,&#xA;  OGFTP.MESSAGE.AMOUNT,&#xA;  OGFTP.MESSAGE_CR.CDT_ACCTG_IDTYPE,&#xA;  OGFTP.MESSAGE.POST_DATE,  &#xA;  OGFTP.MESSAGE.POST_TIME    &#xA;FROM&#xA;  OGFTP.MESSAGE_CR,&#xA;  OGFTP.MESSAGE &#xA;WHERE OGFTP.MESSAGE_CR.TRN_DATE=OGFTP.MESSAGE.TRN_DATE &#xA; AND OGFTP.MESSAGE_CR.TRN_NUMBER=OGFTP.MESSAGE.TRN_NUMBER  &#xA; AND OGFTP.MESSAGE.TRN_DATE   =   to_date('&quot; + (DT_WSTR, 10) (DT_DBDATE) @[User::AsOfDate] + &quot;', 'YYYY-MM-DD' )&#xA; AND OGFTP.MESSAGE.SOURCE_CD = 'PTM'&#xA;  AND OGFTP.MESSAGE.TRAN_TYPE = 'FTR'&#xA; AND OGFTP.MESSAGE.STS_CAN != 'Y'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FedWireCrSql">
+      <DTS:VariableValue
+        DTS:DataType="8"> SELECT 
+ OGFTP.MESSAGE.TRN_DATE,
+ OGFTP.MESSAGE.TRN_NUMBER,
+ OGFTP.MESSAGE_CR.CDT_NAME1,
+  OGFTP.MESSAGE.PAY_STATE,
+  0 AS IS_ANTICIPATION,
+  OGFTP.MESSAGE.AMOUNT,
+  OGFTP.MESSAGE_CR.CDT_ACCTG_IDTYPE,
+  OGFTP.MESSAGE.POST_DATE,  
+  OGFTP.MESSAGE.POST_TIME
+FROM
+  OGFTP.MESSAGE_CR,
+  OGFTP.MESSAGE 
+WHERE OGFTP.MESSAGE_CR.TRN_DATE=OGFTP.MESSAGE.TRN_DATE 
+ AND OGFTP.MESSAGE_CR.TRN_NUMBER=OGFTP.MESSAGE.TRN_NUMBER  
+ AND OGFTP.MESSAGE.TRN_DATE   =   to_date('2016-09-07', 'YYYY-MM-DD' )
+ AND OGFTP.MESSAGE.SOURCE_CD = 'FED'  
+ AND OGFTP.MESSAGE.TRAN_TYPE = 'FTR'
+ AND OGFTP.MESSAGE.STS_CAN != 'Y'
+ AND OGFTP.MESSAGE.STS_ACC = 'Y'
+ UNION
+ SELECT 
+ OGFTP.MESSAGE.TRN_DATE,
+ OGFTP.MESSAGE.TRN_NUMBER,
+ OGFTP.MESSAGE_CR.CDT_NAME1, 
+  OGFTP.MESSAGE.PAY_STATE,
+  1 AS IS_ANTICIPATION,
+  OGFTP.MESSAGE.AMOUNT,
+  OGFTP.MESSAGE_CR.CDT_ACCTG_IDTYPE,
+  OGFTP.MESSAGE.POST_DATE,  
+  OGFTP.MESSAGE.POST_TIME    
+FROM
+  OGFTP.MESSAGE_CR,
+  OGFTP.MESSAGE 
+WHERE OGFTP.MESSAGE_CR.TRN_DATE=OGFTP.MESSAGE.TRN_DATE 
+ AND OGFTP.MESSAGE_CR.TRN_NUMBER=OGFTP.MESSAGE.TRN_NUMBER  
+ AND OGFTP.MESSAGE.TRN_DATE   =   to_date('2016-09-07', 'YYYY-MM-DD' )
+ AND OGFTP.MESSAGE.SOURCE_CD = 'PTM'
+  AND OGFTP.MESSAGE.TRAN_TYPE = 'FTR'
+ AND OGFTP.MESSAGE.STS_CAN != 'Y'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{968C0C76-757E-4699-8911-B99DB27E9ADF}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot; SELECT &#xA; OGFTP.MESSAGE.PROC_DATE,&#xA; OGFTP.MESSAGE.TRN_NUMBER,&#xA; OGFTP.MESSAGE_DR.DBT_NAME1, &#xA;  OGFTP.MESSAGE.PAY_STATE,&#xA;  0 AS IS_ANTICIPATION,  &#xA;  OGFTP.MESSAGE.AMOUNT,&#xA;  OGFTP.MESSAGE_DR.DBT_ACCTG_IDTYPE,&#xA;  OGFTP.MESSAGE.POST_DATE,  &#xA;  OGFTP.MESSAGE.POST_TIME  &#xA;FROM&#xA;  OGFTP.MESSAGE_DR,&#xA;  OGFTP.MESSAGE &#xA;WHERE OGFTP.MESSAGE_DR.TRN_DATE=OGFTP.MESSAGE.TRN_DATE &#xA; AND OGFTP.MESSAGE_DR.TRN_NUMBER=OGFTP.MESSAGE.TRN_NUMBER &#xA; AND OGFTP.MESSAGE.PROC_DATE   =  to_date('&quot; + (DT_WSTR, 10) (DT_DBDATE) @[User::AsOfDate] + &quot;', 'YYYY-MM-DD' )&#xA; AND OGFTP.MESSAGE.INSTR_ADV_TYPE = 'FED' &#xA; AND OGFTP.MESSAGE.STS_CAN != 'Y'&#xA; AND OGFTP.MESSAGE.STS_ACC = 'Y'&#xA; UNION &#xA; SELECT &#xA; OGFTP.MESSAGE.TRN_DATE,&#xA; OGFTP.MESSAGE.TRN_NUMBER,&#xA; OGFTP.MESSAGE_DR.DBT_NAME1, &#xA;  OGFTP.MESSAGE.PAY_STATE,&#xA;  1 AS IS_ANTICIPATION,  &#xA;  OGFTP.MESSAGE.AMOUNT,&#xA;  OGFTP.MESSAGE_DR.DBT_ACCTG_IDTYPE,&#xA;  OGFTP.MESSAGE.POST_DATE,  &#xA;  OGFTP.MESSAGE.POST_TIME    &#xA;FROM&#xA;  OGFTP.MESSAGE_DR,&#xA;  OGFTP.MESSAGE &#xA;WHERE OGFTP.MESSAGE_DR.TRN_DATE=OGFTP.MESSAGE.TRN_DATE &#xA; AND OGFTP.MESSAGE_DR.TRN_NUMBER=OGFTP.MESSAGE.TRN_NUMBER &#xA; AND OGFTP.MESSAGE.TRN_DATE   =  to_date('&quot; + (DT_WSTR, 10) (DT_DBDATE) @[User::AsOfDate] + &quot;', 'YYYY-MM-DD' )&#xA; AND OGFTP.MESSAGE.SOURCE_CD = 'PTM'&#xA;  AND OGFTP.MESSAGE.TRAN_TYPE = 'FTR'&#xA; AND OGFTP.MESSAGE.STS_CAN != 'Y'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="FedWireDrSql">
+      <DTS:VariableValue
+        DTS:DataType="8"> SELECT 
+ OGFTP.MESSAGE.PROC_DATE,
+ OGFTP.MESSAGE.TRN_NUMBER,
+ OGFTP.MESSAGE_DR.DBT_NAME1, 
+  OGFTP.MESSAGE.PAY_STATE,
+  0 AS IS_ANTICIPATION,  
+  OGFTP.MESSAGE.AMOUNT,
+  OGFTP.MESSAGE_DR.DBT_ACCTG_IDTYPE,
+  OGFTP.MESSAGE.POST_DATE,  
+  OGFTP.MESSAGE.POST_TIME  
+FROM
+  OGFTP.MESSAGE_DR,
+  OGFTP.MESSAGE 
+WHERE OGFTP.MESSAGE_DR.TRN_DATE=OGFTP.MESSAGE.TRN_DATE 
+ AND OGFTP.MESSAGE_DR.TRN_NUMBER=OGFTP.MESSAGE.TRN_NUMBER 
+ AND OGFTP.MESSAGE.PROC_DATE   =  to_date('2016-09-07', 'YYYY-MM-DD' )
+ AND OGFTP.MESSAGE.INSTR_ADV_TYPE = 'FED' 
+ AND OGFTP.MESSAGE.STS_CAN != 'Y'
+ AND OGFTP.MESSAGE.STS_ACC = 'Y'
+ UNION 
+ SELECT 
+ OGFTP.MESSAGE.TRN_DATE,
+ OGFTP.MESSAGE.TRN_NUMBER,
+ OGFTP.MESSAGE_DR.DBT_NAME1, 
+  OGFTP.MESSAGE.PAY_STATE,
+  1 AS IS_ANTICIPATION,  
+  OGFTP.MESSAGE.AMOUNT,
+  OGFTP.MESSAGE_DR.DBT_ACCTG_IDTYPE,
+  OGFTP.MESSAGE.POST_DATE,  
+  OGFTP.MESSAGE.POST_TIME    
+FROM
+  OGFTP.MESSAGE_DR,
+  OGFTP.MESSAGE 
+WHERE OGFTP.MESSAGE_DR.TRN_DATE=OGFTP.MESSAGE.TRN_DATE 
+ AND OGFTP.MESSAGE_DR.TRN_NUMBER=OGFTP.MESSAGE.TRN_NUMBER 
+ AND OGFTP.MESSAGE.TRN_DATE   =  to_date('2016-09-07', 'YYYY-MM-DD' )
+ AND OGFTP.MESSAGE.SOURCE_CD = 'PTM'
+  AND OGFTP.MESSAGE.TRAN_TYPE = 'FTR'
+ AND OGFTP.MESSAGE.STS_CAN != 'Y'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A2FA5967-6285-4637-845A-B10600E4B602}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RGWPassword">
+      <DTS:VariableValue
+        DTS:DataType="8">King_123$</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2B5F85FF-2E54-4298-A837-06BDC1EB2880}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RGWServerName">
+      <DTS:VariableValue
+        DTS:DataType="8">OGFTP</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{586D57C4-4A22-4ED5-8684-749BC9B67DA9}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="RGWUserName">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_RGW_DATA</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Insert Cr data to main table from Staging"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{945940E9-2084-47B6-93D9-92B106E0A17E}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Cr data to main table from Staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6A45E2B4-744E-4D86-B720-DED54AC12850}"
+          SQLTask:SqlStatementSource="exec [Intraday].[ins_fed_wire_cr_realtime_from_staging]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert Dr data to main table from Staging"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{36412907-0417-4D12-8411-D1CC570F95B5}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Dr data to main table from Staging"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6A45E2B4-744E-4D86-B720-DED54AC12850}"
+          SQLTask:SqlStatementSource="exec [Intraday].[ins_fed_wire_dr_realtime_from_staging]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Fed Wire Cr Data To Staging Table"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{51DA5279-0470-40B2-A3DA-60DBFB3A17C2}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Fed Wire Cr Data To Staging Table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Fed Wire Data from RGW Database"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable">User::FedWireCrSql</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RGW Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[RGW Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[TRN_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[TRN_DATE]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[TRN_DATE]"
+                      name="TRN_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[TRN_NUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[TRN_NUMBER]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[TRN_NUMBER]"
+                      name="TRN_NUMBER"
+                      precision="8"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[PAY_STATE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[PAY_STATE]"
+                      length="1"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[PAY_STATE]"
+                      name="PAY_STATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[AMOUNT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[AMOUNT]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[AMOUNT]"
+                      name="AMOUNT"
+                      precision="21"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[CDT_ACCTG_IDTYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[CDT_ACCTG_IDTYPE]"
+                      length="1"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[CDT_ACCTG_IDTYPE]"
+                      name="CDT_ACCTG_IDTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[IS_ANTICIPATION]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[IS_ANTICIPATION]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[IS_ANTICIPATION]"
+                      name="IS_ANTICIPATION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[CDT_NAME1]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[CDT_NAME1]"
+                      length="35"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[CDT_NAME1]"
+                      name="CDT_NAME1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[POST_DATE]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_DATE]"
+                      name="POST_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_TIME]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[POST_TIME]"
+                      length="11"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_TIME]"
+                      name="POST_TIME"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[TRN_DATE]"
+                      dataType="dbTimeStamp"
+                      name="TRN_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[TRN_NUMBER]"
+                      dataType="numeric"
+                      name="TRN_NUMBER"
+                      precision="8" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[PAY_STATE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="PAY_STATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[AMOUNT]"
+                      dataType="numeric"
+                      name="AMOUNT"
+                      precision="21"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[CDT_ACCTG_IDTYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="CDT_ACCTG_IDTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[IS_ANTICIPATION]"
+                      dataType="r8"
+                      name="IS_ANTICIPATION" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[CDT_NAME1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="35"
+                      name="CDT_NAME1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[POST_DATE]"
+                      dataType="dbTimeStamp"
+                      name="POST_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[POST_TIME]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="POST_TIME" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[TRN_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[TRN_DATE]"
+                      name="TRN_DATE" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[TRN_NUMBER]"
+                      dataType="numeric"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[TRN_NUMBER]"
+                      name="TRN_NUMBER"
+                      precision="8" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[CDT_NAME1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="35"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[CDT_NAME1]"
+                      name="CDT_NAME1" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[PAY_STATE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[PAY_STATE]"
+                      name="PAY_STATE" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[IS_ANTICIPATION]"
+                      dataType="r8"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[IS_ANTICIPATION]"
+                      name="IS_ANTICIPATION" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[AMOUNT]"
+                      dataType="numeric"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[AMOUNT]"
+                      name="AMOUNT"
+                      precision="21"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[CDT_ACCTG_IDTYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[CDT_ACCTG_IDTYPE]"
+                      name="CDT_ACCTG_IDTYPE" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[POST_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[POST_DATE]"
+                      name="POST_DATE" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[POST_TIME]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[POST_TIME]"
+                      name="POST_TIME" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Loading Data to Funding Database"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Intraday].[staging_fed_wire_cr_realtime]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Funding Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[Funding Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[TRN_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="TRN_DATE"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[TRN_DATE]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[TRN_DATE]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[TRN_NUMBER]"
+                      cachedDataType="numeric"
+                      cachedName="TRN_NUMBER"
+                      cachedPrecision="8"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[TRN_NUMBER]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[TRN_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[PAY_STATE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="PAY_STATE"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[PAY_STATE]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[PAY_STATE]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[AMOUNT]"
+                      cachedDataType="numeric"
+                      cachedName="AMOUNT"
+                      cachedPrecision="21"
+                      cachedScale="3"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[AMOUNT]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[AMOUNT]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[CDT_ACCTG_IDTYPE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="CDT_ACCTG_IDTYPE"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[CDT_ACCTG_IDTYPE]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[CDT_ACCTG_IDTYPE]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[IS_ANTICIPATION]"
+                      cachedDataType="r8"
+                      cachedName="IS_ANTICIPATION"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[IS_ANTICIPATION]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[IS_ANTICIPATION]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[CDT_NAME1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="35"
+                      cachedName="CDT_NAME1"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[COUNTERPARTY]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[CDT_NAME1]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[POST_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="POST_DATE"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[POST_DATE]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_DATE]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[POST_TIME]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="POST_TIME"
+                      externalMetadataColumnId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[POST_TIME]"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_TIME]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[TRN_DATE]"
+                      dataType="dbDate"
+                      name="TRN_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[TRN_NUMBER]"
+                      dataType="i4"
+                      name="TRN_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[PAY_STATE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="PAY_STATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[AMOUNT]"
+                      dataType="numeric"
+                      name="AMOUNT"
+                      precision="30"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[CDT_ACCTG_IDTYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="CDT_ACCTG_IDTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[IS_ANTICIPATION]"
+                      dataType="bool"
+                      name="IS_ANTICIPATION" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[COUNTERPARTY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="COUNTERPARTY" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[POST_DATE]"
+                      dataType="dbDate"
+                      name="POST_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[POST_TIME]"
+                      dataType="dbTime2"
+                      name="POST_TIME"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Fed Wire Cr Data To Staging Table.Paths[OLE DB Source Output]"
+              endId="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Fed Wire Dr Data To Staging Table"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0374EB06-8874-4E07-A0A8-972E0C1573A0}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Fed Wire Dr Data To Staging Table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database"
+              componentClassID="{165A526D-D5DE-47FF-96A6-F8274C19826B}"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Fed Wire Data from RGW Database"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable">User::FedWireDrSql</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[RGW Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[RGW Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[TRN_NUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[TRN_NUMBER]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[TRN_NUMBER]"
+                      name="TRN_NUMBER"
+                      precision="8"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[PAY_STATE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[PAY_STATE]"
+                      length="1"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[PAY_STATE]"
+                      name="PAY_STATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[AMOUNT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[AMOUNT]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[AMOUNT]"
+                      name="AMOUNT"
+                      precision="21"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[DBT_ACCTG_IDTYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[DBT_ACCTG_IDTYPE]"
+                      length="1"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[DBT_ACCTG_IDTYPE]"
+                      name="DBT_ACCTG_IDTYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[PROC_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[PROC_DATE]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[PROC_DATE]"
+                      name="PROC_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[IS_ANTICIPATION]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[IS_ANTICIPATION]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[IS_ANTICIPATION]"
+                      name="IS_ANTICIPATION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[DBT_NAME1]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[DBT_NAME1]"
+                      length="35"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[DBT_NAME1]"
+                      name="DBT_NAME1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[POST_DATE]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_DATE]"
+                      name="POST_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_TIME]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[POST_TIME]"
+                      length="11"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_TIME]"
+                      name="POST_TIME"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[TRN_NUMBER]"
+                      dataType="numeric"
+                      name="TRN_NUMBER"
+                      precision="8" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[PAY_STATE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="PAY_STATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[AMOUNT]"
+                      dataType="numeric"
+                      name="AMOUNT"
+                      precision="21"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[DBT_ACCTG_IDTYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="DBT_ACCTG_IDTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[PROC_DATE]"
+                      dataType="dbTimeStamp"
+                      name="PROC_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[IS_ANTICIPATION]"
+                      dataType="r8"
+                      name="IS_ANTICIPATION" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[DBT_NAME1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="35"
+                      name="DBT_NAME1" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[POST_DATE]"
+                      dataType="dbTimeStamp"
+                      name="POST_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].ExternalColumns[POST_TIME]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      name="POST_TIME" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[PROC_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[PROC_DATE]"
+                      name="PROC_DATE" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[TRN_NUMBER]"
+                      dataType="numeric"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[TRN_NUMBER]"
+                      name="TRN_NUMBER"
+                      precision="8" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[DBT_NAME1]"
+                      codePage="1252"
+                      dataType="str"
+                      length="35"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[DBT_NAME1]"
+                      name="DBT_NAME1" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[PAY_STATE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[PAY_STATE]"
+                      name="PAY_STATE" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[IS_ANTICIPATION]"
+                      dataType="r8"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[IS_ANTICIPATION]"
+                      name="IS_ANTICIPATION" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[AMOUNT]"
+                      dataType="numeric"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[AMOUNT]"
+                      name="AMOUNT"
+                      precision="21"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[DBT_ACCTG_IDTYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[DBT_ACCTG_IDTYPE]"
+                      name="DBT_ACCTG_IDTYPE" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[POST_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[POST_DATE]"
+                      name="POST_DATE" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[POST_TIME]"
+                      codePage="1252"
+                      dataType="str"
+                      length="11"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[POST_TIME]"
+                      name="POST_TIME" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Loading Data to Funding Database"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Intraday].[staging_fed_wire_dr_realtime]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Funding Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[Funding Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[PROC_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="PROC_DATE"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[TRN_DATE]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[PROC_DATE]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[TRN_NUMBER]"
+                      cachedDataType="numeric"
+                      cachedName="TRN_NUMBER"
+                      cachedPrecision="8"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[TRN_NUMBER]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[TRN_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[PAY_STATE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="PAY_STATE"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[PAY_STATE]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[PAY_STATE]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[AMOUNT]"
+                      cachedDataType="numeric"
+                      cachedName="AMOUNT"
+                      cachedPrecision="21"
+                      cachedScale="3"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[AMOUNT]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[AMOUNT]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[DBT_ACCTG_IDTYPE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="1"
+                      cachedName="DBT_ACCTG_IDTYPE"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[DBT_ACCTG_IDTYPE]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[DBT_ACCTG_IDTYPE]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[IS_ANTICIPATION]"
+                      cachedDataType="r8"
+                      cachedName="IS_ANTICIPATION"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[IS_ANTICIPATION]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[IS_ANTICIPATION]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[DBT_NAME1]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="35"
+                      cachedName="DBT_NAME1"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[COUNTERPARTY]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[DBT_NAME1]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[POST_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="POST_DATE"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[POST_DATE]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_DATE]" />
+                    <inputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].Columns[POST_TIME]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="11"
+                      cachedName="POST_TIME"
+                      externalMetadataColumnId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[POST_TIME]"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output].Columns[POST_TIME]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[TRN_DATE]"
+                      dataType="dbDate"
+                      name="TRN_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[TRN_NUMBER]"
+                      dataType="i4"
+                      name="TRN_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[PAY_STATE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="PAY_STATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[AMOUNT]"
+                      dataType="numeric"
+                      name="AMOUNT"
+                      precision="30"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[DBT_ACCTG_IDTYPE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1"
+                      name="DBT_ACCTG_IDTYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[IS_ANTICIPATION]"
+                      dataType="bool"
+                      name="IS_ANTICIPATION" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[COUNTERPARTY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="70"
+                      name="COUNTERPARTY" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[POST_DATE]"
+                      dataType="dbDate"
+                      name="POST_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input].ExternalColumns[POST_TIME]"
+                      dataType="dbTime2"
+                      name="POST_TIME"
+                      scale="7" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Fed Wire Dr Data To Staging Table.Paths[OLE DB Source Output]"
+              endId="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Staging tables"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0D68AB56-F185-4F68-A282-28B81180791E}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Staging tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{6A45E2B4-744E-4D86-B720-DED54AC12850}"
+          SQLTask:SqlStatementSource="truncate table [Intraday].[staging_fed_wire_cr_realtime]&#xA;truncate table [Intraday].[staging_fed_wire_dr_realtime]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{5C63EDE4-9A51-4F01-AF2C-A0C320520A02}"
+      DTS:From="Package\Truncate Staging tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load Fed Wire Cr Data To Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{F018CD16-E73A-418A-A3A5-27235761DCB0}"
+      DTS:From="Package\Load Fed Wire Cr Data To Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Insert Cr data to main table from Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{897B33DC-80E1-4043-8731-8A69D132A9F6}"
+      DTS:From="Package\Load Fed Wire Dr Data To Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1 1"
+      DTS:To="Package\Insert Dr data to main table from Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{7344F2CF-838D-4C32-8E2A-FCF88D4E8568}"
+      DTS:From="Package\Truncate Staging tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Load Fed Wire Dr Data To Staging Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="276,42"
+          Id="Package\Insert Cr data to main table from Staging"
+          TopLeft="121,315" />
+        <NodeLayout
+          Size="276,42"
+          Id="Package\Insert Dr data to main table from Staging"
+          TopLeft="498,311" />
+        <NodeLayout
+          Size="271,42"
+          Id="Package\Load Fed Wire Cr Data To Staging Table"
+          TopLeft="117,215" />
+        <NodeLayout
+          Size="272,42"
+          Id="Package\Load Fed Wire Dr Data To Staging Table"
+          TopLeft="494,211" />
+        <NodeLayout
+          Size="192,42"
+          Id="Package\Truncate Staging tables"
+          TopLeft="320,73" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="385.333333333333,115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-132.833333333333,100"
+              Start="0,0"
+              End="-132.833333333333,92.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.495867768595" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.495867768595"
+                    Point2="0,40.495867768595"
+                    Point3="-4,40.495867768595" />
+                  <mssgle:LineSegment
+                    End="-128.833333333333,40.495867768595" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-128.833333333333,40.495867768595"
+                    Point2="-132.833333333333,40.495867768595"
+                    Point3="-132.833333333333,44.495867768595" />
+                  <mssgle:LineSegment
+                    End="-132.833333333333,92.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="255.75,257">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58"
+              Start="0,0"
+              End="0,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1 1]"
+          TopLeft="633,253">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58"
+              Start="0,0"
+              End="0,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="446.666666666667,115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="183.333333333333,96"
+              Start="0,0"
+              End="183.333333333333,88.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.8760330578513" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.8760330578513"
+                    Point2="0,38.8760330578513"
+                    Point3="4,38.8760330578513" />
+                  <mssgle:LineSegment
+                    End="179.333333333333,38.8760330578513" />
+                  <mssgle:CubicBezierSegment
+                    Point1="179.333333333333,38.8760330578513"
+                    Point2="183.333333333333,38.8760330578513"
+                    Point3="183.333333333333,42.8760330578513" />
+                  <mssgle:LineSegment
+                    End="183.333333333333,88.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Fed Wire Cr Data To Staging Table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="244,42"
+          Id="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database"
+          TopLeft="319,204" />
+        <NodeLayout
+          Size="247,42"
+          Id="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database"
+          TopLeft="319,92" />
+        <EdgeLayout
+          Id="Package\Load Fed Wire Cr Data To Staging Table.Paths[OLE DB Source Output]"
+          TopLeft="441.75,134">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,70"
+              Start="0,0"
+              End="0,62.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,62.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Fed Wire Cr Data To Staging Table\Fed Wire Data from RGW Database">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Fed Wire Cr Data To Staging Table\Loading Data to Funding Database">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Load Fed Wire Dr Data To Staging Table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="244,42"
+          Id="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database"
+          TopLeft="319,204" />
+        <NodeLayout
+          Size="247,42"
+          Id="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database"
+          TopLeft="319,92" />
+        <EdgeLayout
+          Id="Package\Load Fed Wire Dr Data To Staging Table.Paths[OLE DB Source Output]"
+          TopLeft="441.75,134">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,70"
+              Start="0,0"
+              End="0,62.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,62.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Fed Wire Dr Data To Staging Table\Fed Wire Data from RGW Database">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Fed Wire Dr Data To Staging Table\Loading Data to Funding Database">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

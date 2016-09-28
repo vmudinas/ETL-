@@ -1,0 +1,966 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/2/2014 8:08:13 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7DU-2UA2510JVV"
+  DTS:CreatorName="UBOC-AD\UB68960"
+  DTS:DTSID="{4C0803FF-52F5-4F8B-8BDE-6A85C7F0F74E}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="LoadHypoTradeValuationMonthly"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="121"
+  DTS:VersionGUID="{2EC84F27-1669-422B-8879-7E1C7EEE4A28}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CORP_TSY_ADMIN]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{e81cb2df-bde2-4ddb-871b-fcda832abe99}"
+      DTS:ObjectName="CORP_TSY_ADMIN">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::sql_server_name]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_ADMIN;Provider=SQLNCLI11;Integrated Security=SSPI;Auto Translate=false;Application Name=SSIS-New Package-{F4646F01-776E-4EA9-9D6A-8969005C3148}DestinationConnectionOLEDB;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CORP_TSY_ALM]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{fa970490-4a7d-4256-be37-4bc7de66c667}"
+      DTS:ObjectName="CORP_TSY_ALM">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::sql_server_name]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_ALM;Provider=SQLNCLI11;Integrated Security=SSPI;Auto Translate=false;Application Name=SSIS-New Package-{F4646F01-776E-4EA9-9D6A-8969005C3148}DestinationConnectionOLEDB;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[HypoTradesMonthEndVal_05-30-2014]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{26F15D50-062E-4228-B946-D6CA22D2457B}"
+      DTS:ObjectName="HypoTradesMonthEndVal_05-30-2014">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::hypo_trade_file_name]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="1033"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="\\uboc-ad\data\lahq-groups\Treasury_93100\Derivatives\Hedge Effectiveness - Production\Inbound\HypoTradesMonthEndVal_12-02-2014.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="131"
+              DTS:DataPrecision="10"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Original TradeID"
+              DTS:DTSID="{04E7667B-3821-4F46-95E9-69BF6924D04C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="131"
+              DTS:DataPrecision="10"
+              DTS:TextQualified="True"
+              DTS:ObjectName="TradeID"
+              DTS:DTSID="{56976D58-7F66-4F70-9D09-F3748B3BD122}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Maturity Date"
+              DTS:DTSID="{4089C32F-2811-4548-ABBC-24E1DB57E6D2}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="14"
+              DTS:DataScale="10"
+              DTS:TextQualified="True"
+              DTS:ObjectName="B E Rate"
+              DTS:DTSID="{7665E4CE-E387-458E-BC1D-7DF0B91AC534}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="NPV_NET"
+              DTS:DTSID="{3689E6C9-9D44-4AB8-8115-356667E2EBEB}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:DataType="133"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Valuation Date"
+              DTS:DTSID="{46E91015-F9E4-4CBD-BC34-C2D89CB5EE4F}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{014B66CA-ECB5-433C-B0DA-9589343C809F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date">
+      <DTS:VariableValue
+        DTS:DataType="7">7/31/2015 9:16:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0AEED893-60D0-42C3-8B15-A0B34EA0CBDE}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;\\\\uboc-ad\\data\\lahq-groups\\Treasury_93100\\Derivatives\\Hedge Effectiveness - Production\\Inbound\\&quot; + &quot;HypoTradesMonthEndVal_&quot; + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::last_business_date_of_month] ), 2) + &quot;-&quot; + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::last_business_date_of_month] ), 2) + &quot;-&quot; +  (DT_STR, 4, 1252) DATEPART(&quot;yy&quot; , @[User::last_business_date_of_month] ) + &quot;.csv&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="hypo_trade_file_name">
+      <DTS:VariableValue
+        DTS:DataType="8">\\uboc-ad\data\lahq-groups\Treasury_93100\Derivatives\Hedge Effectiveness - Production\Inbound\HypoTradesMonthEndVal_12-02-2014.csv</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9E53BDDB-275F-4469-A334-0709BC219E82}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="last_business_date_of_month">
+      <DTS:VariableValue
+        DTS:DataType="7">12/2/2014 10:32:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{13339E4F-799A-48E7-84CC-8990BF11A561}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="last_calender_date_of_month">
+      <DTS:VariableValue
+        DTS:DataType="7">4/20/2015 12:10:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8930A2A7-CE85-4C10-BC70-2E74DA476E02}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="sql_server_name">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A5608869-AC99-45D8-A2C7-FB59D8429A7C}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[User::last_calender_date_of_month]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="valuation_date">
+      <DTS:VariableValue
+        DTS:DataType="7">4/20/2015 12:10:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get last business Date of the month"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{142164e8-a5b7-40a5-b0b9-2d3a0b7c6d83}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get last business Date of the month"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{e81cb2df-bde2-4ddb-871b-fcda832abe99}"
+          SQLTask:SqlStatementSource="select dbo.get_last_business_date_of_month (dateadd(m,1,?))"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::last_business_date_of_month" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::as_of_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get last Calender Date of the month"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5e5f4b25-af2a-41ad-ad4a-0c1d6c127255}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get last Calender Date of the month"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{fa970490-4a7d-4256-be37-4bc7de66c667}"
+          SQLTask:SqlStatementSource="SELECT DATEADD(s,-1,DATEADD(mm, DATEDIFF(m,0,?)+1,0))"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::last_calender_date_of_month" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::as_of_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Hypo Trade Valuation Data"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FC341F9B-CCB0-4A46-A679-BA2094ED4A65}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Hypo Trade Valuation Data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{fa970490-4a7d-4256-be37-4bc7de66c667}"
+          SQLTask:SqlStatementSource="exec [HedgeEffectiveness].[ins_hypo_trade_valuation_monthly] ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::valuation_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Staging Data"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{D921604E-09F9-4A7D-B029-546CE0051891}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Staging Data"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Staging Data\Conditional Split"
+              componentClassID="{7F88F654-4E20-4D14-84F4-AF9C925D3087}"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Evaluates and directs rows in a dataset."
+              name="Conditional Split"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Staging Data\Conditional Split.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Staging Data\Conditional Split.Inputs[Conditional Split Input].Columns[Valuation Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Valuation Date"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Valuation Date]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Staging Data\Conditional Split.Outputs[Case 1]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Case 1"
+                  synchronousInputId="Package\Load Staging Data\Conditional Split.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">(DT_DBDATE)#{Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Valuation Date]} == (DT_DBDATE)@[User::valuation_date]</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">(DT_DBDATE)[Valuation Date] == (DT_DBDATE)@[User::valuation_date]</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Staging Data\Conditional Split.Outputs[Conditional Split Default Output]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="Conditional Split Default Output"
+                  synchronousInputId="Package\Load Staging Data\Conditional Split.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Staging Data\Conditional Split.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Load Staging Data\Conditional Split.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Staging Data\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Data\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Staging Data\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Data\Conditional Split.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Staging Data\Flat File Source"
+              componentClassID="{D23FD76B-F51D-420F-BBCB-19CBF6AC1AB4}"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="1033"
+              name="Flat File Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Staging Data\Flat File Source.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[HypoTradesMonthEndVal_05-30-2014]"
+                  connectionManagerRefId="Package.ConnectionManagers[HypoTradesMonthEndVal_05-30-2014]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Original TradeID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Original TradeID]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Original TradeID]"
+                      name="Original TradeID"
+                      precision="10"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[TradeID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[TradeID]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[TradeID]"
+                      name="TradeID"
+                      precision="10"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Maturity Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Maturity Date]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Maturity Date]"
+                      name="Maturity Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[B E Rate]"
+                      dataType="decimal"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[B E Rate]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[B E Rate]"
+                      name="B E Rate"
+                      scale="10"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[NPV_NET]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[NPV_NET]"
+                      length="50"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[NPV_NET]"
+                      name="NPV_NET"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Valuation Date]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Valuation Date]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Valuation Date]"
+                      name="Valuation Date"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Original TradeID]"
+                      dataType="numeric"
+                      name="Original TradeID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[TradeID]"
+                      dataType="numeric"
+                      name="TradeID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Maturity Date]"
+                      dataType="dbDate"
+                      name="Maturity Date" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[B E Rate]"
+                      dataType="decimal"
+                      name="B E Rate"
+                      scale="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[NPV_NET]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="NPV_NET" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].ExternalColumns[Valuation Date]"
+                      dataType="dbDate"
+                      name="Valuation Date" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1252"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Staging Data\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[HedgeEffectiveness].[hypo_trade_valuation_stg]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Staging Data\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CORP_TSY_ALM]"
+                  connectionManagerRefId="Package.ConnectionManagers[CORP_TSY_ALM]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Original TradeID]"
+                      cachedDataType="numeric"
+                      cachedName="Original TradeID"
+                      cachedPrecision="10"
+                      externalMetadataColumnId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_TRADE_ID]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Original TradeID]" />
+                    <inputColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[TradeID]"
+                      cachedDataType="numeric"
+                      cachedName="TradeID"
+                      cachedPrecision="10"
+                      externalMetadataColumnId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HYPO_TRADE_ID]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[TradeID]" />
+                    <inputColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Maturity Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Maturity Date"
+                      externalMetadataColumnId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MATURITY_DATE]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Maturity Date]" />
+                    <inputColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[B E Rate]"
+                      cachedDataType="decimal"
+                      cachedName="B E Rate"
+                      cachedScale="10"
+                      externalMetadataColumnId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BE_RATE]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[B E Rate]" />
+                    <inputColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[NPV_NET]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="NPV_NET"
+                      externalMetadataColumnId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NVP_NET]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[NPV_NET]" />
+                    <inputColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Valuation Date]"
+                      cachedDataType="dbDate"
+                      cachedName="Valuation Date"
+                      externalMetadataColumnId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VALUATION_DATE]"
+                      lineageId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output].Columns[Valuation Date]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ORG_TRADE_ID]"
+                      dataType="numeric"
+                      name="ORG_TRADE_ID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[HYPO_TRADE_ID]"
+                      dataType="numeric"
+                      name="HYPO_TRADE_ID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MATURITY_DATE]"
+                      dataType="dbDate"
+                      name="MATURITY_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BE_RATE]"
+                      dataType="numeric"
+                      name="BE_RATE"
+                      precision="13"
+                      scale="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[NVP_NET]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="NVP_NET" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VALUATION_DATE]"
+                      dataType="dbDate"
+                      name="VALUATION_DATE" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Staging Data\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Staging Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Data\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Staging Data.Paths[Case 1]"
+              endId="Package\Load Staging Data\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Case 1"
+              startId="Package\Load Staging Data\Conditional Split.Outputs[Case 1]" />
+            <path
+              refId="Package\Load Staging Data.Paths[Flat File Source Output]"
+              endId="Package\Load Staging Data\Conditional Split.Inputs[Conditional Split Input]"
+              name="Flat File Source Output"
+              startId="Package\Load Staging Data\Flat File Source.Outputs[Flat File Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Hypo Trade Valuation Data"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E4312311-5FE0-4A5B-9365-A00AD842C244}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Hypo Trade Valuation Data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{fa970490-4a7d-4256-be37-4bc7de66c667}"
+          SQLTask:SqlStatementSource="truncate table [HedgeEffectiveness].[hypo_trade_valuation_stg]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{BEF15109-DB5C-422B-85BC-6086C4D74FCA}"
+      DTS:From="Package\Get last business Date of the month"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Truncate Hypo Trade Valuation Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{E6228AA0-D31F-42B4-8975-C87FC0FC966D}"
+      DTS:From="Package\Truncate Hypo Trade Valuation Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Load Staging Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{6E066A07-306C-47ED-AF26-7C8192FF5572}"
+      DTS:From="Package\Load Staging Data"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Load Hypo Trade Valuation Data" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{08105A1E-61C3-4216-A3CC-D5DFDF727464}"
+      DTS:From="Package\Get last Calender Date of the month"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Get last business Date of the month" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="226,44"
+          Id="Package\Get last business Date of the month"
+          TopLeft="11.4245283018868,84.5943396226415" />
+        <NodeLayout
+          Size="229,44"
+          Id="Package\Get last Calender Date of the month"
+          TopLeft="5.91509433962264,5.5" />
+        <NodeLayout
+          Size="202,44"
+          Id="Package\Load Hypo Trade Valuation Data"
+          TopLeft="12.5188679245283,345.424528301887" />
+        <NodeLayout
+          Size="219,44"
+          Id="Package\Load Staging Data"
+          TopLeft="10.5188679245283,256.405660377359" />
+        <NodeLayout
+          Size="237,44"
+          Id="Package\Truncate Hypo Trade Valuation Data"
+          TopLeft="5.5,175.650943396226" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="123.801886792453,219.575471698113">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-3.9622641509434,36.8301886792453"
+              Start="0,0"
+              End="-3.9622641509434,29.3301886792453">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.4150943396226" />
+                  <mssgle:LineSegment
+                    End="-3.9622641509434,18.4150943396226" />
+                  <mssgle:LineSegment
+                    End="-3.9622641509434,29.3301886792453" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="119.839622641509,300.330188679245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-6.49056603773585,45.0943396226415"
+              Start="0,0"
+              End="-6.49056603773585,37.5943396226415">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5283018867925" />
+                  <mssgle:LineSegment
+                    End="-6.49056603773585,22.5283018867925" />
+                  <mssgle:LineSegment
+                    End="-6.49056603773585,37.5943396226415" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="120.216981132075,49.4245283018868">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="4,35.1698113207547"
+              Start="0,0"
+              End="4,27.6698113207547">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5849056603774" />
+                  <mssgle:LineSegment
+                    End="4,17.5849056603774" />
+                  <mssgle:LineSegment
+                    End="4,27.6698113207547" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="124.216981132075,128.518867924528">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-0.415094339622641,47.1320754716981"
+              Start="0,0"
+              End="-0.415094339622641,39.6320754716981">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5471698113208" />
+                  <mssgle:LineSegment
+                    End="-0.415094339622641,23.5471698113208" />
+                  <mssgle:LineSegment
+                    End="-0.415094339622641,39.6320754716981" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

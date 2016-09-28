@@ -1,0 +1,904 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/23/2013 7:00:25 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7DU-2UA2510JVV"
+  DTS:CreatorName="UBOC-AD\xu93148"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{E774A640-FA1E-492A-8020-907A745E88F8}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="1033"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="LoadPortfolio"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="75"
+  DTS:VersionGUID="{57214419-B6A6-4194-B956-930350065236}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{CAE75221-EF47-40D2-9392-F59AC91F6135}"
+      DTS:ObjectName="DestinationConnectionOLEDB">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::database_server]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=false;Application Name=SSIS-load_funding-{CAE75221-EF47-40D2-9392-F59AC91F6135}DestinationConnectionOLEDB;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+      DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{19E9B5ED-1CB0-431C-9849-B5FDE15F091B}"
+      DTS:ObjectName="SourceConnectionAdoNET">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::dmq_password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::dmq_server]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::dmq_user]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=P003;User ID=SVC_DMQ_DATA;Persist Security Info=True;Unicode=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3E319423-07B4-4BC0-BC6E-6001B18975E0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date">
+      <DTS:VariableValue
+        DTS:DataType="7">12/14/2015</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{08B682D0-B1F4-40FE-BDBE-8CE67851B6CD}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_STR, 4, 1252) DATEPART(&quot;yy&quot; ,@[User::as_of_date]) + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::as_of_date]), 2)  + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::as_of_date]), 2)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date_yyyymmdd">
+      <DTS:VariableValue
+        DTS:DataType="8">20151214</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{92B9F12D-6933-4162-8ADC-191015DDEDBF}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="database_server">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{884362E8-0436-4C1D-A040-3681EBB3B036}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_password">
+      <DTS:VariableValue
+        DTS:DataType="8">svc987dm</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DF8D39F1-A2B6-4422-BFBD-28ACE792DB77}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_server">
+      <DTS:VariableValue
+        DTS:DataType="8">P003</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9154C817-A7E9-4EEF-800E-84465B8E3B89}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_user">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_DMQ_DATA</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DBA1D8CE-D90D-4EED-905C-37A4194A8206}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="port_codes">
+      <DTS:VariableValue
+        DTS:DataType="8">'AABSCC','AAUTOS','ACLO','ACMBS'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1E720798-5BA3-4C93-B4F2-73981C0C5B29}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="prev_as_of_date">
+      <DTS:VariableValue
+        DTS:DataType="7">12/15/2015</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{59C1E108-8249-4C68-A563-C741EDD7D651}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_STR, 4, 1252) DATEPART(&quot;yy&quot; ,@[User::prev_as_of_date]) + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::prev_as_of_date]), 2)  + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::prev_as_of_date]), 2)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="prev_as_of_date_yyyymmdd">
+      <DTS:VariableValue
+        DTS:DataType="8">20151215</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Get Portfolio Codes"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{98E218AC-7498-418C-B946-C4A5037807CE}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Portfolio Codes"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CAE75221-EF47-40D2-9392-F59AC91F6135}"
+          SQLTask:SqlStatementSource="EXEC [CashFlowForecast].[get_portfolio_dmq_cod] ? OUTPUT" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::port_codes"
+            SQLTask:ParameterDirection="Output"
+            SQLTask:DataType="129"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Prev Business Date"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AE0B5EF0-DBB1-412D-8BB8-7A60BF19BAD9}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Prev Business Date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CAE75221-EF47-40D2-9392-F59AC91F6135}"
+          SQLTask:SqlStatementSource="select CashFlowForecast.get_business_date(?,-1)"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::prev_as_of_date" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::as_of_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Insert Funding Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AAFE6D82-90EC-4FF4-BF41-7AA9A79F1C36}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Insert Funding Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CAE75221-EF47-40D2-9392-F59AC91F6135}"
+          SQLTask:SqlStatementSource="execute CashFlowForecast.ins_portfolio_from_staging" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Staging Table"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{ABF86622-3BF8-4811-84E6-8A9C51745F70}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Staging Table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[Source - Query].[SqlCommand]">"SELECT TO_DATE(TO_CHAR(FACT.INTRADER_DAILY_DATE_ID),'YYYYMMDD') AS BUSINESS_DATE,
+            FACT.PORT_ID, 
+            ACCT.INTRADER_ACCT_SETTLE_DT AS PAYMENT_DATE, 
+            'S' AS PAYMENT_TYPE,
+            SUM(ORIG_PRIN_AMT) AS BALANCE
+FROM ODMDMQ.INTRADER_DAILY_FACT_B FACT, 
+          ODMDMQ.INTRADER_ACCT_DIM_B ACCT
+WHERE FACT.INTRADER_ACCT_DIM_ID = ACCT.INTRADER_ACCT_DIM_ID 
+AND FACT.INTRADER_DAILY_DATE_ID = '" + @[User::as_of_date_yyyymmdd] + "'
+AND ACCT.INTRADER_ACCT_SETTLE_DT &gt;= TO_DATE('" +@[User::as_of_date_yyyymmdd] +"','YYYYMMDD')
+AND FACT.PORT_ID in ( "+ @[User::port_codes] +" ) 
+GROUP BY FACT.INTRADER_DAILY_DATE_ID, FACT.PORT_ID, ACCT.INTRADER_ACCT_SETTLE_DT
+UNION
+SELECT TO_DATE(TO_CHAR(FACT.INTRADER_DAILY_DATE_ID),'YYYYMMDD') AS BUSINESS_DATE,
+            FACT.PORT_ID, 
+            ACCT.INTRADER_ACCT_MTRTY_DT AS PAYMENT_DATE, 
+            'M' AS PAYMENT_TYPE,
+            SUM(ORIG_PAR_AMT + (CASE WHEN ORIG_PAR_AMT &gt; 0 THEN ACCRUED_INT_AMT ELSE ACCRUED_INT_AMT * -1 END )) AS BALANCE
+FROM ODMDMQ.INTRADER_DAILY_FACT_B FACT, 
+          ODMDMQ.INTRADER_ACCT_DIM_B ACCT
+WHERE FACT.INTRADER_ACCT_DIM_ID = ACCT.INTRADER_ACCT_DIM_ID 
+AND FACT.INTRADER_DAILY_DATE_ID = '" + @[User::as_of_date_yyyymmdd] + "'
+AND ACCT.INTRADER_ACCT_MTRTY_DT &gt;= TO_DATE('" +@[User::as_of_date_yyyymmdd] +"','YYYYMMDD')
+AND FACT.PORT_ID in ( " + @[User::port_codes] + " )
+GROUP BY FACT.INTRADER_DAILY_DATE_ID, FACT.PORT_ID, ACCT.INTRADER_ACCT_MTRTY_DT
+UNION
+SELECT TO_DATE( " + @[User::as_of_date_yyyymmdd] + ",'YYYYMMDD') AS BUSINESS_DATE,
+            FACT.PORT_ID, 
+            ACCT.INTRADER_ACCT_MTRTY_DT AS PAYMENT_DATE, 
+            'M' AS PAYMENT_TYPE,
+            SUM(ORIG_PAR_AMT + (CASE WHEN ORIG_PAR_AMT &gt; 0 THEN ACCRUED_INT_AMT ELSE ACCRUED_INT_AMT * -1 END )) AS BALANCE
+FROM ODMDMQ.INTRADER_DAILY_FACT_B FACT, 
+          ODMDMQ.INTRADER_ACCT_DIM_B ACCT
+WHERE FACT.INTRADER_ACCT_DIM_ID = ACCT.INTRADER_ACCT_DIM_ID 
+AND FACT.INTRADER_DAILY_DATE_ID = '" + @[User::prev_as_of_date_yyyymmdd] + "'
+AND ACCT.INTRADER_ACCT_MTRTY_DT = TO_DATE('" +@[User::as_of_date_yyyymmdd] +"','YYYYMMDD')
+AND FACT.PORT_ID in ( " + @[User::port_codes] + " )
+GROUP BY FACT.INTRADER_DAILY_DATE_ID, FACT.PORT_ID, ACCT.INTRADER_ACCT_MTRTY_DT"</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Staging Table\OLE DB Destination"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[CashFlowForecast].[staging_portfolio]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Staging Table\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionOLEDB]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BALANCE]"
+                      cachedDataType="numeric"
+                      cachedName="BALANCE"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BALANCE]"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[BALANCE]" />
+                    <inputColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PAYMENT_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="PAYMENT_DATE"
+                      externalMetadataColumnId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PAYMENT_DATE]"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[PAYMENT_DATE]" />
+                    <inputColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PORT_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="PORT_ID"
+                      externalMetadataColumnId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DMQ_PORT_ID]"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[PORT_ID]" />
+                    <inputColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[BUSINESS_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="BUSINESS_DATE"
+                      externalMetadataColumnId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[BUSINESS_DATE]" />
+                    <inputColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PAYMENT_TYPE]"
+                      cachedDataType="wstr"
+                      cachedLength="1"
+                      cachedName="PAYMENT_TYPE"
+                      externalMetadataColumnId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PAYMENT_TYPE]"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[PAYMENT_TYPE]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PAYMENT_DATE]"
+                      dataType="dbTimeStamp"
+                      name="PAYMENT_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[BALANCE]"
+                      dataType="numeric"
+                      name="BALANCE"
+                      precision="25"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DMQ_PORT_ID]"
+                      dataType="wstr"
+                      length="20"
+                      name="DMQ_PORT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PAYMENT_TYPE]"
+                      dataType="wstr"
+                      length="1"
+                      name="PAYMENT_TYPE" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Table\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Staging Table\Source - Query"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              name="Source - Query"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT TO_DATE(TO_CHAR(FACT.INTRADER_DAILY_DATE_ID),'YYYYMMDD') AS BUSINESS_DATE,
+            FACT.PORT_ID, 
+            ACCT.INTRADER_ACCT_SETTLE_DT AS PAYMENT_DATE, 
+            'S' AS PAYMENT_TYPE,
+            SUM(ORIG_PRIN_AMT) AS BALANCE
+FROM ODMDMQ.INTRADER_DAILY_FACT_B FACT, 
+          ODMDMQ.INTRADER_ACCT_DIM_B ACCT
+WHERE FACT.INTRADER_ACCT_DIM_ID = ACCT.INTRADER_ACCT_DIM_ID 
+AND FACT.INTRADER_DAILY_DATE_ID = '20151214'
+AND ACCT.INTRADER_ACCT_SETTLE_DT &gt;= TO_DATE('20151214','YYYYMMDD')
+AND FACT.PORT_ID in ( 'AABSCC','AAUTOS','ACLO','ACMBS' ) 
+GROUP BY FACT.INTRADER_DAILY_DATE_ID, FACT.PORT_ID, ACCT.INTRADER_ACCT_SETTLE_DT
+UNION
+SELECT TO_DATE(TO_CHAR(FACT.INTRADER_DAILY_DATE_ID),'YYYYMMDD') AS BUSINESS_DATE,
+            FACT.PORT_ID, 
+            ACCT.INTRADER_ACCT_MTRTY_DT AS PAYMENT_DATE, 
+            'M' AS PAYMENT_TYPE,
+            SUM(ORIG_PAR_AMT + (CASE WHEN ORIG_PAR_AMT &gt; 0 THEN ACCRUED_INT_AMT ELSE ACCRUED_INT_AMT * -1 END )) AS BALANCE
+FROM ODMDMQ.INTRADER_DAILY_FACT_B FACT, 
+          ODMDMQ.INTRADER_ACCT_DIM_B ACCT
+WHERE FACT.INTRADER_ACCT_DIM_ID = ACCT.INTRADER_ACCT_DIM_ID 
+AND FACT.INTRADER_DAILY_DATE_ID = '20151214'
+AND ACCT.INTRADER_ACCT_MTRTY_DT &gt;= TO_DATE('20151214','YYYYMMDD')
+AND FACT.PORT_ID in ( 'AABSCC','AAUTOS','ACLO','ACMBS' )
+GROUP BY FACT.INTRADER_DAILY_DATE_ID, FACT.PORT_ID, ACCT.INTRADER_ACCT_MTRTY_DT
+UNION
+SELECT TO_DATE( 20151214,'YYYYMMDD') AS BUSINESS_DATE,
+            FACT.PORT_ID, 
+            ACCT.INTRADER_ACCT_MTRTY_DT AS PAYMENT_DATE, 
+            'M' AS PAYMENT_TYPE,
+            SUM(ORIG_PAR_AMT + (CASE WHEN ORIG_PAR_AMT &gt; 0 THEN ACCRUED_INT_AMT ELSE ACCRUED_INT_AMT * -1 END )) AS BALANCE
+FROM ODMDMQ.INTRADER_DAILY_FACT_B FACT, 
+          ODMDMQ.INTRADER_ACCT_DIM_B ACCT
+WHERE FACT.INTRADER_ACCT_DIM_ID = ACCT.INTRADER_ACCT_DIM_ID 
+AND FACT.INTRADER_DAILY_DATE_ID = '20151215'
+AND ACCT.INTRADER_ACCT_MTRTY_DT = TO_DATE('20151214','YYYYMMDD')
+AND FACT.PORT_ID in ( 'AABSCC','AAUTOS','ACLO','ACMBS' )
+GROUP BY FACT.INTRADER_DAILY_DATE_ID, FACT.PORT_ID, ACCT.INTRADER_ACCT_MTRTY_DT</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Staging Table\Source - Query.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[BUSINESS_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[BUSINESS_DATE]"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[BUSINESS_DATE]"
+                      name="BUSINESS_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[PORT_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PORT_ID]"
+                      length="30"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[PORT_ID]"
+                      name="PORT_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[PAYMENT_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PAYMENT_DATE]"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[PAYMENT_DATE]"
+                      name="PAYMENT_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[PAYMENT_TYPE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PAYMENT_TYPE]"
+                      length="1"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[PAYMENT_TYPE]"
+                      name="PAYMENT_TYPE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[BALANCE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[BALANCE]"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].Columns[BALANCE]"
+                      name="BALANCE"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[BUSINESS_DATE]"
+                      dataType="dbTimeStamp"
+                      name="BUSINESS_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PORT_ID]"
+                      dataType="wstr"
+                      length="30"
+                      name="PORT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PAYMENT_DATE]"
+                      dataType="dbTimeStamp"
+                      name="PAYMENT_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PAYMENT_TYPE]"
+                      dataType="wstr"
+                      length="1"
+                      name="PAYMENT_TYPE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[BALANCE]"
+                      dataType="numeric"
+                      name="BALANCE"
+                      precision="38"
+                      scale="4" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[BUSINESS_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[BUSINESS_DATE]"
+                      name="BUSINESS_DATE" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[PORT_ID]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[PORT_ID]"
+                      name="PORT_ID" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[PAYMENT_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[PAYMENT_DATE]"
+                      name="PAYMENT_DATE" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[PAYMENT_TYPE]"
+                      dataType="wstr"
+                      length="1"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[PAYMENT_TYPE]"
+                      name="PAYMENT_TYPE" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[BALANCE]"
+                      dataType="numeric"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[BALANCE]"
+                      name="BALANCE"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Staging Table.Paths[ADO NET Source Output]"
+              endId="Package\Load Staging Table\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Load Staging Table\Source - Query.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Staging Table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7514DDB5-D83D-49E4-BC4B-A0780D2161E9}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Staging Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{CAE75221-EF47-40D2-9392-F59AC91F6135}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE CashFlowForecast.staging_portfolio" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{B4672A4C-3B3A-4E6D-B2DE-E9C1639402C1}"
+      DTS:From="Package\Truncate Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{268FA620-E8DD-4C30-9723-722EEFBD2FF3}"
+      DTS:From="Package\Load Staging Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Insert Funding Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{A47A3D86-7AAB-4C52-B105-69A583DC73B7}"
+      DTS:From="Package\Get Portfolio Codes"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Truncate Staging Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{C49301B2-A0BD-4B9B-A1E7-D69D5698FFCB}"
+      DTS:From="Package\Get Prev Business Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Get Portfolio Codes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="216,42"
+          Id="Package\Get Portfolio Codes"
+          TopLeft="206,123" />
+        <NodeLayout
+          Size="215,44"
+          Id="Package\Get Prev Business Date"
+          TopLeft="206,34.575471698113" />
+        <NodeLayout
+          Size="204,44"
+          Id="Package\Insert Funding Table"
+          TopLeft="212.518867924528,421.575471698113" />
+        <NodeLayout
+          Size="206,44"
+          Id="Package\Load Staging Table"
+          TopLeft="213.292452830189,328.518867924528" />
+        <NodeLayout
+          Size="205,44"
+          Id="Package\Truncate Staging Table"
+          TopLeft="210.5,218.820754716981" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="314.646226415094,262.820754716981">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,65.698113207547"
+              Start="0,0"
+              End="0,58.198113207547">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.198113207547" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="315.405660377358,372.518867924528">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,49.056603773585"
+              Start="0,0"
+              End="0,41.556603773585">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,41.556603773585" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="313.5,165">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.820754716981"
+              Start="0,0"
+              End="0,46.320754716981">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.320754716981" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="313.75,78.575471698113">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.424528301887"
+              Start="0,0"
+              End="0,36.924528301887">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.924528301887" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load Staging Table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Load Staging Table\Source - Query"
+          TopLeft="134.292452830189,59.5" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Load Staging Table\OLE DB Destination"
+          TopLeft="129.5,177.5" />
+        <EdgeLayout
+          Id="Package\Load Staging Table.Paths[ADO NET Source Output]"
+          TopLeft="199.783018867925,103.424528301887">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,74.0754716981132"
+              Start="0,0"
+              End="0,66.5754716981132">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.5754716981132" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Staging Table\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Staging Table\Source - Query">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

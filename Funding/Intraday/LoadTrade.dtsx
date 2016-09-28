@@ -1,0 +1,1242 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/22/2016 10:54:18 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7NU-5CG4422XTB"
+  DTS:CreatorName="UBOC-AD\ub68960"
+  DTS:DTSID="{A115C630-76D9-4C21-B457-B7ED05C2F321}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="LoadTrade"
+  DTS:PackageType="5"
+  DTS:VersionBuild="46"
+  DTS:VersionGUID="{1555AFE7-A267-4DC4-B781-98B2C2BC17FC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Funding Database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{9DC75D71-80C2-44BC-B570-00CA6BE3D6B7}"
+      DTS:ObjectName="Funding Database">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::DatabaseServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Intrader Database]"
+      DTS:CreationName="ODBC"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{37B4958F-B47C-4B98-89FA-53332DD552F3}"
+      DTS:ObjectName="Intrader Database">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[User::IntraderConnString]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::IntraderPassword]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="uid=UBCODBC1;Dsn=IntraderProd;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA61gIMcuje062Jim19xdh+QAAAAAIAAAARABUAFMAAAADZgAAwAAAABAAAACzNj2EBpHnbSOeziyEcOk0AAAAAASAAACgAAAAEAAAADRdDZ7ftiF1cD0obWs2JqYYAAAA9hvzWEW+C6cDDev54kZr6zcHHFkHZ5SxFAAAADC3VdhvPQywJ34sN/5LIsDvw0LR</DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D44113CE-57A0-4F75-BB2B-DFE80D2B8E32}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AsOfDate">
+      <DTS:VariableValue
+        DTS:DataType="7">4/4/2016 11:08:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{25F8DD43-55CF-4151-9F90-AE4715D54507}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DatabaseServerName">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9A606722-FA21-4DEB-822F-8E035587C6A8}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;SELECT \&quot;trade-dt\&quot; as_of_date, ticket, stat, \&quot;port-id\&quot;, \&quot;sec-id\&quot;, \&quot;loc-id\&quot;, cusip, psc, \&quot;cust-num\&quot;, \&quot;ent-dt\&quot;, \&quot;trade-dt\&quot;, \&quot;settle-dt\&quot;, \&quot;mat-dt\&quot;, par, face, \&quot;tot-amt\&quot;, factor, \&quot;reason-cd\&quot;, \&quot;del-cd\&quot;, \&quot;cstdy-loc\&quot;, \&quot;pay-cd\&quot; FROM PUB.trade WHERE \&quot;trade-dt\&quot; = '&quot; + (DT_WSTR, 10) (DT_DBDATE) @[User::AsOfDate] + &quot;'&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="GetTradeSql">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT "trade-dt" as_of_date, ticket, stat, "port-id", "sec-id", "loc-id", cusip, psc, "cust-num", "ent-dt", "trade-dt", "settle-dt", "mat-dt", par, face, "tot-amt", factor, "reason-cd", "del-cd", "cstdy-loc", "pay-cd" FROM PUB.trade WHERE "trade-dt" = '2016-04-04'</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8412E2F9-14C5-49EE-8B0D-6235B17C63C6}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="IntraderConnString">
+      <DTS:VariableValue
+        DTS:DataType="8">uid=UBCODBC1;Dsn=IntraderProd;</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DC3CF015-D678-4646-973E-BD3A80D69E29}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="IntraderPassword">
+      <DTS:VariableValue
+        DTS:DataType="8">UBCODBC1!</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1050A79F-170A-4816-AC62-39FF5B25D084}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="IterationId">
+      <DTS:VariableValue
+        DTS:DataType="3">6</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Downlaod Trade data to Staging"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{BC596F03-2D19-44F0-B855-0E00CA79FD84}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Downlaod Trade data to Staging"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[ODBC Source].[SqlCommand]">@[User::GetTradeSql]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Downlaod Trade data to Staging\ODBC Source"
+              componentClassID="{A77F5655-A006-443A-9B7E-90B6BD55CB84}"
+              contactInfo="ODBC Source;Connector for Open Database Connectivity (ODBC) by Attunity; Attunity Ltd.; All Rights Reserved; http://www.attunity.com;1"
+              description="ODBC Source"
+              name="ODBC Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The name of the table to be fetched."
+                  expressionType="Notify"
+                  name="TableName">"PUB"."trade"</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand">SELECT "trade-dt" as_of_date, ticket, stat, "port-id", "sec-id", "loc-id", cusip, psc, "cust-num", "ent-dt", "trade-dt", "settle-dt", "mat-dt", par, face, "tot-amt", factor, "reason-cd", "del-cd", "cstdy-loc", "pay-cd" FROM PUB.trade WHERE "trade-dt" = '2016-04-04'</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows fetched per batch."
+                  expressionType="Notify"
+                  name="BatchSize">1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines the chunk size allocation for LOB columns"
+                  expressionType="Notify"
+                  name="LobChunkSize">32768</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines how the component exposes CHAR columns. If False, CHAR columns are exposed as (multi-)byte strings (DT_STR), if True, CHAR columns are exposed as wide strings (DT_WSTR)"
+                  expressionType="Notify"
+                  name="ExposeCharColumnsAsUnicode">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds to wait for an SQL statement to execute before returning to the application."
+                  expressionType="Notify"
+                  name="StatementTimeout">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The code page to use when code page information is unavailable from the data source."
+                  expressionType="Notify"
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Int32"
+                  description="The mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The method used for fetching data."
+                  expressionType="Notify"
+                  name="FetchMethod"
+                  typeConverter="FetchMethod">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="The ODBC C data type for binding numeric data."
+                  expressionType="Notify"
+                  name="BindNumericAs"
+                  typeConverter="BindNumericAs">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Determines how the component would bind columns of (multi)-byte string types (i.e., SQL_CHAR, SQL_VARCHAR, SQL_LONGVARCHAR). The options are: Unicode (SQL_C_WCHAR) and ANSI (SQL_C_CHAR)."
+                  expressionType="Notify"
+                  name="BindCharColumnsAs"
+                  typeConverter="BindCharColumnsAs">0</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Downlaod Trade data to Staging\ODBC Source.Connections[ODBCConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Intrader Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[Intrader Database]"
+                  description="The ODBC runtime connection"
+                  name="ODBCConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output]"
+                  errorRowDisposition="FailComponent"
+                  name="ODBC Source Output"
+                  truncationRowDisposition="FailComponent">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[ticket]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[ticket]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[ticket]"
+                      name="ticket"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[stat]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[stat]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[stat]"
+                      name="stat" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[port-id]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[port-id]"
+                      length="16"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[port-id]"
+                      name="port-id" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[sec-id]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[sec-id]"
+                      length="24"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[sec-id]"
+                      name="sec-id" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[loc-id]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[loc-id]"
+                      length="6"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[loc-id]"
+                      name="loc-id" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[cusip]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[cusip]"
+                      length="18"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[cusip]"
+                      name="cusip" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[psc]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[psc]"
+                      length="2"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[psc]"
+                      name="psc" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[cust-num]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[cust-num]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[cust-num]"
+                      name="cust-num"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[ent-dt]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[ent-dt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[ent-dt]"
+                      name="ent-dt" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[trade-dt]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[trade-dt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[trade-dt]"
+                      name="trade-dt" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[settle-dt]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[settle-dt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[settle-dt]"
+                      name="settle-dt" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[mat-dt]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[mat-dt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[mat-dt]"
+                      name="mat-dt" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[par]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[par]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[par]"
+                      name="par"
+                      precision="20"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[face]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[face]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[face]"
+                      name="face"
+                      precision="20"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[tot-amt]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[tot-amt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[tot-amt]"
+                      name="tot-amt"
+                      precision="17"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[factor]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[factor]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[factor]"
+                      name="factor"
+                      precision="25"
+                      scale="10" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[reason-cd]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[reason-cd]"
+                      length="20"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[reason-cd]"
+                      name="reason-cd" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[del-cd]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[del-cd]"
+                      length="6"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[del-cd]"
+                      name="del-cd" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[cstdy-loc]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[cstdy-loc]"
+                      length="6"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[cstdy-loc]"
+                      name="cstdy-loc" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[pay-cd]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[pay-cd]"
+                      length="4"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[pay-cd]"
+                      name="pay-cd" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[ticket]"
+                      dataType="numeric"
+                      name="ticket"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[stat]"
+                      dataType="i4"
+                      name="stat" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[port-id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="16"
+                      name="port-id" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[sec-id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="24"
+                      name="sec-id" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[loc-id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="loc-id" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[cusip]"
+                      codePage="1252"
+                      dataType="str"
+                      length="18"
+                      name="cusip" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[psc]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="psc" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[cust-num]"
+                      dataType="numeric"
+                      name="cust-num"
+                      precision="15" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[ent-dt]"
+                      dataType="dbDate"
+                      name="ent-dt" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[trade-dt]"
+                      dataType="dbDate"
+                      name="trade-dt" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[settle-dt]"
+                      dataType="dbDate"
+                      name="settle-dt" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[mat-dt]"
+                      dataType="dbDate"
+                      name="mat-dt" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[par]"
+                      dataType="numeric"
+                      name="par"
+                      precision="20"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[face]"
+                      dataType="numeric"
+                      name="face"
+                      precision="20"
+                      scale="5" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[tot-amt]"
+                      dataType="numeric"
+                      name="tot-amt"
+                      precision="17"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[factor]"
+                      dataType="numeric"
+                      name="factor"
+                      precision="25"
+                      scale="10" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[reason-cd]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="reason-cd" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[del-cd]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="del-cd" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[cstdy-loc]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="cstdy-loc" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[pay-cd]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="pay-cd" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output]"
+                  isErrorOut="true"
+                  name="ODBC Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[ticket]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[ticket]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[ticket]"
+                      name="ticket"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[stat]"
+                      dataType="i4"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[stat]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[stat]"
+                      name="stat" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[port-id]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[port-id]"
+                      length="16"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[port-id]"
+                      name="port-id" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[sec-id]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[sec-id]"
+                      length="24"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[sec-id]"
+                      name="sec-id" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[loc-id]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[loc-id]"
+                      length="6"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[loc-id]"
+                      name="loc-id" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[cusip]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[cusip]"
+                      length="18"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[cusip]"
+                      name="cusip" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[psc]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[psc]"
+                      length="2"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[psc]"
+                      name="psc" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[cust-num]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[cust-num]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[cust-num]"
+                      name="cust-num"
+                      precision="15" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[ent-dt]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[ent-dt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[ent-dt]"
+                      name="ent-dt" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[trade-dt]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[trade-dt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[trade-dt]"
+                      name="trade-dt" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[settle-dt]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[settle-dt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[settle-dt]"
+                      name="settle-dt" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[mat-dt]"
+                      dataType="dbDate"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[mat-dt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[mat-dt]"
+                      name="mat-dt" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[par]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[par]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[par]"
+                      name="par"
+                      precision="20"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[face]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[face]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[face]"
+                      name="face"
+                      precision="20"
+                      scale="5" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[tot-amt]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[tot-amt]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[tot-amt]"
+                      name="tot-amt"
+                      precision="17"
+                      scale="2" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[factor]"
+                      dataType="numeric"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[factor]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[factor]"
+                      name="factor"
+                      precision="25"
+                      scale="10" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[reason-cd]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[reason-cd]"
+                      length="20"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[reason-cd]"
+                      name="reason-cd" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[del-cd]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[del-cd]"
+                      length="6"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[del-cd]"
+                      name="del-cd" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[cstdy-loc]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[cstdy-loc]"
+                      length="6"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[cstdy-loc]"
+                      name="cstdy-loc" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[pay-cd]"
+                      codePage="1252"
+                      dataType="str"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].ExternalColumns[pay-cd]"
+                      length="4"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[pay-cd]"
+                      name="pay-cd" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Downlaod Trade data to Staging\Trade Table"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Trade Table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Intraday].[staging_trade]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Downlaod Trade data to Staging\Trade Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Funding Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[Funding Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[ticket]"
+                      cachedDataType="numeric"
+                      cachedName="ticket"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[TICKET]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[ticket]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[stat]"
+                      cachedDataType="i4"
+                      cachedName="stat"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[STAT]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[stat]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[cusip]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="18"
+                      cachedName="cusip"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[CUSIP]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[cusip]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[par]"
+                      cachedDataType="numeric"
+                      cachedName="par"
+                      cachedPrecision="20"
+                      cachedScale="5"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[PAR]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[par]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[face]"
+                      cachedDataType="numeric"
+                      cachedName="face"
+                      cachedPrecision="20"
+                      cachedScale="5"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[FACE]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[face]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[factor]"
+                      cachedDataType="numeric"
+                      cachedName="factor"
+                      cachedPrecision="25"
+                      cachedScale="10"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[FACTOR]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[factor]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[port-id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="16"
+                      cachedName="port-id"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[PORT_ID]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[port-id]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[sec-id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="24"
+                      cachedName="sec-id"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[SEC_ID]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[sec-id]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[psc]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2"
+                      cachedName="psc"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[PURCHASE_SELL]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[psc]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[cust-num]"
+                      cachedDataType="numeric"
+                      cachedName="cust-num"
+                      cachedPrecision="15"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[CUST_NUM]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[cust-num]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[ent-dt]"
+                      cachedDataType="dbDate"
+                      cachedName="ent-dt"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[ENT_DT]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[ent-dt]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[trade-dt]"
+                      cachedDataType="dbDate"
+                      cachedName="trade-dt"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[TRADE_DT]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[trade-dt]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[settle-dt]"
+                      cachedDataType="dbDate"
+                      cachedName="settle-dt"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[SETTLE_DT]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[settle-dt]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[mat-dt]"
+                      cachedDataType="dbDate"
+                      cachedName="mat-dt"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[MAT_DT]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[mat-dt]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[tot-amt]"
+                      cachedDataType="numeric"
+                      cachedName="tot-amt"
+                      cachedPrecision="17"
+                      cachedScale="2"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[TOT_AMT]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[tot-amt]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[reason-cd]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="reason-cd"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[REASON_CD]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[reason-cd]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[AS_OF_DATE]"
+                      cachedDataType="dbDate"
+                      cachedName="AS_OF_DATE"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[AS_OF_DATE]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[loc-id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="loc-id"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[LOC_ID]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[loc-id]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[del-cd]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="del-cd"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[DEL_CD]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[del-cd]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[cstdy-loc]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="cstdy-loc"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[CSTDY_LOC]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[cstdy-loc]" />
+                    <inputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].Columns[pay-cd]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="4"
+                      cachedName="pay-cd"
+                      externalMetadataColumnId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[PAY_CD]"
+                      lineageId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output].Columns[pay-cd]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[TICKET]"
+                      dataType="i4"
+                      name="TICKET" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[STAT]"
+                      dataType="i4"
+                      name="STAT" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[PORT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="16"
+                      name="PORT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[SEC_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="24"
+                      name="SEC_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[CUSIP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="18"
+                      name="CUSIP" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[PURCHASE_SELL]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2"
+                      name="PURCHASE_SELL" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[CUST_NUM]"
+                      dataType="i4"
+                      name="CUST_NUM" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[ENT_DT]"
+                      dataType="dbDate"
+                      name="ENT_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[TRADE_DT]"
+                      dataType="dbDate"
+                      name="TRADE_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[SETTLE_DT]"
+                      dataType="dbDate"
+                      name="SETTLE_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[MAT_DT]"
+                      dataType="dbDate"
+                      name="MAT_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[PAR]"
+                      dataType="numeric"
+                      name="PAR"
+                      precision="20"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[FACE]"
+                      dataType="numeric"
+                      name="FACE"
+                      precision="20"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[TOT_AMT]"
+                      dataType="numeric"
+                      name="TOT_AMT"
+                      precision="20"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[FACTOR]"
+                      dataType="r8"
+                      name="FACTOR" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[REASON_CD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="REASON_CD" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[LOC_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="LOC_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[DEL_CD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="DEL_CD" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[CSTDY_LOC]"
+                      codePage="1252"
+                      dataType="str"
+                      length="6"
+                      name="CSTDY_LOC" />
+                    <externalMetadataColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input].ExternalColumns[PAY_CD]"
+                      codePage="1252"
+                      dataType="str"
+                      length="4"
+                      name="PAY_CD" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Downlaod Trade data to Staging\Trade Table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Downlaod Trade data to Staging\Trade Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Downlaod Trade data to Staging\Trade Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Downlaod Trade data to Staging\Trade Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Downlaod Trade data to Staging.Paths[ODBC Source Output]"
+              endId="Package\Downlaod Trade data to Staging\Trade Table.Inputs[OLE DB Destination Input]"
+              name="ODBC Source Output"
+              startId="Package\Downlaod Trade data to Staging\ODBC Source.Outputs[ODBC Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Trade Data"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{f42d1701-48fd-4c37-9ddf-4da155ff80ea}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Trade Data"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9DC75D71-80C2-44BC-B570-00CA6BE3D6B7}"
+          SQLTask:SqlStatementSource="EXEC [CORP_TSY_FUNDING].[Intraday].ins_trade ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="@AS_OF_DATE"
+            SQLTask:DtsVariableName="User::AsOfDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="0" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="@ITERATION_ID"
+            SQLTask:DtsVariableName="User::IterationId"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="2"
+            SQLTask:ParameterSize="0" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate Staging table"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D6CA9E7C-BF0A-4603-A210-5282351771BA}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate Staging table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{9DC75D71-80C2-44BC-B570-00CA6BE3D6B7}"
+          SQLTask:SqlStatementSource="Truncate table [CORP_TSY_FUNDING].[Intraday].staging_trade" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{BCB9E7E7-AB56-492D-8A08-0A5DEBCF0F16}"
+      DTS:From="Package\Truncate Staging table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Downlaod Trade data to Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{A9CB15D3-FE49-418F-8DC2-4532D1F412D6}"
+      DTS:From="Package\Downlaod Trade data to Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load Trade Data" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="233,42"
+          Id="Package\Downlaod Trade data to Staging"
+          TopLeft="221,158" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\Load Trade Data"
+          TopLeft="257,255" />
+        <NodeLayout
+          Size="188,44"
+          Id="Package\Truncate Staging table"
+          TopLeft="250,48" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="340.75,92">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66"
+              Start="0,0"
+              End="0,58.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="337,200">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,55"
+              Start="0,0"
+              End="0,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Downlaod Trade data to Staging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="137,42"
+          Id="Package\Downlaod Trade data to Staging\Trade Table"
+          TopLeft="148,181" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Downlaod Trade data to Staging\ODBC Source"
+          TopLeft="150,67" />
+        <EdgeLayout
+          Id="Package\Downlaod Trade data to Staging.Paths[ODBC Source Output]"
+          TopLeft="219.25,109">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72"
+              Start="0,0"
+              End="0,64.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Downlaod Trade data to Staging\ODBC Source">
+    <Properties>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Downlaod Trade data to Staging\Trade Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,1132 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/22/2016 10:54:18 AM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7NU-5CG4422XTB"
+  DTS:CreatorName="UBOC-AD\ub68960"
+  DTS:DTSID="{9D2E5268-E7A0-4E4E-84C7-BAB6AB8634FB}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.6020.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="LoadFrbInflows"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="100"
+  DTS:VersionGUID="{BDA2A977-637C-4A03-A929-A70E605135BB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DMQ Database]"
+      DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{1DC1DA38-126C-4EAD-A1CF-A7BB720E4456}"
+      DTS:ObjectName="DMQ Database">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::DmqPassword]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::DmqServer]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::DmqUser]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=P003;User ID=SVC_DMQ_DATA;Persist Security Info=True;Unicode=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Funding Database]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3A6501B9-4DAB-4B45-BBD0-B6D27DD8890E}"
+      DTS:ObjectName="Funding Database">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::DatabaseServerName]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0342AF91-6DD9-4046-BF13-86EE87D54F62}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="AsOfDate">
+      <DTS:VariableValue
+        DTS:DataType="7">4/4/2016 11:08:00 AM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1F01F92B-563F-4DA0-8A5B-EEA775775882}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_STR, 4, 1252) DATEPART(&quot;yy&quot; , @[User::AsOfDate]) + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::AsOfDate]), 2)  + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::AsOfDate]), 2)"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="AsOfDateYYYYMMDD">
+      <DTS:VariableValue
+        DTS:DataType="8">20160404</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{EACB49BE-B4B9-4ADC-9220-D248C28BFD7D}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DatabaseServerName">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6AB522CA-1E79-42DB-A6CB-37E63EBE7656}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DmqPassword">
+      <DTS:VariableValue
+        DTS:DataType="8">svc987dm</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{5A441280-E52B-4B9B-AFBC-57384EF1D990}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DmqServer">
+      <DTS:VariableValue
+        DTS:DataType="8">P003</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DC44C321-5DB3-4EC2-AF8C-4C6944879A80}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DmqUser">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_DMQ_DATA</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C8F4EA29-916B-4142-89E2-7FB7671C48F1}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;SELECT &#xA;      TO_DATE(PERIOD_DT_DIM_ID,'YYYYMMDD') AS AS_OF_DATE&#xA;    , PERIOD_DT_DIM_ID&#xA;    , REPORTING_ENTITY&#xA;    , CURRENCY&#xA;    , CONVERTED&#xA;    , PID&#xA;    , PRODUCT&#xA;    , SID&#xA;    , SUB_PRODUCT&#xA;    , MARKET_VALUE&#xA;    , LENDABLE_VALUE&#xA;    , MATURITY_BUCKET&#xA;    , FORWARD_START_AMOUNT&#xA;    , FORWARD_START_BUCKET&#xA;    , COLLATERAL_CLASS&#xA;    , TREASURY_CONTROL       &#xA;FROM ODMDMQ.FRB_REP_INFLOWS_ASSETS &#xA;WHERE PERIOD_DT_DIM_ID = &quot; +  @[User::AsOfDateYYYYMMDD]  + &quot; &#xA;    AND PRODUCT IN (&quot; +  @[User::Products]  + &quot;)&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="load_position_sql">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT 
+      TO_DATE(PERIOD_DT_DIM_ID,'YYYYMMDD') AS AS_OF_DATE
+    , PERIOD_DT_DIM_ID
+    , REPORTING_ENTITY
+    , CURRENCY
+    , CONVERTED
+    , PID
+    , PRODUCT
+    , SID
+    , SUB_PRODUCT
+    , MARKET_VALUE
+    , LENDABLE_VALUE
+    , MATURITY_BUCKET
+    , FORWARD_START_AMOUNT
+    , FORWARD_START_BUCKET
+    , COLLATERAL_CLASS
+    , TREASURY_CONTROL       
+FROM ODMDMQ.FRB_REP_INFLOWS_ASSETS 
+WHERE PERIOD_DT_DIM_ID = 20160404 
+    AND PRODUCT IN ('UNRESTRICTED RESERVE BALANCES','RESTRICTED RESERVE BALANCES','UNENCUMBERED SECURITIES')</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1FBEEAD2-D6F7-4141-8548-13FCC462464A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Products">
+      <DTS:VariableValue
+        DTS:DataType="8">'UNRESTRICTED RESERVE BALANCES','RESTRICTED RESERVE BALANCES','UNENCUMBERED SECURITIES'</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DFT Load FRB Inflows To Staging"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:Description="Load FRB Inflows To Staging"
+      DTS:DTSID="{98404BAB-9DFE-4435-AB99-3C18620EE85C}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT Load FRB Inflows To Staging"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[ADO_SRC Read FRB Inflows].[SqlCommand]">@[User::load_position_sql]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Read FRB Inflows"
+              name="ADO_SRC Read FRB Inflows"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT 
+      TO_DATE(PERIOD_DT_DIM_ID,'YYYYMMDD') AS AS_OF_DATE
+    , PERIOD_DT_DIM_ID
+    , REPORTING_ENTITY
+    , CURRENCY
+    , CONVERTED
+    , PID
+    , PRODUCT
+    , SID
+    , SUB_PRODUCT
+    , MARKET_VALUE
+    , LENDABLE_VALUE
+    , MATURITY_BUCKET
+    , FORWARD_START_AMOUNT
+    , FORWARD_START_BUCKET
+    , COLLATERAL_CLASS
+    , TREASURY_CONTROL       
+FROM ODMDMQ.FRB_REP_INFLOWS_ASSETS 
+WHERE PERIOD_DT_DIM_ID = 20160404 
+    AND PRODUCT IN ('UNRESTRICTED RESERVE BALANCES','RESTRICTED RESERVE BALANCES','UNENCUMBERED SECURITIES')</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DMQ Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[DMQ Database]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[PERIOD_DT_DIM_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[PERIOD_DT_DIM_ID]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[PERIOD_DT_DIM_ID]"
+                      name="PERIOD_DT_DIM_ID"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[REPORTING_ENTITY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[REPORTING_ENTITY]"
+                      length="60"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[REPORTING_ENTITY]"
+                      name="REPORTING_ENTITY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[CURRENCY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY]"
+                      length="3"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[CURRENCY]"
+                      name="CURRENCY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[CONVERTED]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[CONVERTED]"
+                      length="5"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[CONVERTED]"
+                      name="CONVERTED"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[PID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[PID]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[PID]"
+                      name="PID"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[PRODUCT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[PRODUCT]"
+                      length="80"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[PRODUCT]"
+                      name="PRODUCT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[SID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[SID]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[SID]"
+                      name="SID"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[SUB_PRODUCT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[SUB_PRODUCT]"
+                      length="80"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[SUB_PRODUCT]"
+                      name="SUB_PRODUCT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[MARKET_VALUE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[MARKET_VALUE]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[MARKET_VALUE]"
+                      name="MARKET_VALUE"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[LENDABLE_VALUE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[LENDABLE_VALUE]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[LENDABLE_VALUE]"
+                      name="LENDABLE_VALUE"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[MATURITY_BUCKET]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_BUCKET]"
+                      length="20"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[MATURITY_BUCKET]"
+                      name="MATURITY_BUCKET"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMOUNT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_AMOUNT]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMOUNT]"
+                      name="FORWARD_START_AMOUNT"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[FORWARD_START_BUCKET]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_BUCKET]"
+                      length="20"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[FORWARD_START_BUCKET]"
+                      name="FORWARD_START_BUCKET"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[COLLATERAL_CLASS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[COLLATERAL_CLASS]"
+                      length="10"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[COLLATERAL_CLASS]"
+                      name="COLLATERAL_CLASS"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[TREASURY_CONTROL]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[TREASURY_CONTROL]"
+                      length="5"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[TREASURY_CONTROL]"
+                      name="TREASURY_CONTROL"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[PERIOD_DT_DIM_ID]"
+                      dataType="numeric"
+                      name="PERIOD_DT_DIM_ID"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[REPORTING_ENTITY]"
+                      dataType="wstr"
+                      length="60"
+                      name="REPORTING_ENTITY" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[CURRENCY]"
+                      dataType="wstr"
+                      length="3"
+                      name="CURRENCY" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[CONVERTED]"
+                      dataType="wstr"
+                      length="5"
+                      name="CONVERTED" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[PID]"
+                      dataType="numeric"
+                      name="PID"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      name="PRODUCT" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[SID]"
+                      dataType="numeric"
+                      name="SID"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[SUB_PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      name="SUB_PRODUCT" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[MARKET_VALUE]"
+                      dataType="numeric"
+                      name="MARKET_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[LENDABLE_VALUE]"
+                      dataType="numeric"
+                      name="LENDABLE_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[MATURITY_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="MATURITY_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_AMOUNT]"
+                      dataType="numeric"
+                      name="FORWARD_START_AMOUNT"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[FORWARD_START_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="FORWARD_START_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[COLLATERAL_CLASS]"
+                      dataType="wstr"
+                      length="10"
+                      name="COLLATERAL_CLASS" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].ExternalColumns[TREASURY_CONTROL]"
+                      dataType="wstr"
+                      length="5"
+                      name="TREASURY_CONTROL" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[PERIOD_DT_DIM_ID]"
+                      dataType="numeric"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[PERIOD_DT_DIM_ID]"
+                      name="PERIOD_DT_DIM_ID"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[REPORTING_ENTITY]"
+                      dataType="wstr"
+                      length="60"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[REPORTING_ENTITY]"
+                      name="REPORTING_ENTITY" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[CURRENCY]"
+                      dataType="wstr"
+                      length="3"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[CURRENCY]"
+                      name="CURRENCY" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[CONVERTED]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[CONVERTED]"
+                      name="CONVERTED" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[PID]"
+                      dataType="numeric"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[PID]"
+                      name="PID"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[PRODUCT]"
+                      name="PRODUCT" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[SID]"
+                      dataType="numeric"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[SID]"
+                      name="SID"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[SUB_PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[SUB_PRODUCT]"
+                      name="SUB_PRODUCT" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[MARKET_VALUE]"
+                      dataType="numeric"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[MARKET_VALUE]"
+                      name="MARKET_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[LENDABLE_VALUE]"
+                      dataType="numeric"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[LENDABLE_VALUE]"
+                      name="LENDABLE_VALUE"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[MATURITY_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[MATURITY_BUCKET]"
+                      name="MATURITY_BUCKET" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_AMOUNT]"
+                      dataType="numeric"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_AMOUNT]"
+                      name="FORWARD_START_AMOUNT"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[FORWARD_START_BUCKET]"
+                      name="FORWARD_START_BUCKET" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[COLLATERAL_CLASS]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[COLLATERAL_CLASS]"
+                      name="COLLATERAL_CLASS" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[TREASURY_CONTROL]"
+                      dataType="wstr"
+                      length="5"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[TREASURY_CONTROL]"
+                      name="TREASURY_CONTROL" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Insert FRB Inflows"
+              name="OLE_DST Insert FRB Inflows"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Intraday].[staging_frb_inflows]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Funding Database]"
+                  connectionManagerRefId="Package.ConnectionManagers[Funding Database]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[AS_OF_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="AS_OF_DATE"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[PERIOD_DT_DIM_ID]"
+                      cachedDataType="numeric"
+                      cachedName="PERIOD_DT_DIM_ID"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[PERIOD_DT_DIM_ID]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[PERIOD_DT_DIM_ID]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[REPORTING_ENTITY]"
+                      cachedDataType="wstr"
+                      cachedLength="60"
+                      cachedName="REPORTING_ENTITY"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[REPORTING_ENTITY]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[REPORTING_ENTITY]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[CURRENCY]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="CURRENCY"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[CURRENCY]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[CURRENCY]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[CONVERTED]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="CONVERTED"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[CONVERTED]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[CONVERTED]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[PID]"
+                      cachedDataType="numeric"
+                      cachedName="PID"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[PID]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[PID]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[PRODUCT]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="PRODUCT"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[PRODUCT]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[PRODUCT]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[SID]"
+                      cachedDataType="numeric"
+                      cachedName="SID"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[SID]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[SID]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[SUB_PRODUCT]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="SUB_PRODUCT"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[SUB_PRODUCT]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[SUB_PRODUCT]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[MARKET_VALUE]"
+                      cachedDataType="numeric"
+                      cachedName="MARKET_VALUE"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[MARKET_VALUE]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[MARKET_VALUE]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[LENDABLE_VALUE]"
+                      cachedDataType="numeric"
+                      cachedName="LENDABLE_VALUE"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[LENDABLE_VALUE]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[LENDABLE_VALUE]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[MATURITY_BUCKET]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="MATURITY_BUCKET"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[MATURITY_BUCKET]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[MATURITY_BUCKET]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[FORWARD_START_AMOUNT]"
+                      cachedDataType="numeric"
+                      cachedName="FORWARD_START_AMOUNT"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[FORWARD_START_AMOUNT]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[FORWARD_START_AMOUNT]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[FORWARD_START_BUCKET]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="FORWARD_START_BUCKET"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[FORWARD_START_BUCKET]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[FORWARD_START_BUCKET]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[COLLATERAL_CLASS]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="COLLATERAL_CLASS"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[COLLATERAL_CLASS]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[COLLATERAL_CLASS]" />
+                    <inputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].Columns[TREASURY_CONTROL]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="TREASURY_CONTROL"
+                      externalMetadataColumnId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[TREASURY_CONTROL]"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output].Columns[TREASURY_CONTROL]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[PERIOD_DT_DIM_ID]"
+                      dataType="i4"
+                      name="PERIOD_DT_DIM_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[REPORTING_ENTITY]"
+                      dataType="wstr"
+                      length="60"
+                      name="REPORTING_ENTITY" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[CURRENCY]"
+                      dataType="wstr"
+                      length="3"
+                      name="CURRENCY" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[CONVERTED]"
+                      dataType="wstr"
+                      length="5"
+                      name="CONVERTED" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[PID]"
+                      dataType="i4"
+                      name="PID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      name="PRODUCT" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[SID]"
+                      dataType="i4"
+                      name="SID" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[SUB_PRODUCT]"
+                      dataType="wstr"
+                      length="80"
+                      name="SUB_PRODUCT" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[MARKET_VALUE]"
+                      dataType="numeric"
+                      name="MARKET_VALUE"
+                      precision="30"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[LENDABLE_VALUE]"
+                      dataType="numeric"
+                      name="LENDABLE_VALUE"
+                      precision="30"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[MATURITY_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="MATURITY_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[FORWARD_START_AMOUNT]"
+                      dataType="numeric"
+                      name="FORWARD_START_AMOUNT"
+                      precision="30"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[FORWARD_START_BUCKET]"
+                      dataType="wstr"
+                      length="20"
+                      name="FORWARD_START_BUCKET" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[COLLATERAL_CLASS]"
+                      dataType="wstr"
+                      length="10"
+                      name="COLLATERAL_CLASS" />
+                    <externalMetadataColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input].ExternalColumns[TREASURY_CONTROL]"
+                      dataType="wstr"
+                      length="5"
+                      name="TREASURY_CONTROL" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT Load FRB Inflows To Staging.Paths[ADO NET Source Output]"
+              endId="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Load FRB Inflows"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Load FRB Inflows"
+      DTS:DTSID="{BF5E5173-0723-4690-BFFD-EEC947C79402}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Load FRB Inflows"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3A6501B9-4DAB-4B45-BBD0-B6D27DD8890E}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="EXEC [Intraday].[ins_frb_inflows] ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="@AS_OF_DATE"
+            SQLTask:DtsVariableName="User::AsOfDate"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="0" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL Truncate FRB Inflows"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Truncates FRB Inflows Staging table"
+      DTS:DTSID="{1215BA9C-569A-4DE4-8C4A-8CBA3C6FB746}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL Truncate FRB Inflows"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2012; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3A6501B9-4DAB-4B45-BBD0-B6D27DD8890E}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [Intraday].[staging_frb_inflows]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1372EC23-9895-4753-B444-7355D63FBD12}"
+      DTS:From="Package\SQL Truncate FRB Inflows"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DFT Load FRB Inflows To Staging" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{60E8DDD0-8FA1-45DA-B6DA-D159B01DB1BE}"
+      DTS:From="Package\DFT Load FRB Inflows To Staging"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SQL Load FRB Inflows" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="239,42"
+          Id="Package\SQL Load FRB Inflows"
+          TopLeft="5.50000000000003,209.5" />
+        <NodeLayout
+          Size="239,42"
+          Id="Package\DFT Load FRB Inflows To Staging"
+          TopLeft="5.50000000000003,107.5" />
+        <NodeLayout
+          Size="239,42"
+          Id="Package\SQL Truncate FRB Inflows"
+          TopLeft="5.50000000000001,5.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="125,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="125,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT Load FRB Inflows To Staging">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="213,42"
+          Id="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows"
+          TopLeft="5.50000000000001,5.5" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows"
+          TopLeft="5.50000000000001,107.5" />
+        <EdgeLayout
+          Id="Package\DFT Load FRB Inflows To Staging.Paths[ADO NET Source Output]"
+          TopLeft="112.5,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load FRB Inflows To Staging\ADO_SRC Read FRB Inflows">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT Load FRB Inflows To Staging\OLE_DST Insert FRB Inflows">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

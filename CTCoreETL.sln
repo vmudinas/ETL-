@@ -1,0 +1,122 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "FundingDesk", "Funding\FundingDesk\FundingDesk.dtproj", "{C2D5CF5F-88F4-46B8-8AC4-49258E92F41A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Funding", "Funding", "{6EEB1AFA-A5EC-43BC-9894-77AFE4F673B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Liability", "Liability", "{FA5BA4C3-7C35-4D40-9709-004B67F9B48E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AssetLiability", "AssetLiability", "{B6C656F0-AB83-4410-BEAC-5B23E8E5EEEA}"
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "HedgeEffectiveness", "AssetLiability\HedgeEffectiveness\HedgeEffectiveness.dtproj", "{F9E13AD7-BC24-4B19-836D-BA6834B99AF9}"
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "FAS91", "AssetLiability\FAS91\FAS91.dtproj", "{712CD54E-E333-46D5-A4F8-D5D2037006EB}"
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "OvernightStress", "Liability\OvernightStress\OvernightStress.dtproj", "{B6604E99-54AA-4A86-926A-366ACAB211B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MiddleOffice", "MiddleOffice", "{FF38F096-A324-4C57-9903-54D6F4AAF82C}"
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "BlackrockRecon", "MiddleOffice\BlackrockRecon\BlackrockRecon.dtproj", "{ADE0CD4C-5943-4C93-94A5-12D8F8068FB5}"
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "CashFlowForecast", "Funding\CashFlowForecast\CashFlowForecast.dtproj", "{B7B6C649-9E11-4190-97D8-38162FDF7352}"
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "Intraday", "Funding\Intraday\Intraday.dtproj", "{CB1BC7F6-0071-447D-81DA-33C56EE08E51}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://chdc-tsy-dvrprt:8080/tfs/corptsyapps
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Funding\\FundingDesk\\FundingDesk.dtproj
+		SccProjectTopLevelParentUniqueName1 = CTCoreETL.sln
+		SccProjectName1 = Funding/FundingDesk
+		SccLocalPath1 = Funding\\FundingDesk
+		SccProjectUniqueName2 = AssetLiability\\HedgeEffectiveness\\HedgeEffectiveness.dtproj
+		SccProjectTopLevelParentUniqueName2 = CTCoreETL.sln
+		SccProjectName2 = AssetLiability/HedgeEffectiveness
+		SccLocalPath2 = AssetLiability\\HedgeEffectiveness
+		SccProjectUniqueName3 = AssetLiability\\FAS91\\FAS91.dtproj
+		SccProjectTopLevelParentUniqueName3 = CTCoreETL.sln
+		SccProjectName3 = AssetLiability/FAS91
+		SccLocalPath3 = AssetLiability\\FAS91
+		SccProjectUniqueName4 = Liability\\OvernightStress\\OvernightStress.dtproj
+		SccProjectTopLevelParentUniqueName4 = CTCoreETL.sln
+		SccProjectName4 = Liability/OvernightStress
+		SccLocalPath4 = Liability\\OvernightStress
+		SccProjectUniqueName5 = MiddleOffice\\BlackrockRecon\\BlackrockRecon.dtproj
+		SccProjectTopLevelParentUniqueName5 = CTCoreETL.sln
+		SccProjectName5 = MiddleOffice/BlackrockRecon
+		SccLocalPath5 = MiddleOffice\\BlackrockRecon
+		SccProjectUniqueName6 = Funding\\CashFlowForecast\\CashFlowForecast.dtproj
+		SccProjectTopLevelParentUniqueName6 = CTCoreETL.sln
+		SccProjectName6 = Funding/CashFlowForecast
+		SccLocalPath6 = Funding\\CashFlowForecast
+		SccProjectUniqueName7 = Funding\\Intraday\\Intraday.dtproj
+		SccProjectTopLevelParentUniqueName7 = CTCoreETL.sln
+		SccProjectName7 = Funding/Intraday
+		SccLocalPath7 = Funding\\Intraday
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Development|Any CPU = Development|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2D5CF5F-88F4-46B8-8AC4-49258E92F41A}.Debug|Any CPU.ActiveCfg = Development
+		{C2D5CF5F-88F4-46B8-8AC4-49258E92F41A}.Debug|Any CPU.Build.0 = Development
+		{C2D5CF5F-88F4-46B8-8AC4-49258E92F41A}.Development|Any CPU.ActiveCfg = Development
+		{C2D5CF5F-88F4-46B8-8AC4-49258E92F41A}.Development|Any CPU.Build.0 = Development
+		{C2D5CF5F-88F4-46B8-8AC4-49258E92F41A}.Release|Any CPU.ActiveCfg = Development
+		{C2D5CF5F-88F4-46B8-8AC4-49258E92F41A}.Release|Any CPU.Build.0 = Development
+		{F9E13AD7-BC24-4B19-836D-BA6834B99AF9}.Debug|Any CPU.ActiveCfg = Development
+		{F9E13AD7-BC24-4B19-836D-BA6834B99AF9}.Debug|Any CPU.Build.0 = Development
+		{F9E13AD7-BC24-4B19-836D-BA6834B99AF9}.Development|Any CPU.ActiveCfg = Development
+		{F9E13AD7-BC24-4B19-836D-BA6834B99AF9}.Development|Any CPU.Build.0 = Development
+		{F9E13AD7-BC24-4B19-836D-BA6834B99AF9}.Release|Any CPU.ActiveCfg = Development
+		{F9E13AD7-BC24-4B19-836D-BA6834B99AF9}.Release|Any CPU.Build.0 = Development
+		{712CD54E-E333-46D5-A4F8-D5D2037006EB}.Debug|Any CPU.ActiveCfg = Development
+		{712CD54E-E333-46D5-A4F8-D5D2037006EB}.Debug|Any CPU.Build.0 = Development
+		{712CD54E-E333-46D5-A4F8-D5D2037006EB}.Development|Any CPU.ActiveCfg = Development
+		{712CD54E-E333-46D5-A4F8-D5D2037006EB}.Development|Any CPU.Build.0 = Development
+		{712CD54E-E333-46D5-A4F8-D5D2037006EB}.Release|Any CPU.ActiveCfg = Development
+		{712CD54E-E333-46D5-A4F8-D5D2037006EB}.Release|Any CPU.Build.0 = Development
+		{B6604E99-54AA-4A86-926A-366ACAB211B8}.Debug|Any CPU.ActiveCfg = Development
+		{B6604E99-54AA-4A86-926A-366ACAB211B8}.Debug|Any CPU.Build.0 = Development
+		{B6604E99-54AA-4A86-926A-366ACAB211B8}.Development|Any CPU.ActiveCfg = Development
+		{B6604E99-54AA-4A86-926A-366ACAB211B8}.Development|Any CPU.Build.0 = Development
+		{B6604E99-54AA-4A86-926A-366ACAB211B8}.Release|Any CPU.ActiveCfg = Development
+		{B6604E99-54AA-4A86-926A-366ACAB211B8}.Release|Any CPU.Build.0 = Development
+		{ADE0CD4C-5943-4C93-94A5-12D8F8068FB5}.Debug|Any CPU.ActiveCfg = Development
+		{ADE0CD4C-5943-4C93-94A5-12D8F8068FB5}.Debug|Any CPU.Build.0 = Development
+		{ADE0CD4C-5943-4C93-94A5-12D8F8068FB5}.Development|Any CPU.ActiveCfg = Development
+		{ADE0CD4C-5943-4C93-94A5-12D8F8068FB5}.Development|Any CPU.Build.0 = Development
+		{ADE0CD4C-5943-4C93-94A5-12D8F8068FB5}.Release|Any CPU.ActiveCfg = Development
+		{ADE0CD4C-5943-4C93-94A5-12D8F8068FB5}.Release|Any CPU.Build.0 = Development
+		{B7B6C649-9E11-4190-97D8-38162FDF7352}.Debug|Any CPU.ActiveCfg = Development
+		{B7B6C649-9E11-4190-97D8-38162FDF7352}.Debug|Any CPU.Build.0 = Development
+		{B7B6C649-9E11-4190-97D8-38162FDF7352}.Development|Any CPU.ActiveCfg = Development
+		{B7B6C649-9E11-4190-97D8-38162FDF7352}.Development|Any CPU.Build.0 = Development
+		{B7B6C649-9E11-4190-97D8-38162FDF7352}.Release|Any CPU.ActiveCfg = Development
+		{B7B6C649-9E11-4190-97D8-38162FDF7352}.Release|Any CPU.Build.0 = Development
+		{CB1BC7F6-0071-447D-81DA-33C56EE08E51}.Debug|Any CPU.ActiveCfg = Development
+		{CB1BC7F6-0071-447D-81DA-33C56EE08E51}.Debug|Any CPU.Build.0 = Development
+		{CB1BC7F6-0071-447D-81DA-33C56EE08E51}.Development|Any CPU.ActiveCfg = Development
+		{CB1BC7F6-0071-447D-81DA-33C56EE08E51}.Development|Any CPU.Build.0 = Development
+		{CB1BC7F6-0071-447D-81DA-33C56EE08E51}.Release|Any CPU.ActiveCfg = Development
+		{CB1BC7F6-0071-447D-81DA-33C56EE08E51}.Release|Any CPU.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C2D5CF5F-88F4-46B8-8AC4-49258E92F41A} = {6EEB1AFA-A5EC-43BC-9894-77AFE4F673B5}
+		{B7B6C649-9E11-4190-97D8-38162FDF7352} = {6EEB1AFA-A5EC-43BC-9894-77AFE4F673B5}
+		{CB1BC7F6-0071-447D-81DA-33C56EE08E51} = {6EEB1AFA-A5EC-43BC-9894-77AFE4F673B5}
+		{B6604E99-54AA-4A86-926A-366ACAB211B8} = {FA5BA4C3-7C35-4D40-9709-004B67F9B48E}
+		{F9E13AD7-BC24-4B19-836D-BA6834B99AF9} = {B6C656F0-AB83-4410-BEAC-5B23E8E5EEEA}
+		{712CD54E-E333-46D5-A4F8-D5D2037006EB} = {B6C656F0-AB83-4410-BEAC-5B23E8E5EEEA}
+		{ADE0CD4C-5943-4C93-94A5-12D8F8068FB5} = {FF38F096-A324-4C57-9903-54D6F4AAF82C}
+	EndGlobalSection
+EndGlobal

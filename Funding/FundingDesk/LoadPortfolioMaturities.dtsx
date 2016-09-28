@@ -1,0 +1,926 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/29/2015 1:20:52 PM"
+  DTS:CreationName="SSIS.Package.3"
+  DTS:CreatorComputerName="7DU-2UA2510JVV"
+  DTS:CreatorName="UBOC-AD\UB68960"
+  DTS:DTSID="{A8E40303-BD72-4F8A-A121-F14825621BA0}"
+  DTS:ExecutableType="SSIS.Package.3"
+  DTS:LastModifiedProductVersion="11.0.5583.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="LoadPortfolioMaturities"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="79"
+  DTS:VersionGUID="{193104E3-CF71-4F6F-8E95-1956B8E1A5D5}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CORP_TSY_DMQ]"
+      DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{92035EAB-A5D3-4182-8A8A-C808CB689F62}"
+      DTS:ObjectName="CORP_TSY_DMQ">
+      <DTS:PropertyExpression
+        DTS:Name="Password">@[User::dmq_password]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::dmq_server]</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="UserName">@[User::dmq_user]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=P003;User ID=SVC_DMQ_DATA;Persist Security Info=True;Unicode=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CORP_TSY_FUNDING]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{0B980212-8654-4A75-AB58-CE0194CCB99C}"
+      DTS:ObjectName="CORP_TSY_FUNDING">
+      <DTS:PropertyExpression
+        DTS:Name="ServerName">@[User::database_server]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=CHDC-SQL-DVCH1B\I1;Initial Catalog=CORP_TSY_FUNDING;Provider=SQLNCLI11;Integrated Security=SSPI;Auto Translate=false;Application Name=SSIS-New Package-{F4646F01-776E-4EA9-9D6A-8969005C3148}DestinationConnectionOLEDB;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A905FDA3-A1E2-429D-A3EA-8E06F5998884}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date">
+      <DTS:VariableValue
+        DTS:DataType="7">9/30/2015 3:20:00 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B9E4F418-AA98-4FD4-8BBD-854B522EF5BB}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(DT_STR, 4, 1252) DATEPART(&quot;yy&quot; ,@[User::as_of_date]) + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;mm&quot; , @[User::as_of_date]), 2)  + RIGHT(&quot;0&quot; + (DT_STR, 2, 1252) DATEPART(&quot;dd&quot; , @[User::as_of_date]), 2) "
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="as_of_date_yyyymmdd">
+      <DTS:VariableValue
+        DTS:DataType="8">20150930</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DE93ABCF-E296-4520-9970-D790CA55BC7E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="database_server">
+      <DTS:VariableValue
+        DTS:DataType="8">CHDC-SQL-DVCH1B\I1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{84D37D04-84CB-4715-B36B-89984F90ACE7}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_password">
+      <DTS:VariableValue
+        DTS:DataType="8">svc987dm</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3BECC564-42E6-4BD4-A8BE-47140CF5788B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_server">
+      <DTS:VariableValue
+        DTS:DataType="8">P003</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3FC11365-A349-4494-96AF-75FB02D19475}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="dmq_user">
+      <DTS:VariableValue
+        DTS:DataType="8">SVC_DMQ_DATA</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{03A46BC0-C280-4CFA-967E-8C2227A902F7}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;select TO_DATE( &quot; +  @[User::as_of_date_yyyymmdd] + &quot;,'YYYYMMDD') AS as_of_date, F.port_id,   F.CUSIP, F.settl_prin_amt, D.INTRADER_ACCT_MTRTY_DT,  CASE WHEN port_id IN ('CPDMUB','CPDU6') THEN  F.SETTL_YIELD ELSE D.INTRADER_ACCT_RATE END AS INTRADER_ACCT_RATE &#xA;from INTRADER_DAILY_FACT_B F&#xA;join ODMDMQ.INTRADER_ACCT_DIM_B D on F.INTRADER_ACCT_DIM_ID = D.INTRADER_ACCT_DIM_ID &#xA;where intrader_daily_date_id =   &quot; + @[User::as_of_date_yyyymmdd] + &quot;&#xA;and port_id in ( &quot; + @[User::port_id_string] + &quot; )&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="load_funding_sql">
+      <DTS:VariableValue
+        DTS:DataType="8">select TO_DATE( 20150930,'YYYYMMDD') AS as_of_date, F.port_id,   F.CUSIP, F.settl_prin_amt, D.INTRADER_ACCT_MTRTY_DT,  CASE WHEN port_id IN ('CPDMUB','CPDU6') THEN  F.SETTL_YIELD ELSE D.INTRADER_ACCT_RATE END AS INTRADER_ACCT_RATE 
+from INTRADER_DAILY_FACT_B F
+join ODMDMQ.INTRADER_ACCT_DIM_B D on F.INTRADER_ACCT_DIM_ID = D.INTRADER_ACCT_DIM_ID 
+where intrader_daily_date_id =   20150930
+and port_id in ( 'ECCUSDP','ECINSDP' )</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AFB920E8-4F8A-48BB-91E7-D7DA86C830EA}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="port_id_string">
+      <DTS:VariableValue
+        DTS:DataType="8">'ECCUSDP','ECINSDP'</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Delete Maturities"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0775644A-B88C-49A8-B509-1866C9C96413}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Delete Maturities"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0B980212-8654-4A75-AB58-CE0194CCB99C}"
+          SQLTask:SqlStatementSource="DELETE [PublicFund].[tlg_funding_maturities] WHERE [AS_OF_DATE] =  convert(date,?)&#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::as_of_date"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Port Id String"
+      DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C22E08BB-F3E4-4E03-B3C6-7A2559C6D7F0}"
+      DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Port Id String"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{0B980212-8654-4A75-AB58-CE0194CCB99C}"
+          SQLTask:SqlStatementSource="exec [PublicFund].[get_tlg_port_id_string]"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::port_id_string" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load Maturities"
+      DTS:CreationName="SSIS.Pipeline.3"
+      DTS:DTSID="{A2282762-94F6-4FA2-847F-285EFA2B6E1E}"
+      DTS:ExecutableType="SSIS.Pipeline.3"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load Maturities"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[Source - Query].[SqlCommand]">@[User::load_funding_sql]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load Maturities\Data Conversion 0 - 0"
+              componentClassID="{62B1106C-7DB8-4EC8-ADD6-4C664DFFC54A}"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion 0 - 0"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[AS_OF_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="AS_OF_DATE"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[PORT_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="PORT_ID"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[PORT_ID]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[SETTL_PRIN_AMT]"
+                      cachedDataType="numeric"
+                      cachedName="SETTL_PRIN_AMT"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[SETTL_PRIN_AMT]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[INTRADER_ACCT_MTRTY_DT]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="INTRADER_ACCT_MTRTY_DT"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_ACCT_MTRTY_DT]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[INTRADER_ACCT_RATE]"
+                      cachedDataType="numeric"
+                      cachedName="INTRADER_ACCT_RATE"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_ACCT_RATE]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input].Columns[CUSIP]"
+                      cachedDataType="wstr"
+                      cachedLength="9"
+                      cachedName="CUSIP"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[CUSIP]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of AS_OF_DATE]"
+                      name="Copy of AS_OF_DATE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of PORT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of PORT_ID]"
+                      name="Copy of PORT_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[PORT_ID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of SETTL_PRIN_AMT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of SETTL_PRIN_AMT]"
+                      name="Copy of SETTL_PRIN_AMT"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[SETTL_PRIN_AMT]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of INTRADER_ACCT_MTRTY_DT]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of INTRADER_ACCT_MTRTY_DT]"
+                      name="Copy of INTRADER_ACCT_MTRTY_DT"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_ACCT_MTRTY_DT]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of SETTL_YIELD]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of SETTL_YIELD]"
+                      name="Copy of SETTL_YIELD"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_ACCT_RATE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of CUSIP]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="20"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of CUSIP]"
+                      name="Copy of CUSIP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[CUSIP]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Maturities\Destination - funding_maturities"
+              componentClassID="{4ADA7EAA-136C-4215-8098-D7A7C27FC0D1}"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SqlServer v10; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destination - funding_maturities"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[PublicFund].[tlg_funding_maturities]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Maturities\Destination - funding_maturities.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CORP_TSY_FUNDING]"
+                  connectionManagerRefId="Package.ConnectionManagers[CORP_TSY_FUNDING]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].Columns[AS_OF_DATE]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="AS_OF_DATE"
+                      externalMetadataColumnId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].Columns[SETTL_PRIN_AMT]"
+                      cachedDataType="numeric"
+                      cachedName="SETTL_PRIN_AMT"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[SETTLEMENT_AMOUNT]"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[SETTL_PRIN_AMT]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].Columns[INTRADER_ACCT_MTRTY_DT]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="INTRADER_ACCT_MTRTY_DT"
+                      externalMetadataColumnId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[MATURITY_DATE]"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_ACCT_MTRTY_DT]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].Columns[Copy of PORT_ID]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="10"
+                      cachedName="Copy of PORT_ID"
+                      externalMetadataColumnId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[INTRADER_PORT_ID]"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of PORT_ID]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].Columns[Copy of SETTL_YIELD]"
+                      cachedDataType="numeric"
+                      cachedName="Copy of SETTL_YIELD"
+                      cachedPrecision="38"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[RATE]"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of SETTL_YIELD]" />
+                    <inputColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].Columns[Copy of CUSIP]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Copy of CUSIP"
+                      externalMetadataColumnId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[CUSIP]"
+                      lineageId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output].Columns[Copy of CUSIP]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[CREATED_BY]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="CREATED_BY" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[CREATED_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATED_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbDate"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[SETTLEMENT_AMOUNT]"
+                      dataType="numeric"
+                      name="SETTLEMENT_AMOUNT"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[MATURITY_DATE]"
+                      dataType="dbDate"
+                      name="MATURITY_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[RATE]"
+                      dataType="numeric"
+                      name="RATE"
+                      precision="5"
+                      scale="2" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[INTRADER_PORT_ID]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="INTRADER_PORT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input].ExternalColumns[CUSIP]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="CUSIP" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load Maturities\Destination - funding_maturities.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Maturities\Destination - funding_maturities.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Destination - funding_maturities.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Maturities\Destination - funding_maturities.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load Maturities\Source - Query"
+              componentClassID="{874F7595-FB5F-40FF-96AF-FBFF8250E3EF}"
+              contactInfo="Extracts data from a relational database by using a .NET provider.;Microsoft Corporation; Microsoft SqlServer v10; © 2007 Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Extracts data from a relational database by using a .NET provider."
+              name="Source - Query"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select TO_DATE( 20150930,'YYYYMMDD') AS as_of_date, F.port_id,   F.CUSIP, F.settl_prin_amt, D.INTRADER_ACCT_MTRTY_DT,  CASE WHEN port_id IN ('CPDMUB','CPDU6') THEN  F.SETTL_YIELD ELSE D.INTRADER_ACCT_RATE END AS INTRADER_ACCT_RATE 
+from INTRADER_DAILY_FACT_B F
+join ODMDMQ.INTRADER_ACCT_DIM_B D on F.INTRADER_ACCT_DIM_ID = D.INTRADER_ACCT_DIM_ID 
+where intrader_daily_date_id =   20150930
+and port_id in ( 'ECCUSDP','ECINSDP' )</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version= 11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter, Microsoft.SqlServer.ADONETSrc, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load Maturities\Source - Query.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[CORP_TSY_DMQ]"
+                  connectionManagerRefId="Package.ConnectionManagers[CORP_TSY_DMQ]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[AS_OF_DATE]"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[PORT_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PORT_ID]"
+                      length="30"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[PORT_ID]"
+                      name="PORT_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[CUSIP]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CUSIP]"
+                      length="9"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[CUSIP]"
+                      name="CUSIP"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[SETTL_PRIN_AMT]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SETTL_PRIN_AMT]"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[SETTL_PRIN_AMT]"
+                      name="SETTL_PRIN_AMT"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_ACCT_MTRTY_DT]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTRADER_ACCT_MTRTY_DT]"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_ACCT_MTRTY_DT]"
+                      name="INTRADER_ACCT_MTRTY_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_ACCT_RATE]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTRADER_ACCT_RATE]"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].Columns[INTRADER_ACCT_RATE]"
+                      name="INTRADER_ACCT_RATE"
+                      precision="38"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      name="AS_OF_DATE" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[PORT_ID]"
+                      dataType="wstr"
+                      length="30"
+                      name="PORT_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[CUSIP]"
+                      dataType="wstr"
+                      length="9"
+                      name="CUSIP" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[SETTL_PRIN_AMT]"
+                      dataType="numeric"
+                      name="SETTL_PRIN_AMT"
+                      precision="38"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTRADER_ACCT_MTRTY_DT]"
+                      dataType="dbTimeStamp"
+                      name="INTRADER_ACCT_MTRTY_DT" />
+                    <externalMetadataColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output].ExternalColumns[INTRADER_ACCT_RATE]"
+                      dataType="numeric"
+                      name="INTRADER_ACCT_RATE"
+                      precision="38"
+                      scale="4" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[AS_OF_DATE]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[AS_OF_DATE]"
+                      name="AS_OF_DATE" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[PORT_ID]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[PORT_ID]"
+                      name="PORT_ID" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[CUSIP]"
+                      dataType="wstr"
+                      length="9"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[CUSIP]"
+                      name="CUSIP" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[SETTL_PRIN_AMT]"
+                      dataType="numeric"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[SETTL_PRIN_AMT]"
+                      name="SETTL_PRIN_AMT"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTRADER_ACCT_MTRTY_DT]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTRADER_ACCT_MTRTY_DT]"
+                      name="INTRADER_ACCT_MTRTY_DT" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTRADER_ACCT_RATE]"
+                      dataType="numeric"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[INTRADER_ACCT_RATE]"
+                      name="INTRADER_ACCT_RATE"
+                      precision="38"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load Maturities.Paths[ADO NET Source Output]"
+              endId="Package\Load Maturities\Data Conversion 0 - 0.Inputs[Data Conversion Input]"
+              name="ADO NET Source Output"
+              startId="Package\Load Maturities\Source - Query.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Load Maturities.Paths[Data Conversion Output]"
+              endId="Package\Load Maturities\Destination - funding_maturities.Inputs[Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\Load Maturities\Data Conversion 0 - 0.Outputs[Data Conversion Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{8DAE5122-FFDF-4A24-B55C-6C159ECB4C0F}"
+      DTS:From="Package\Get Port Id String"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Delete Maturities" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{FE82DE37-82CE-48E0-B3F0-FE2A3638C4F7}"
+      DTS:From="Package\Delete Maturities"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Load Maturities" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql11">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Delete Maturities"
+          TopLeft="17.4245283018868,191.952830188679" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Get Port Id String"
+          TopLeft="5.5,90.2547169811321" />
+        <NodeLayout
+          Size="136,44"
+          Id="Package\Load Maturities"
+          TopLeft="23.3867924528302,269.952830188679" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="73.3867924528302,134.179245283019">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="11.9245283018868,57.7735849056604"
+              Start="0,0"
+              End="11.9245283018868,50.2735849056604">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.8679245283019" />
+                  <mssgle:LineSegment
+                    End="11.9245283018868,28.8679245283019" />
+                  <mssgle:LineSegment
+                    End="11.9245283018868,50.2735849056604" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="85.311320754717,235.877358490566">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="5.9622641509434,34.0754716981132"
+              Start="0,0"
+              End="5.9622641509434,26.5754716981132">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.0188679245283" />
+                  <mssgle:LineSegment
+                    End="5.9622641509434,17.0188679245283" />
+                  <mssgle:LineSegment
+                    End="5.9622641509434,26.5754716981132" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
